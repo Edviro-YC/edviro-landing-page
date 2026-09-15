@@ -38,7 +38,7 @@ usePageSeo({
       <div style="max-width: 820px; margin: 0 auto; width: 100%;">
         <p style="margin: 0 0 22px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #75817B;">Legal</p>
         <h1 style="margin: 0; font-weight: 400; font-size: clamp(36px, 5.4vw, 60px); line-height: 1.05; letter-spacing: -0.035em;">Privacy Policy</h1>
-        <p style="margin: 18px 0 0; font-size: 15px; line-height: 1.6; color: #5F6B65;">Last updated: May 3, 2026</p>
+        <p style="margin: 18px 0 0; font-size: 15px; line-height: 1.6; color: #5F6B65;">Last updated: September 15, 2026</p>
       </div>
     </section>
 
@@ -229,8 +229,7 @@ usePageSeo({
             <h2>13. Contact Us</h2>
             <p>If you have questions or want to exercise privacy rights, contact us at:</p>
             <ul class="plain">
-              <li>Email: <a href="mailto:partnerships@edviroenergy.com">partnerships@edviroenergy.com</a></li>
-              <li>Address: 10396 Paradise Dr, Cupertino, California 95014</li>
+              <li>Email: <a href="mailto:founders@edviroenergy.com">founders@edviroenergy.com</a></li>
             </ul>
           </section>
         </div>
@@ -352,7 +351,7 @@ usePageSeo({
             <p>We do not sell data, but you can opt out of analytics tracking where applicable.</p>
             <h3>d) Right to Non-Discrimination</h3>
             <p>We will not deny services if you exercise your privacy rights.</p>
-            <p>To exercise any rights, contact us at <a href="mailto:partnerships@edviroenergy.com">partnerships@edviroenergy.com</a>.</p>
+            <p>To exercise any rights, contact us at <a href="mailto:founders@edviroenergy.com">founders@edviroenergy.com</a>.</p>
           </section>
 
           <section>
@@ -404,8 +403,7 @@ usePageSeo({
             <h2>11. Contact Us</h2>
             <p>If you have questions, you can contact us at:</p>
             <ul class="plain">
-              <li>Email: <a href="mailto:partnerships@edviroenergy.com">partnerships@edviroenergy.com</a></li>
-              <li>Address: 10396 Paradise Dr, Cupertino, California 95014</li>
+              <li>Email: <a href="mailto:founders@edviroenergy.com">founders@edviroenergy.com</a></li>
             </ul>
           </section>
         </div>
