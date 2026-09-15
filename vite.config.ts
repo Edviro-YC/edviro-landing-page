@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 // Type-only import to load vite-ssg's `ssgOptions` module augmentation on `vite`.
 import type {} from 'vite-ssg'
-import { BOOKING_URL, DEMO_REDIRECT_PATH, IUSD_DEMO_PATH, IUSD_DEMO_URL } from './src/seo/site'
+import { BOOKING_URL, DEMO_REDIRECT_PATH, IUSD_DEMO_PATH, IUSD_DEMO_URL, PRIVACY_PATH } from './src/seo/site'
 
 /**
  * Emits Netlify's `_redirects` so vanity paths forward at the edge. Generated
@@ -23,6 +23,9 @@ import { BOOKING_URL, DEMO_REDIRECT_PATH, IUSD_DEMO_PATH, IUSD_DEMO_URL } from '
  *
  * /home is a legacy path that has no route (it would 404); 301 it to the
  * homepage so old links and any indexed copies consolidate on `/`.
+ *
+ * /privacy-policy is the dashboard's route name; the public canonical is
+ * /privacy/ (the URL cited inside the policy itself).
  */
 function netlifyRedirects(): Plugin {
   let isSsrBuild = false
@@ -44,7 +47,9 @@ function netlifyRedirects(): Plugin {
           `${IUSD_DEMO_PATH}  ${IUSD_DEMO_URL}  302\n` +
           `${IUSD_DEMO_PATH}/*  ${IUSD_DEMO_URL}/:splat  302\n` +
           `/home  /  301\n` +
-          `/home/  /  301\n`,
+          `/home/  /  301\n` +
+          `/privacy-policy  ${PRIVACY_PATH}  301\n` +
+          `/privacy-policy/  ${PRIVACY_PATH}  301\n`,
       })
     },
   }

@@ -36,6 +36,11 @@ export const CAPITAL_PLANNING_PATH = '/capital-planning/'
 export const MV_PATH = '/measurement-and-verification/'
 export const FAQ_PATH = '/faq/'
 export const ABOUT_PATH = '/about/'
+/** Canonical public privacy policy. Also cited in the policy body itself. */
+export const PRIVACY_PATH = '/privacy/'
+
+/** Operator dashboard (edviro-dashboard on Netlify). */
+export const DASHBOARD_URL = 'https://dash.edviroenergy.com'
 
 /**
  * Public profiles, used for the footer links and Organization `sameAs`. The X
