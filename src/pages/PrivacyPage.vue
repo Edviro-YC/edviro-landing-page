@@ -19,12 +19,12 @@ const breadcrumbs = [
   { name: 'Privacy policy', path: PRIVACY_PATH },
 ]
 
-const tab = ref<PolicyTab>('mobile-app')
+const tab = ref<PolicyTab>('dashboard')
 
 usePageSeo({
   title: 'Privacy Policy',
   description:
-    'How Edviro collects, uses, shares, and protects information in the mobile app, website, and dashboard — including PG&E Share My Data access and your CCPA rights.',
+    'How Edviro collects, uses, shares, and protects information in the mobile app, website, and dashboard, including Green Button connections for Xcel Energy and PG&E.',
   path: PRIVACY_PATH,
   jsonLd: [organizationLd(), breadcrumbLd(breadcrumbs)],
 })
@@ -80,12 +80,16 @@ usePageSeo({
           <section>
             <h2>1. Introduction</h2>
             <p>
-              This Privacy Policy describes how Edviro ("Edviro," "we," "us," or "our") collects, uses, shares, and protects information when authorized users access the Edviro mobile application.
+              This Privacy Policy describes how Edviro Inc. ("Edviro," "we," "us," or "our") collects, uses, shares, and protects information when authorized users access the Edviro mobile application.
             </p>
             <p>
               The Edviro app is designed for facilities, operations, and administrative teams at the organizations we serve (such as school districts and other multi-site facility operators) to review energy usage, utility billing insights, sustainability goals, facility assets, anomaly tracking, savings reports, and AI-assisted operational guidance. This policy is intended to support Apple's App Store privacy requirements by explaining the categories of data the app may collect, whether that data is linked to a user, how it is used, and whether it is used for tracking.
             </p>
           </section>
+
+          <p>
+            The Green Button and other utility-data provisions in the Website &amp; Dashboard section also apply to utility information accessed through the mobile app. Those provisions govern authorized uses, sharing, revocation, and retention of utility data and take precedence over more general descriptions in this Mobile App section.
+          </p>
 
           <section>
             <h2>2. Information We Collect</h2>
@@ -135,7 +139,7 @@ usePageSeo({
               This data is generally linked to your account, organization, site, facility, or app session so that we can provide the requested services to authorized users.
             </p>
             <p>
-              We do not use the Edviro app to track users across apps or websites owned by other companies for targeted advertising or advertising measurement. We do not sell personal information and we do not display third-party ads in the app.
+              We do not use the Edviro app to track users across apps or websites owned by other companies for targeted advertising or advertising measurement. We do not sell personal information collected through the mobile app and we do not display third-party ads in the app.
             </p>
           </section>
 
@@ -204,7 +208,7 @@ usePageSeo({
               You may request access, correction, deletion, or export of personal information by contacting us. Some requests may need to be handled through your organization or account administrator, and some information may be retained when required for legal, security, audit, billing, or operational reasons.
             </p>
             <p>
-              California residents may have additional rights under the California Consumer Privacy Act, including the right to know, delete, correct, and opt out of certain sharing. We do not sell personal information or use it for cross-context behavioral advertising.
+              California residents may have additional rights under the California Consumer Privacy Act, including the right to know, delete, correct, and opt out of certain sharing. We do not sell personal information collected through the mobile app or use that information for cross-context behavioral advertising.
             </p>
             <p>
               You can also manage camera and photo permissions in your device settings and sign out of the app from the account settings screen.
@@ -221,7 +225,7 @@ usePageSeo({
           <section>
             <h2>12. Updates to This Policy</h2>
             <p>
-              We may update this Privacy Policy from time to time. Updates will be posted at https://edviroenergy.com/privacy, and the "Last updated" date will reflect the latest revision.
+              We may update this Privacy Policy from time to time. The current policy is available at https://edviroenergy.com/privacy/ and https://dash.edviroenergy.com/privacy-policy. The "Last updated" date will reflect the latest revision. Where required, we notify affected customers of material changes and obtain any necessary additional consent. You may request prior versions at founders@edviroenergy.com.
             </p>
           </section>
 
@@ -242,169 +246,104 @@ usePageSeo({
         >
           <section>
             <h2>1. Introduction</h2>
-            <p>
-              Welcome to Edviro ("we," "us," or "our"). We are committed to protecting your privacy and ensuring transparency regarding how we collect, use, and protect personal information.
-            </p>
-            <p>This Privacy Policy explains:</p>
-            <ul>
-              <li>What data we collect</li>
-              <li>How we use it</li>
-              <li>How we secure it</li>
-              <li>Your rights under CCPA and applicable laws</li>
-            </ul>
-            <p>This policy applies when you:</p>
-            <ul>
-              <li>Visit our website (https://edviroenergy.com)</li>
-              <li>Use our energy analytics platform</li>
-              <li>Authorize access via PG&amp;E's Share My Data program</li>
-            </ul>
+            <p>This Privacy Policy describes how Edviro Inc. ("Edviro," "we," "us," or "our") collects, uses, shares, and protects information when you visit our website, use our facilities and energy management platform, or authorize a utility-data connection.</p>
+            <p>Our platform serves authorized facilities, operations, and administrative teams at organizations such as school districts and other facility operators. This policy covers utility information received through Green Button Connect My Data and utility-branded data-sharing programs, including Xcel Energy's Green Button program in Minnesota and PG&amp;E's Share My Data program, where the connection is available and you have authorized it.</p>
+            <p>The utility-data provisions below also apply when that information is accessed through the Edviro mobile app. A reference to a utility or program describes how we handle authorized data; it does not represent that the utility endorses Edviro or that every integration is available to every customer.</p>
           </section>
 
-          <section>
+          <section id="utility-data">
             <h2>2. Information We Collect</h2>
-            <p>We only collect the data necessary to provide our services.</p>
-
-            <h3>a) Data You Provide Voluntarily</h3>
+            <h3>a) Information You Provide</h3>
             <ul>
-              <li>Account Information: Name, email, organization, and login credentials.</li>
-              <li>Support Requests: Any information you provide when contacting us.</li>
+              <li>Account and contact information, including your name, email address, organization, role, and Edviro account authentication information.</li>
+              <li>Facility and asset records, documents, photos, work orders, notes, and other content that authorized users submit to the platform.</li>
+              <li>Support requests and prompts, messages, confirmations, and responses associated with AI-assisted features.</li>
             </ul>
-
-            <h3>b) Data We Collect from PG&amp;E Share My Data</h3>
-            <p>When you authorize access through PG&amp;E's Share My Data program, we receive:</p>
+            <h3>b) Green Button and Other Authorized Utility Data</h3>
+            <p>We receive utility data only after the utility account holder or an authorized representative grants access. Depending on the utility, meter, program, and authorization, this may include:</p>
             <ul>
-              <li>
-                <strong>Commodity Types:</strong>
-                <ul>
-                  <li>Electric usage and billing data</li>
-                  <li>Gas usage and billing data</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Historical Data Access:</strong>
-                <ul>
-                  <li>Up to 48 months of historical data</li>
-                  <li>Daily data updates</li>
-                  <li>Access duration: 5 years from authorization</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Specific Data Elements:</strong>
-                <ul>
-                  <li>Basic account information</li>
-                  <li>Billing data and history</li>
-                  <li>Energy usage patterns and metrics</li>
-                  <li>Program enrollment status</li>
-                  <li>Meter configuration data</li>
-                  <li>Peak Day Pricing (PDP) program status</li>
-                </ul>
-              </li>
+              <li>Customer, account, service-agreement, and meter identifiers; account-holder information; and service addresses or other service-location details.</li>
+              <li>Electricity or natural gas consumption, interval readings, demand, meter configuration, and usage summaries.</li>
+              <li>Billing periods, charges, costs, rates or tariffs, and billing line items.</li>
+              <li>Program enrollment or pricing-program information where provided, such as PG&amp;E Peak Day Pricing status.</li>
+              <li>Authorization records and access or refresh tokens used to maintain the connection.</li>
             </ul>
+            <p>Historical coverage, update frequency, permitted data categories, and the authorization end date depend on the applicable utility program and the customer's consent. We do not promise a uniform historical lookback, daily delivery, or a fixed authorization period across utilities. The period of data made available by a utility is separate from how long Edviro retains information already received.</p>
+            <p>For Green Button connections that use the utility's authorization page, you authenticate with the utility. Edviro does not receive or store the password you enter on that page; we use the resulting authorization and access tokens.</p>
+            <h3>c) Technical and Usage Information</h3>
+            <p>We may collect IP addresses, browser or device information, session identifiers, product interactions, and diagnostic or security logs to operate, secure, and support our website and platform. Cookies and similar technologies are described in Section 7.</p>
           </section>
 
           <section>
-            <h2>3. How We Use Your Information</h2>
-            <p>We use collected data only for the following purposes:</p>
+            <h2>3. How We Use Information</h2>
             <ul>
-              <li>To provide energy usage analytics for school districts and other facility operators.</li>
-              <li>To securely retrieve and process PG&amp;E energy data via Share My Data.</li>
-              <li>To improve our website and dashboard performance.</li>
-              <li>To comply with legal, security, and regulatory requirements.</li>
+              <li>Authenticate users and provide access to their organization's facilities and records.</li>
+              <li>Retrieve authorized utility data and provide energy monitoring, billing analysis, benchmarking, forecasting, anomaly detection, savings analysis, and efficiency recommendations.</li>
+              <li>Support facility and asset management, work orders, reporting, and customer-requested operational workflows.</li>
+              <li>Provide support, diagnose technical problems, maintain reliability and security, and understand website and product performance.</li>
+              <li>Meet applicable legal, regulatory, security, and contractual obligations.</li>
             </ul>
-            <p>We do not:</p>
-            <ul>
-              <li>Sell or share your data with advertisers.</li>
-              <li>Store unnecessary personal information.</li>
-              <li>Use data for any reason beyond our stated business purpose.</li>
-            </ul>
+            <p>AI-assisted features may process relevant utility or facility records, user-submitted content, and prompts to produce explanations, forecasts, recommendations, or other requested outputs. Providers of these features may receive the information needed to process those requests, as described in Sections 4 and 9.</p>
+            <p>Utility data is used only within the purposes and scope authorized by the customer and permitted by the applicable utility program. Permission to provide customer-specific analysis does not, by itself, authorize unrelated research, advertising, or training models for use across customers. Any additional use, including such model training, requires the authorization and other permissions required by the applicable utility terms and law. This policy does not expand a customer's utility authorization.</p>
+            <p>We do not sell utility data, use it for targeted advertising, or disclose it to advertisers. Website marketing technologies are described separately in Section 7 and do not authorize advertising use of utility data.</p>
           </section>
 
           <section>
-            <h2>4. How We Share Your Information</h2>
-            <p>We only share your information in limited cases:</p>
+            <h2>4. How We Share Information</h2>
+            <p>Subject to the customer's authorization and applicable utility restrictions, we may share information:</p>
             <ul>
-              <li>With PG&amp;E if you authorize energy data access.</li>
-              <li>With service providers, such as secure cloud hosting and analytics providers.</li>
-              <li>With government agencies if legally required.</li>
+              <li>With authorized users and administrators of the organization responsible for the account.</li>
+              <li>With service providers that support hosting, authentication, storage, security, analytics, customer support, and AI processing, to the extent needed to deliver those services.</li>
+              <li>With a utility or an integration partner to establish, maintain, or troubleshoot an authorized connection or carry out a customer-requested service.</li>
+              <li>When required by applicable law or legal process, subject to any applicable notice requirements and disclosure restrictions.</li>
             </ul>
-            <p>We do not sell personal information.</p>
+            <p>Our service providers are permitted to process customer utility data only to provide the authorized services to Edviro. They are not authorized to sell that data, use it for their own advertising, or use it for purposes outside the customer's authorization.</p>
+          </section>
+
+          <section id="privacy-choices">
+            <h2>5. Your Privacy Choices and Utility Authorization</h2>
+            <h3>Granting, Limiting, or Revoking Utility Access</h3>
+            <p>You can decline a utility connection, select the scope offered by the utility, or revoke authorization using the utility's data-sharing controls or by contacting the utility. For Xcel Energy, its privacy notice also provides datarequest@xcelenergy.com as a way to request that consent be terminated or limited. For PG&amp;E, manage authorization through Share My Data. You may also contact founders@edviroenergy.com for help with an Edviro connection or a request to stop Edviro's access or use.</p>
+            <p>When authorization expires or is revoked, we stop obtaining new data under that authorization. We also honor applicable limits on continued use of information already received. Disconnecting a utility does not itself delete historical information in Edviro; retention and deletion are addressed in Section 8.</p>
+            <p>Declining or revoking a connection may prevent Edviro from providing updated analytics or other features that depend on that data. It does not cancel your utility service.</p>
+            <h3>Access, Correction, Export, and Deletion</h3>
+            <p>You may contact founders@edviroenergy.com to request access, correction, export, or deletion of information, ask about our use or retention of data, or dispute its accuracy. We may verify your identity and authority and coordinate with your organization or account administrator. Corrections to a utility's source records may need to be made with that utility.</p>
+            <p>Depending on where you live and which laws apply, you may have additional privacy rights, including rights to know, correct, delete, obtain a copy of information, or opt out of certain processing. California residents may have rights under the California Consumer Privacy Act; Minnesota residents may have rights under the Minnesota Consumer Data Privacy Act where it applies. To exercise a right or appeal a decision on a request, email founders@edviroenergy.com. We respond as required by applicable law and do not unlawfully discriminate for exercising privacy rights.</p>
           </section>
 
           <section>
-            <h2>5. Your Rights Under the California Consumer Privacy Act (CCPA)</h2>
-            <p>If you are a California resident, you have the following rights:</p>
-            <h3>a) Right to Know</h3>
-            <p>You can request details on:</p>
-            <ul>
-              <li>What data we collect</li>
-              <li>How we use it</li>
-              <li>With whom we share it</li>
-            </ul>
-            <h3>b) Right to Delete</h3>
-            <p>You can request deletion of your personal information, except when required for:</p>
-            <ul>
-              <li>Security and fraud prevention</li>
-              <li>Compliance with legal obligations</li>
-              <li>Providing requested services</li>
-            </ul>
-            <h3>c) Right to Opt Out</h3>
-            <p>We do not sell data, but you can opt out of analytics tracking where applicable.</p>
-            <h3>d) Right to Non-Discrimination</h3>
-            <p>We will not deny services if you exercise your privacy rights.</p>
-            <p>To exercise any rights, contact us at <a href="mailto:founders@edviroenergy.com">founders@edviroenergy.com</a>.</p>
+            <h2>6. Security</h2>
+            <p>We use reasonable administrative, technical, and organizational safeguards designed to protect information, including encrypted transport, authentication, access controls, and service-provider security controls. No method of transmission or storage is completely secure, so we cannot guarantee absolute security.</p>
           </section>
 
           <section>
-            <h2>6. Security Measures</h2>
-            <p>We take data security seriously and use industry practices, including:</p>
-            <ul>
-              <li>Encryption to protect data at rest and in transit.</li>
-              <li>Secure API authentication to restrict access to authorized users only.</li>
-              <li>Access controls to prevent unauthorized data exposure.</li>
-            </ul>
-            <p>While we strive to protect your data, no system is 100% secure.</p>
+            <h2>7. Cookies and Similar Technologies</h2>
+            <p>Our website and platform use cookies, local storage, and similar technologies for sign-in, preferences, security, and analytics. Our marketing website also uses Google Ads, LinkedIn Insight Tag, OpenAI advertising measurement, and PostHog analytics. These services may receive technical and activity information such as an IP address, browser details, pages visited, referral information, and interactions to analyze site use and measure marketing campaigns.</p>
+            <p>When you book a demo, the marketing website may also send your email address to Google for enhanced conversion matching. Advertising providers may match website events with information they already hold, subject to their privacy policies. These website measurements are separate from the utility-data connections described in this policy.</p>
+            <p>You can manage cookies through your browser settings and use the privacy or advertising controls offered by the relevant providers. Disabling cookies may affect sign-in or other functionality. Contact founders@edviroenergy.com to exercise applicable privacy rights concerning website tracking. Utility account records, meter readings, and billing data are not used for advertising or sent to advertising platforms.</p>
           </section>
 
           <section>
-            <h2>7. Cookies and Tracking</h2>
-            <p>We use cookies only for essential functionality and analytics.</p>
-            <ul>
-              <li>You can opt out by disabling cookies in your browser.</li>
-              <li>We do not track sensitive data or serve targeted ads.</li>
-            </ul>
+            <h2>8. Retention and Deletion</h2>
+            <p>We retain utility, facility, account, and related workflow records while needed to provide the customer's authorized services, including historical comparisons, reporting, and support. The retention period depends on the customer relationship, the purposes authorized, the applicable service agreement and utility terms, and legal requirements; utility authorization length is not a data-retention schedule.</p>
+            <p>When the service relationship ends, authorization is limited or withdrawn, or deletion is requested, we assess which records remain necessary and permitted to retain. Information that is no longer needed or permitted for those purposes is deleted or de-identified. Limited records may be retained where required or permitted for legal compliance, security, billing, audits, or disputes, subject to applicable utility restrictions.</p>
+            <p>Deletion from active systems and expiry of backup copies are separate processes. Backup copies may remain until overwritten through the applicable backup lifecycle and remain subject to the same protections and use restrictions. Contact founders@edviroenergy.com to request deletion or information about the retention arrangements for your organization's records, including backups.</p>
+            <p>Revoking a utility connection stops future collection under that authorization; it does not automatically erase previously collected data. A deletion request and any restrictions on further use are handled separately under this section and applicable law and utility terms.</p>
           </section>
 
           <section>
-            <h2>8. Data Retention Policy</h2>
-            <ul>
-              <li>PG&amp;E energy data is stored only as long as necessary to provide analytics.</li>
-              <li>User accounts are retained until account deletion is requested, subject to legal and contractual requirements.</li>
-              <li>Analytics data is retained for site optimization, then deleted or de-identified.</li>
-            </ul>
+            <h2>9. Service Providers and International Processing</h2>
+            <p>We use providers for cloud hosting, authentication, databases, storage, security, analytics, and AI processing. Information may be processed in the United States or other locations where our providers operate, subject to applicable customer agreements, utility-program restrictions, and legal requirements. Where required, we use safeguards for international transfers. Contact founders@edviroenergy.com with questions about providers or processing locations relevant to your service.</p>
           </section>
 
           <section>
-            <h2>9. Third-Party Services &amp; Data Transfers</h2>
-            <p>We use third-party services for hosting and analytics. Our service providers are expected to:</p>
-            <ul>
-              <li>Comply with data security policies</li>
-              <li>Use information only to provide services to Edviro</li>
-              <li>Not share or sell collected information for advertising</li>
-            </ul>
-            <p>Your data remains within the U.S. unless required by international regulations or supported service-provider operations.</p>
-          </section>
-
-          <section>
-            <h2>10. Updates to This Privacy Policy</h2>
-            <p>We may update this Privacy Policy periodically. All updates will be posted at https://edviroenergy.com/privacy.</p>
+            <h2>10. Changes to This Policy</h2>
+            <p>We post the current policy at <a href="https://edviroenergy.com/privacy/">edviroenergy.com/privacy/</a> and <a href="https://dash.edviroenergy.com/privacy-policy">dash.edviroenergy.com/privacy-policy</a> and update the revision date when it changes. Where required, we notify affected customers of material changes and obtain additional consent before making materially different uses of previously collected information. You may request prior versions at founders@edviroenergy.com.</p>
           </section>
 
           <section>
             <h2>11. Contact Us</h2>
-            <p>If you have questions, you can contact us at:</p>
-            <ul class="plain">
-              <li>Email: <a href="mailto:founders@edviroenergy.com">founders@edviroenergy.com</a></li>
-            </ul>
+            <p>For privacy questions, utility-data requests, or concerns about this policy, contact Edviro Inc. at <a href="mailto:founders@edviroenergy.com">founders@edviroenergy.com</a>.</p>
           </section>
         </div>
       </div>
