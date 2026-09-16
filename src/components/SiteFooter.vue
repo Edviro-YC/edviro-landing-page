@@ -14,6 +14,7 @@ import {
   FAQ_PATH,
   LINKEDIN_URL,
   MV_PATH,
+  PRIVACY_PATH,
   SCHOOL_ENERGY_PATH,
   WORK_ORDERS_PATH,
   X_URL,
@@ -37,6 +38,7 @@ const columns = [
     links: [
       { label: 'About', to: ABOUT_PATH },
       { label: 'FAQ', to: FAQ_PATH },
+      { label: 'Privacy policy', to: PRIVACY_PATH },
       { label: 'Book a demo', to: BOOK_DEMO_PATH },
     ],
   },
@@ -68,6 +70,7 @@ const columns = [
       <div style="padding-top: 22px; display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; justify-content: space-between;">
         <div style="font-size: 12.5px;">© {{ new Date().getFullYear() }} Edviro. Backed by Y Combinator.</div>
         <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+          <RouterLink :to="PRIVACY_PATH" class="footer-link" style="font-weight: 500; font-size: 12.5px; color: #79867E; text-decoration: none;">Privacy</RouterLink>
           <a :href="BLOG_URL" class="footer-link" style="font-weight: 500; font-size: 12.5px; color: #79867E; text-decoration: none;">Blog</a>
           <a :href="LINKEDIN_URL" target="_blank" rel="noopener" class="footer-link" style="font-weight: 500; font-size: 12.5px; color: #79867E; text-decoration: none;">LinkedIn</a>
           <a :href="X_URL" target="_blank" rel="noopener" class="footer-link" style="font-weight: 500; font-size: 12.5px; color: #79867E; text-decoration: none;">X</a>

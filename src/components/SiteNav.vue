@@ -8,6 +8,7 @@ import {
   BLOG_URL,
   BOOK_DEMO_PATH,
   CAPITAL_PLANNING_PATH,
+  DASHBOARD_URL,
   FACILITIES_OPS_PATH,
   FAQ_PATH,
   MV_PATH,
@@ -176,7 +177,10 @@ watch(() => route.fullPath, closeAll)
             </li>
           </template>
         </ul>
-        <RouterLink :to="BOOK_DEMO_PATH" class="book-btn" style="font-size: 14.5px; font-weight: 500; text-decoration: none; color: #EDF0EE; background: var(--accent); padding: 10px 18px; border-radius: 999px; white-space: nowrap;">Book a demo</RouterLink>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <a :href="DASHBOARD_URL" class="dash-btn">Dashboard</a>
+          <RouterLink :to="BOOK_DEMO_PATH" class="book-btn" style="font-size: 14.5px; font-weight: 500; text-decoration: none; color: #EDF0EE; background: var(--accent); padding: 10px 18px; border-radius: 999px; white-space: nowrap;">Book a demo</RouterLink>
+        </div>
       </div>
 
       <!-- Mobile toggle -->
@@ -212,7 +216,10 @@ watch(() => route.fullPath, closeAll)
           </ul>
           <RouterLink v-if="group.id === 'solutions'" :to="FACILITIES_OPS_PATH" class="mobile-link" style="font-weight: 500;" @click="closeAll">Schools: the full facilities platform</RouterLink>
         </section>
-        <RouterLink :to="BOOK_DEMO_PATH" class="book-btn" style="display: block; text-align: center; margin-top: 16px; font-size: 15px; font-weight: 500; text-decoration: none; color: #EDF0EE; background: var(--accent); padding: 13px 18px; border-radius: 999px;" @click="closeAll">Book a demo</RouterLink>
+        <div style="display: grid; gap: 10px; margin-top: 16px;">
+          <a :href="DASHBOARD_URL" class="dash-btn dash-btn-mobile" @click="closeAll">Dashboard</a>
+          <RouterLink :to="BOOK_DEMO_PATH" class="book-btn" style="display: block; text-align: center; font-size: 15px; font-weight: 500; text-decoration: none; color: #EDF0EE; background: var(--accent); padding: 13px 18px; border-radius: 999px;" @click="closeAll">Book a demo</RouterLink>
+        </div>
       </nav>
     </div>
   </header>
@@ -246,6 +253,7 @@ watch(() => route.fullPath, closeAll)
 .nav-menu-link:focus-visible,
 .mobile-link:focus-visible,
 .book-btn:focus-visible,
+.dash-btn:focus-visible,
 .nav-toggle:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
@@ -289,6 +297,27 @@ watch(() => route.fullPath, closeAll)
 }
 .book-btn:hover {
   filter: brightness(1.12);
+}
+.dash-btn {
+  font-size: 14.5px;
+  font-weight: 500;
+  text-decoration: none;
+  color: #171d1a;
+  background: transparent;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid #c0ccc3;
+  white-space: nowrap;
+}
+.dash-btn:hover {
+  background: rgba(23, 29, 26, 0.05);
+  border-color: #171d1a;
+}
+.dash-btn-mobile {
+  display: block;
+  text-align: center;
+  font-size: 15px;
+  padding: 13px 18px;
 }
 .mobile-link {
   display: block;

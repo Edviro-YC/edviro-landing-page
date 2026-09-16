@@ -69,6 +69,14 @@ export const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/AboutPage.vue'),
   },
   {
+    // Canonical public privacy policy (https://edviroenergy.com/privacy).
+    // The dashboard also hosts a copy at /privacy-policy; this page is the
+    // URL the policy itself cites for updates.
+    path: '/privacy',
+    name: 'privacy',
+    component: () => import('@/pages/PrivacyPage.vue'),
+  },
+  {
     // Every "Book a demo" CTA links here. The scheduler lives one click further,
     // at /demo, and Calendly returns invitees to /demo-booked.
     path: '/book-a-demo',
