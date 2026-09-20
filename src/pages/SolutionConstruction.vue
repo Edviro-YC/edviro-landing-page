@@ -1,59 +1,99 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import CtaSection from '@/components/CtaSection.vue'
-import PageBreadcrumbs from '@/components/PageBreadcrumbs.vue'
 import FaqList from '@/components/FaqList.vue'
+import PageBreadcrumbs from '@/components/PageBreadcrumbs.vue'
+import IndustryFlow from '@/components/industry/IndustryFlow.vue'
+import PlatformHero from '@/components/platform/PlatformHero.vue'
+import StepStrip, { type Step } from '@/components/platform/StepStrip.vue'
+import UiApprovalCard, { type TrailEntry } from '@/components/ui/UiApprovalCard.vue'
+import UiBaselineFit from '@/components/ui/UiBaselineFit.vue'
+import UiVarianceChart from '@/components/ui/UiVarianceChart.vue'
 import { usePageSeo } from '@/seo/usePageSeo'
-import { breadcrumbLd, faqLd, serviceLd, organizationLd, type FaqItem } from '@/seo/jsonld'
-import { BOOK_DEMO_PATH } from '@/seo/site'
+import { breadcrumbLd, faqLd, organizationLd, serviceLd, type FaqItem } from '@/seo/jsonld'
+import {
+  CAPITAL_PLANNING_PATH,
+  MV_PATH,
+  PLATFORM_FACILITIES_OPS_PATH,
+  SOLUTION_CONSTRUCTION_PATH,
+} from '@/seo/site'
 
+/**
+ * Construction. The visual is baseline → variance → reviewed fix and report.
+ * Wording is deliberately "independent" and "owner-ready", never
+ * "audit-grade" or "lender-ready": Edviro produces documentation tied to
+ * measured data; whether a lender, program, or auditor accepts it is their
+ * call. All figures fictional. Copy is one short sentence per point.
+ */
 const breadcrumbs = [
   { name: 'Home', path: '/' },
-  { name: 'Solutions', path: '/solutions/construction/' },
-  { name: 'Construction', path: '/solutions/construction/' },
+  { name: 'Solutions', path: SOLUTION_CONSTRUCTION_PATH },
+  { name: 'Construction', path: SOLUTION_CONSTRUCTION_PATH },
+]
+
+const flowSteps = [
+  { label: 'Independent baseline', caption: 'Fit to metered data during fit-out. Locked before occupancy.' },
+  { label: 'Variance flagged', caption: 'Measured load runs 8% over the design model in weeks 3–4. The GC gets the evidence now, not a surprise at handover.' },
+  { label: 'Reviewed and reported', caption: 'The GC reviews. A commissioning fix lands. The owner receives an independent M&V report.' },
+]
+
+const reviewTrail: TrailEntry[] = [
+  { text: 'Flagged by Edviro', time: 'Wk 3', state: 'done' },
+  { text: 'Reviewed by GC · J. Alvarez', time: 'Wk 3', state: 'human' },
+  { text: 'Commissioning fix complete', time: 'Wk 5', state: 'done' },
+  { text: 'M&V report issued to owner', time: 'Mo 6', state: 'done' },
+]
+
+const handoff: Step[] = [
+  { title: 'Design model', detail: 'The engineer\u2019s model is the reference the build is measured against.', icon: 'model' },
+  { title: 'Baseline locked', detail: 'An independent baseline is fit to metered data during fit-out.', icon: 'calibrate' },
+  { title: 'Variance flagged', detail: 'Measured load is compared with the model each week. Deviations reach the GC with evidence.', human: true, tag: 'GC review', icon: 'flag' },
+  { title: 'Commissioning fix', detail: 'The fix is tracked as work. The next weeks show whether it held.', icon: 'wrench' },
+  { title: 'Handover', detail: 'The owner receives an owner-ready M&V report and the calibrated baseline.', icon: 'handoff' },
+  { title: 'Ongoing verification', detail: 'The same baseline keeps checking the building after occupancy.', icon: 'verify' },
 ]
 
 const faqs: FaqItem[] = [
   {
     question: 'What is an energy baseline and why does it matter for construction?',
     answer:
-      'A baseline is a measured model of how a building uses energy before and during construction. Edviro sets an independent baseline so that every savings or performance claim after handover can be measured against it, which is what owners and lenders require to trust the numbers.',
+      'A baseline is a measured model of how a building uses energy, fit to metered data and weather. Edviro sets it during fit-out. Every later performance or savings claim is measured against it, not taken on trust.',
   },
   {
-    question: 'How does Edviro provide audit-grade measurement and verification (M&V)?',
+    question: 'How does Edviro provide independent measurement and verification (M&V)?',
     answer:
-      'Edviro fits a baseline to metered data, then verifies performance against it continuously and generates reports owners and lenders trust. Variances are flagged to the general contractor as they appear rather than discovered after handover.',
+      'Edviro fits the baseline to metered data and compares measured performance against it each week. Variances go to the general contractor as they appear. The owner gets a report in plain language.',
   },
   {
     question: 'Does Edviro keep working after the building is handed over?',
     answer:
-      'Yes. The same agents that handle baselining and M&V continue to catch faults and waste after handover, so new buildings run as designed from day one.',
+      'Yes. The same baseline and verification continue after occupancy. Faults and waste in a new building surface early, before they become normal.',
   },
   {
     question: 'Can Edviro support performance guarantees and incentives?',
     answer:
-      'Edviro produces lender-ready, audit-grade M&V that supports performance guarantees, utility incentives, and green financing, because every claim is tied to measured data against an independent baseline.',
+      'Edviro produces independent, owner-ready M&V documentation tied to measured data. It can support performance guarantees, utility incentive applications, and financing reviews. Whether a program accepts it is that program\u2019s decision.',
   },
   {
-    question: 'How does the as-built digital twin compare to the design model?',
+    question: 'How does the as-built model compare to the design model?',
     answer:
-      'As metered data comes in, Edviro builds a digital twin of the building as it actually performs and checks it against the design model continuously. Variance surfaces during the build, when it is cheap to correct, instead of after handover, and the owner inherits a calibrated twin for future capital planning.',
+      'As metered data comes in, Edviro builds a model of the building as it performs and checks it against the design model. Variance surfaces during the build, when it is cheap to correct. The owner inherits a calibrated baseline.',
   },
 ]
 
 usePageSeo({
   title: 'Baselining and M&V for construction',
   description:
-    'Edviro builds independent baselining and audit-grade measurement and verification (M&V) into the build, so every savings claim holds up for owners and lenders and new buildings run as designed.',
-  path: '/solutions/construction/',
+    'Independent energy baselining and M&V built into the build. Variances reach the contractor early. The owner receives an owner-ready report at handover.',
+  path: SOLUTION_CONSTRUCTION_PATH,
   jsonLd: [
     organizationLd(),
     breadcrumbLd(breadcrumbs),
     serviceLd({
       name: 'Edviro baselining and M&V for construction',
       description:
-        'Independent energy baselining and audit-grade measurement and verification for new construction and major retrofits.',
-      path: '/solutions/construction/',
+        'Independent energy baselining and measurement and verification for new construction and major retrofits, with variances flagged to the contractor during the build and an owner-ready report at handover.',
+      path: SOLUTION_CONSTRUCTION_PATH,
       serviceType: 'Measurement and verification',
       areaServed: 'United States',
     }),
@@ -66,62 +106,69 @@ usePageSeo({
   <main>
     <PageBreadcrumbs :items="breadcrumbs" />
 
-    <!-- HERO -->
-    <section style="padding: 40px 32px 64px;">
-      <div style="max-width: 1180px; margin: 0 auto; width: 100%;">
-        <div style="max-width: 760px;">
-          <p style="margin: 0 0 22px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #75817B;">For construction teams</p>
-          <h1 style="margin: 0; font-weight: 400; font-size: clamp(36px, 5.4vw, 62px); line-height: 1.05; letter-spacing: -0.035em;">Baselining and M&amp;V, <span style="color: var(--accent);">built into the build</span>.</h1>
-          <p style="margin: 26px 0 0; max-width: 600px; font-size: 19px; line-height: 1.6; color: #4B5550;">Edviro sets an independent energy baseline and runs audit-grade measurement and verification from day one, so every savings claim holds up for owners and lenders.</p>
-          <div style="margin-top: 32px; display: flex; gap: 14px; flex-wrap: wrap;">
-            <RouterLink :to="BOOK_DEMO_PATH" class="book-btn" style="font-size: 15px; font-weight: 500; text-decoration: none; color: #EDF0EE; background: var(--accent); padding: 13px 26px; border-radius: 999px;">Book a demo</RouterLink>
-            <RouterLink to="/measurement-and-verification/" class="outline-btn" style="font-size: 15px; font-weight: 500; text-decoration: none; color: #171D1A; background: transparent; padding: 13px 24px; border-radius: 999px; border: 1px solid #C0CCC3;">Learn about M&amp;V</RouterLink>
+    <PlatformHero
+      eyebrow="For construction teams"
+      lede="Edviro sets an independent energy baseline during fit-out and measures the building against it. Variance shows up while the contractor is still on site. The owner receives an owner-ready report at handover."
+      :secondary="{ label: 'Learn about M&V', to: MV_PATH }"
+    >
+      Baselining and M&amp;V, <span class="accent">built into the build.</span>
+    </PlatformHero>
+
+    <!-- IN PRACTICE -->
+    <section id="in-practice" class="section is-tint">
+      <div class="shell">
+        <div class="two-up head">
+          <div>
+            <p class="eyebrow">In practice</p>
+            <h2 class="h2">Catch the variance before the owner does.</h2>
           </div>
+          <p class="lede">Independent baseline, measured variance, reviewed fix. The owner inherits the record the build was checked against.</p>
         </div>
+        <IndustryFlow
+          title="Tower A · Baseline → variance → report"
+          :steps="flowSteps"
+          summary="Three-step flow for Tower A: an independent baseline fit to 62 days of metered data and locked during fit-out; weekly measured energy compared with the design model, with weeks 3 and 4 running 8 percent over and flagged to the general contractor; a review card showing the GC review, a commissioning fix in week 5, and an M&V report issued to the owner in month 6."
+        >
+          <template #step-1><UiBaselineFit /></template>
+          <template #step-2><UiVarianceChart /></template>
+          <template #step-3>
+            <UiApprovalCard
+              label="Variance review"
+              title="Weeks 3–4 measured 8% over design model · AHU-2 economizer"
+              :details="['Evidence: 14 days of interval data vs the design model', 'Proposed: commissioning check of the AHU-2 economizer damper', 'Report: owner-ready M&V summary at handover']"
+              :trail="reviewTrail"
+              status="Reviewed"
+              status-tone="ok"
+              summary="Variance review card: weeks 3 to 4 measured 8 percent over the design model, traced to the AHU-2 economizer. Flagged by Edviro in week 3, reviewed by the GC (J. Alvarez) in week 3, commissioning fix complete in week 5, M&V report issued to the owner in month 6."
+            />
+          </template>
+        </IndustryFlow>
       </div>
     </section>
 
-    <!-- PILLARS -->
-    <section style="padding: 30px 32px 60px;">
-      <div style="max-width: 1180px; margin: 0 auto; width: 100%;">
-        <h2 style="margin: 0 0 40px; font-weight: 400; font-size: clamp(28px, 3.6vw, 42px); line-height: 1.08; letter-spacing: -0.03em; max-width: 620px;">Savings claims that hold up.</h2>
-        <div class="r-cols-3" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;">
-          <div style="border-top: 1.5px solid #171D1A; padding-top: 18px;">
-            <h3 style="margin: 0 0 10px; font-size: 19px; font-weight: 600;">Independent baselining</h3>
-            <p style="margin: 0; font-size: 15.5px; line-height: 1.6; color: #5F6B65;">Set a measured energy baseline before and during construction, so every later claim has a reference.</p>
+    <!-- HANDOFF TIMELINE -->
+    <section id="handoff" class="section">
+      <div class="shell">
+        <div class="two-up head">
+          <div>
+            <p class="eyebrow">From design to handover</p>
+            <h2 class="h2">Six steps, one baseline.</h2>
           </div>
-          <div style="border-top: 1.5px solid #171D1A; padding-top: 18px;">
-            <h3 style="margin: 0 0 10px; font-size: 19px; font-weight: 600;">Audit-grade M&amp;V</h3>
-            <p style="margin: 0; font-size: 15.5px; line-height: 1.6; color: #5F6B65;">Verify performance against the baseline continuously, with reports owners and lenders trust.</p>
-          </div>
-          <div style="border-top: 1.5px solid #171D1A; padding-top: 18px;">
-            <h3 style="margin: 0 0 10px; font-size: 19px; font-weight: 600;">Agents from day one</h3>
-            <p style="margin: 0; font-size: 15.5px; line-height: 1.6; color: #5F6B65;">The same agents that verify also catch faults and waste, so buildings run as designed from handover.</p>
-          </div>
+          <p class="lede">Review is a step in the build, not a report at the end. Each variance reaches a person while it is still cheap to correct.</p>
         </div>
+        <StepStrip :steps="handoff" label="Construction handoff timeline" />
       </div>
     </section>
 
-    <!-- EXAMPLE -->
-    <section style="padding: 50px 32px; background: #101815; color: #EDF0EE;">
-      <div class="r-split" style="max-width: 1180px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;">
-        <div>
-          <p style="margin: 0 0 18px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #79867E;">In practice</p>
-          <h2 style="margin: 0 0 18px; font-weight: 400; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.08; letter-spacing: -0.03em; color: #F2F5F1;">Catch the variance before the owner does.</h2>
-          <p style="margin: 0; font-size: 17px; line-height: 1.65; color: #C4CBC5;">Edviro locks an independent baseline during fit-out, tracks measured load against the design model, and flags variances to the general contractor in real time, then issues a lender-ready M&amp;V report to the owner.</p>
-        </div>
-        <div style="background: #17201B; border: 1px solid #26302A; border-radius: 18px; padding: 24px;">
-          <div style="font-weight: 600; font-size: 11px; color: #79867E; margin-bottom: 8px;">BASELINE · Tower A · fit-out</div>
-          <div style="font-size: 17px; font-weight: 600; color: #EDF0EE; line-height: 1.35; margin-bottom: 16px;">Independent baseline locked. Measured load tracking 8% above the design model.</div>
-          <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: #C4CBC5;">
-            <div>Baseline fit to metered data</div>
-            <div>Variance flagged to the GC</div>
-            <div style="color: #79867E;">Issue M&amp;V report to owner</div>
-          </div>
-          <div style="margin-top: 16px; display: flex; align-items: center; justify-content: space-between; font-weight: 500; font-size: 11px; color: #79867E;">
-            <span>Verifying against baseline…</span>
-            <span style="color: #6FCF97;">lender-ready</span>
-          </div>
+    <!-- AFTER HANDOVER -->
+    <section class="section is-dark">
+      <div class="shell">
+        <h2 class="h2 dark-h2">The building keeps its baseline after the crews leave.</h2>
+        <p class="lede">The owner inherits the calibrated baseline, the asset records, and the verification loop. The platform that checked the build keeps checking the building.</p>
+        <div class="links">
+          <RouterLink :to="MV_PATH" class="text-link">How measurement and verification works →</RouterLink>
+          <RouterLink :to="CAPITAL_PLANNING_PATH" class="text-link">Capital planning →</RouterLink>
+          <RouterLink :to="PLATFORM_FACILITIES_OPS_PATH" class="text-link">See the full platform →</RouterLink>
         </div>
       </div>
     </section>
@@ -133,10 +180,24 @@ usePageSeo({
 </template>
 
 <style scoped>
-.book-btn:hover {
-  filter: brightness(1.12);
+.two-up {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px 56px;
+  align-items: center;
 }
-.outline-btn:hover {
-  border-color: #171D1A !important;
+.head { align-items: end; margin-bottom: 32px; }
+.head .lede { margin: 0; }
+.dark-h2 { color: #F2F5F1; max-width: 720px; }
+.is-dark .lede { max-width: 720px; }
+.links {
+  margin-top: 26px;
+  display: flex;
+  gap: 8px 24px;
+  flex-wrap: wrap;
+  font-size: 15px;
+}
+@media (max-width: 900px) {
+  .two-up { grid-template-columns: minmax(0, 1fr); gap: 28px; }
 }
 </style>

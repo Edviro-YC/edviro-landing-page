@@ -1,65 +1,125 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
-import { CMMS_PATH, SCHOOL_ENERGY_PATH } from '@/seo/site'
+import { MV_PATH } from '@/seo/site'
+import UiMeterTrend from '@/components/ui/UiMeterTrend.vue'
+import UiCauseCard from '@/components/ui/UiCauseCard.vue'
+import UiBeforeAfter from '@/components/ui/UiBeforeAfter.vue'
 
-const examples = [
-  'Unexpected gas or water use',
-  'After-hours HVAC',
-  'Demand spikes',
-  'Solar underperformance',
-  'Heating and cooling together',
-  'Equipment short cycling',
-  'Schedule mismatch',
-  'School-to-school outliers',
-]
-
-const sources = [
-  'Modern BMS',
-  'Legacy controls',
-  'Utility data and bills',
-  'Spreadsheets and exports',
-  'Schedules',
-  'Existing CMMS',
-]
+/**
+ * Energy and M&V as a three-panel diagram: anomaly → likely cause and work
+ * order → verified result. The `evidence` slot is where report-backed proof
+ * renders once it is signed off (HomePage gates it behind showEvidence).
+ */
 </script>
 
 <template>
-  <!-- ENERGY, DIAGNOSTICS, AND EXISTING SYSTEMS -->
-  <section id="energy" style="position: relative; padding: 80px 32px; background: #F5F7F5; border-top: 1px solid #E3E8E4; border-bottom: 1px solid #E3E8E4;">
-    <!-- Preserve the former deep link after folding SystemsSection into this section. -->
-    <span id="systems" aria-hidden="true" style="position: absolute; top: 0; left: 0;"></span>
-    <div style="max-width: 1180px; margin: 0 auto; width: 100%;">
-      <div class="r-split" style="display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 64px; align-items: start;">
+  <section id="energy" class="section is-tint">
+    <div class="shell">
+      <div class="energy-head">
         <div>
-          <p style="margin: 0 0 18px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #75817B;">Energy, diagnostics, and integrations</p>
-          <h2 style="margin: 0 0 20px; font-weight: 400; font-size: clamp(30px, 3.6vw, 44px); line-height: 1.07; letter-spacing: -0.03em;">See what changed. Use what you have.</h2>
-          <p style="margin: 0 0 18px; font-size: 17px; line-height: 1.55; color: #4B5550;">Connect utility data, building systems, schedules, bills, spreadsheets, and work orders. Edviro finds likely causes and turns them into action.</p>
-          <p style="margin: 0 0 22px; font-size: 18px; font-weight: 600; color: #171D1A;">Keep what works. Consolidate what doesn't.</p>
-
-          <p style="margin: 0 0 10px; font-weight: 600; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #75817B;">Connect what exists</p>
-          <ul style="list-style: none; margin: 0 0 26px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px;">
-            <li v-for="source in sources" :key="source" style="font-size: 13.5px; font-weight: 500; color: #33403A; background: #FFFFFF; border: 1px solid #D8DED9; border-radius: 999px; padding: 7px 11px;">{{ source }}</li>
-          </ul>
-
-          <div style="display: flex; flex-wrap: wrap; gap: 10px 20px;">
-            <RouterLink :to="SCHOOL_ENERGY_PATH" class="text-link" style="font-size: 15px; font-weight: 500; color: var(--accent); text-decoration: none;">Explore energy management software for schools →</RouterLink>
-            <RouterLink :to="CMMS_PATH" class="text-link" style="font-size: 15px; font-weight: 500; color: var(--accent); text-decoration: none;">Replace or integrate your CMMS →</RouterLink>
-          </div>
+          <p class="eyebrow">Continuous optimization</p>
+          <h2 class="h2">Meter data in. Verified savings out.</h2>
         </div>
+        <p class="lede">Edviro learns each site’s baseline, flags anomalies, finds the likely cause, and measures the results.</p>
+      </div>
 
-        <div>
-          <p style="margin: 0 0 14px; font-weight: 600; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #75817B;">What Edviro catches</p>
-          <ul class="r-cols-2" style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-            <li v-for="example in examples" :key="example" style="background: #FFFFFF; border: 1px solid #D8DED9; border-radius: 14px; padding: 16px 18px; font-size: 15px; font-weight: 600;">{{ example }}</li>
-          </ul>
+      <div class="flow">
+        <div class="flow-step">
+          <span class="flow-label"><b>1</b> Detect</span>
+          <UiMeterTrend variant="anomaly" title="Main meter · 7 days" flag="After-hours load +38%" />
+        </div>
+        <div class="flow-step">
+          <span class="flow-label"><b>2</b> Diagnose and route</span>
+          <UiCauseCard />
+        </div>
+        <div class="flow-step">
+          <span class="flow-label"><b>3</b> Verify</span>
+          <UiBeforeAfter title="Verification · 30 days" delta="−18% kWh" note="Measured against the learned baseline after the schedule fix" />
         </div>
       </div>
+
+      <slot name="evidence" />
+
+      <p class="energy-foot">
+        <RouterLink :to="MV_PATH" class="text-link">How measurement and verification works →</RouterLink>
+      </p>
     </div>
   </section>
 </template>
 
 <style scoped>
-.text-link:hover {
-  text-decoration: underline;
+.energy-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px 48px;
+  align-items: end;
+  margin-bottom: 36px;
+}
+.energy-head .lede { margin: 0; }
+.flow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+.flow-step {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 10px;
+  align-content: start;
+  min-width: 0;
+}
+.flow-step > :deep(.ui-card) { align-content: start; }
+.flow-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -22px;
+  width: 8px;
+  height: 8px;
+  border-top: 1.5px solid var(--line-strong);
+  border-right: 1.5px solid var(--line-strong);
+  transform: translateY(-50%) rotate(45deg);
+}
+.flow-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.flow-label b {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  background: var(--ink);
+  color: var(--on-dark);
+}
+.energy-foot {
+  margin: 24px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  font-size: 13px;
+  color: var(--muted-2);
+}
+.energy-foot .text-link { font-size: 13px; }
+@media (max-width: 900px) {
+  .flow { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+  .flow-step:not(:last-child)::after {
+    top: auto;
+    right: auto;
+    bottom: -16px;
+    left: 50%;
+    transform: translateX(-50%) rotate(135deg);
+  }
+}
+@media (max-width: 768px) {
+  .energy-head { grid-template-columns: minmax(0, 1fr); margin-bottom: 26px; }
 }
 </style>

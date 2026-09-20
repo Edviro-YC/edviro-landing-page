@@ -7,16 +7,12 @@ export const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/HomePage.vue'),
   },
   {
-    // The ranking energy-management URL. Never repoint or repurpose it; the
-    // O&M pillar below is a separate page with a separate intent.
+    // The ranking energy-management URL. Never repoint or repurpose it. The
+    // former /solutions/school-facilities-operations page was merged into it
+    // (2026-09-19) and 301s here via the generated Netlify _redirects.
     path: '/solutions/schools',
     name: 'solutions-schools',
     component: () => import('@/pages/SolutionSchools.vue'),
-  },
-  {
-    path: '/solutions/school-facilities-operations',
-    name: 'solutions-school-facilities-operations',
-    component: () => import('@/pages/SolutionSchoolFacilitiesOperations.vue'),
   },
   {
     path: '/school-work-order-software',
@@ -33,6 +29,23 @@ export const routes: RouteRecordRaw[] = [
     name: 'school-asset-management-software',
     component: () => import('@/pages/SchoolAssetManagementSoftware.vue'),
   },
+  // Industry-neutral platform routes. They link to the school pages above and
+  // back; neither side redirects or canonicalizes to the other.
+  {
+    path: '/facilities-operations',
+    name: 'facilities-operations',
+    component: () => import('@/pages/FacilitiesOperationsPage.vue'),
+  },
+  {
+    path: '/work-orders',
+    name: 'work-orders',
+    component: () => import('@/pages/WorkOrdersPage.vue'),
+  },
+  {
+    path: '/asset-management',
+    name: 'asset-management',
+    component: () => import('@/pages/AssetManagementPage.vue'),
+  },
   {
     path: '/solutions/real-estate',
     name: 'solutions-real-estate',
@@ -47,6 +60,11 @@ export const routes: RouteRecordRaw[] = [
     path: '/solutions/data-centers',
     name: 'solutions-data-centers',
     component: () => import('@/pages/SolutionDataCenters.vue'),
+  },
+  {
+    path: '/solutions/healthcare',
+    name: 'solutions-healthcare',
+    component: () => import('@/pages/SolutionHealthcare.vue'),
   },
   {
     path: '/measurement-and-verification',

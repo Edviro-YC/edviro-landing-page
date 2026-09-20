@@ -4,57 +4,67 @@ import { RouterLink, useRoute } from 'vue-router'
 import logoWordmark from '@/assets/img/logo-wordmark.png'
 import {
   ABOUT_PATH,
-  ASSETS_PATH,
   BLOG_URL,
   BOOK_DEMO_PATH,
   CAPITAL_PLANNING_PATH,
   DASHBOARD_URL,
-  FACILITIES_OPS_PATH,
   FAQ_PATH,
   MV_PATH,
+  PLATFORM_ASSETS_PATH,
+  PLATFORM_FACILITIES_OPS_PATH,
+  PLATFORM_WORK_ORDERS_PATH,
   SCHOOL_ENERGY_PATH,
-  WORK_ORDERS_PATH,
+  SOLUTION_CONSTRUCTION_PATH,
+  SOLUTION_DATA_CENTERS_PATH,
+  SOLUTION_HEALTHCARE_PATH,
+  SOLUTION_REAL_ESTATE_PATH,
 } from '@/seo/site'
 
 /**
- * Solution-led navigation. Plain facilities vocabulary first; the technical
- * loop lives under About → How Edviro works. Every destination is a live
- * route or a stable section id on the homepage / pillar page.
+ * Platform-first, industry-second navigation. Platform entries point at the
+ * industry-neutral platform routes; the Industries menu is where education
+ * becomes explicit. School-specific pages stay reachable from the Education
+ * entry and the footer.
  */
 type NavLink = { label: string; to: string | { path: string; hash: string }; external?: boolean; hint?: string }
 type NavGroup = { id: string; label: string; links: NavLink[] }
 
 const groups: NavGroup[] = [
   {
-    id: 'solutions',
-    label: 'Solutions',
+    id: 'platform',
+    label: 'Platform',
     links: [
-      { label: 'Energy monitoring', to: SCHOOL_ENERGY_PATH, hint: 'Energy management software for schools' },
-      { label: 'Diagnostics and alerts', to: { path: FACILITIES_OPS_PATH, hash: '#diagnostics' }, hint: 'Find the likely cause, not just an alarm' },
-      { label: 'Work orders and maintenance', to: WORK_ORDERS_PATH, hint: 'Intake, priority, assignment, verification' },
-      { label: 'Assets and inspections', to: ASSETS_PATH, hint: 'Equipment records and service history' },
+      { label: 'Platform overview', to: PLATFORM_FACILITIES_OPS_PATH, hint: 'One loop from signal to verified fix' },
+      { label: 'Work orders', to: PLATFORM_WORK_ORDERS_PATH, hint: 'Intake, review, dispatch, verification' },
+      { label: 'Diagnostics', to: { path: PLATFORM_FACILITIES_OPS_PATH, hash: '#diagnostics' }, hint: 'Find the likely cause, not just an alarm' },
+      { label: 'Assets and inspections', to: PLATFORM_ASSETS_PATH, hint: 'Equipment records and service history' },
+      { label: 'Energy and M&V', to: MV_PATH, hint: 'Meter data in, verified savings out' },
       { label: 'Capital planning', to: CAPITAL_PLANNING_PATH, hint: 'Repair-or-replace and multi-year plans' },
-      { label: 'Measurement and verification', to: MV_PATH, hint: 'Prove that the fix worked' },
+    ],
+  },
+  {
+    id: 'industries',
+    label: 'Industries',
+    links: [
+      { label: 'Data centers', to: SOLUTION_DATA_CENTERS_PATH, hint: 'Cooling headroom verified against telemetry' },
+      { label: 'Education', to: SCHOOL_ENERGY_PATH, hint: 'K-12 districts and higher education' },
+      { label: 'Commercial real estate', to: SOLUTION_REAL_ESTATE_PATH, hint: 'Occupancy-aware HVAC across a portfolio' },
+      { label: 'Healthcare', to: SOLUTION_HEALTHCARE_PATH, hint: 'Reviewed work across critical environments' },
+      { label: 'Construction', to: SOLUTION_CONSTRUCTION_PATH, hint: 'Independent baselining and M&V' },
     ],
   },
   {
     id: 'resources',
     label: 'Resources',
     links: [
-      { label: 'Blog', to: BLOG_URL, external: true, hint: 'Guides for school facilities teams' },
+      { label: 'Blog', to: BLOG_URL, external: true, hint: 'Guides for facilities teams' },
       { label: 'FAQ', to: FAQ_PATH, hint: 'Common questions, answered plainly' },
     ],
   },
-  {
-    id: 'about',
-    label: 'About',
-    links: [
-      { label: 'How Edviro works', to: { path: '/', hash: '#how-it-works' }, hint: 'From the first signal to a verified fix' },
-      { label: "Who it's for", to: { path: '/', hash: '#who' }, hint: 'Schools, construction teams, data centers' },
-      { label: 'Company', to: ABOUT_PATH, hint: 'Team, story, and mission' },
-    ],
-  },
 ]
+
+/** Top-level page link rendered after the menus. */
+const companyLink: NavLink = { label: 'Company', to: ABOUT_PATH }
 
 const route = useRoute()
 const mobileOpen = ref(false)
@@ -71,17 +81,29 @@ const closeAll = () => {
   openGroup.value = null
 }
 
+// A click on a menu that hover already opened pins it open instead of closing
+// it, so mouse users never see the menu vanish under their click.
+let hoverOpened = false
 const toggleGroup = (id: string) => {
+  if (openGroup.value === id && hoverOpened) {
+    hoverOpened = false
+    return
+  }
   openGroup.value = openGroup.value === id ? null : id
+  hoverOpened = false
 }
 
 // Hover opens for pointer users; click/Enter/Space toggles for keyboard and touch.
 const hoverOpen = (id: string) => {
-  if (typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches) openGroup.value = id
+  if (typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches && openGroup.value !== id) {
+    openGroup.value = id
+    hoverOpened = true
+  }
 }
 const hoverClose = (id: string) => {
   if (typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches && openGroup.value === id) {
     openGroup.value = null
+    hoverOpened = false
   }
 }
 
@@ -123,7 +145,7 @@ watch(() => route.fullPath, closeAll)
   <header style="position: sticky; top: 0; z-index: 50; backdrop-filter: blur(14px); background: rgba(237,240,238,0.78); border-bottom: 1px solid #D8DED9;">
     <nav ref="navEl" aria-label="Primary" style="max-width: 1180px; margin: 0 auto; width: 100%; padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px;" class="r-pad-x">
       <RouterLink to="/" aria-label="Edviro home" style="display: flex; align-items: center; text-decoration: none; color: inherit;" @click="closeAll">
-        <img :src="logoWordmark" alt="Edviro" style="height: 28px; width: auto; display: block;" />
+        <img :src="logoWordmark" alt="Edviro" width="128" height="28" fetchpriority="high" style="height: 28px; width: auto; display: block;" />
       </RouterLink>
 
       <!-- Desktop -->
@@ -152,11 +174,11 @@ watch(() => route.fullPath, closeAll)
               <div
                 :id="`nav-menu-${group.id}`"
                 class="nav-menu"
-                :class="{ 'is-wide': group.id === 'solutions' }"
+                :class="{ 'is-wide': group.links.length > 3 }"
                 :hidden="openGroup !== group.id"
               >
                 <div class="nav-menu-inner">
-                  <ul style="list-style: none; margin: 0; padding: 0; display: grid; gap: 2px;" :style="group.id === 'solutions' ? 'grid-template-columns: 1fr 1fr;' : ''">
+                  <ul style="list-style: none; margin: 0; padding: 0; display: grid; gap: 2px;" :style="group.links.length > 3 ? 'grid-template-columns: 1fr 1fr;' : ''">
                     <li v-for="link in group.links" :key="link.label">
                       <a v-if="link.external" :href="link.to as string" class="nav-menu-link" @click="closeAll">
                         <span class="nav-menu-label">{{ link.label }}</span>
@@ -171,11 +193,10 @@ watch(() => route.fullPath, closeAll)
                 </div>
               </div>
             </li>
-            <!-- "Schools" sits between Solutions and Resources as a top-level page link. -->
-            <li v-if="group.id === 'solutions'">
-              <RouterLink :to="FACILITIES_OPS_PATH" class="nav-link">Schools</RouterLink>
-            </li>
           </template>
+          <li>
+            <RouterLink :to="companyLink.to" class="nav-link">{{ companyLink.label }}</RouterLink>
+          </li>
         </ul>
         <div style="display: flex; align-items: center; gap: 10px;">
           <a :href="DASHBOARD_URL" class="dash-btn">Dashboard</a>
@@ -203,18 +224,20 @@ watch(() => route.fullPath, closeAll)
       id="mobile-menu"
       class="r-nav-panel"
       :class="{ 'is-open': mobileOpen }"
-      style="border-top: 1px solid #D8DED9; background: rgba(237,240,238,0.97); padding: 8px 20px 20px; max-height: calc(100vh - 72px); overflow-y: auto;"
+      style="border-top: 1px solid #D8DED9; background: rgba(237,240,238,0.97); padding: 8px 20px 20px; max-height: calc(100vh - 72px); overflow-y: auto; overscroll-behavior: contain;"
     >
       <nav aria-label="Mobile">
         <section v-for="group in groups" :key="group.id" style="padding: 10px 0 6px; border-bottom: 1px solid #DCE3DD;">
-          <div :id="`mobile-group-${group.id}`" style="margin: 0 0 4px; font-size: 11.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #6B7570;">{{ group.label }}</div>
+          <div :id="`mobile-group-${group.id}`" style="margin: 0 0 4px; font-size: 11.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);">{{ group.label }}</div>
           <ul :aria-labelledby="`mobile-group-${group.id}`" style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column;">
             <li v-for="link in group.links" :key="link.label">
               <a v-if="link.external" :href="link.to as string" class="mobile-link" @click="closeAll">{{ link.label }}</a>
               <RouterLink v-else :to="link.to" class="mobile-link" @click="closeAll">{{ link.label }}</RouterLink>
             </li>
           </ul>
-          <RouterLink v-if="group.id === 'solutions'" :to="FACILITIES_OPS_PATH" class="mobile-link" style="font-weight: 500;" @click="closeAll">Schools: the full facilities platform</RouterLink>
+        </section>
+        <section style="padding: 10px 0 6px; border-bottom: 1px solid #DCE3DD;">
+          <RouterLink :to="companyLink.to" class="mobile-link" style="font-weight: 500;" @click="closeAll">{{ companyLink.label }}</RouterLink>
         </section>
         <div style="display: grid; gap: 10px; margin-top: 16px;">
           <a :href="DASHBOARD_URL" class="dash-btn dash-btn-mobile" @click="closeAll">Dashboard</a>
@@ -247,16 +270,6 @@ watch(() => route.fullPath, closeAll)
 .nav-trigger.is-open {
   color: #171D1A;
   background: rgba(23, 29, 26, 0.05);
-}
-.nav-link:focus-visible,
-.nav-trigger:focus-visible,
-.nav-menu-link:focus-visible,
-.mobile-link:focus-visible,
-.book-btn:focus-visible,
-.dash-btn:focus-visible,
-.nav-toggle:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
 }
 .nav-menu {
   position: absolute;
@@ -293,7 +306,7 @@ watch(() => route.fullPath, closeAll)
 }
 .nav-menu-hint {
   font-size: 12.5px;
-  color: #6B7570;
+  color: var(--muted);
 }
 .book-btn:hover {
   filter: brightness(1.12);

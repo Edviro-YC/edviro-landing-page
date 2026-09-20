@@ -5,8 +5,12 @@
  */
 export const SITE_URL = 'https://edviroenergy.com'
 export const SITE_NAME = 'Edviro'
-/** Buyer-friendly category. Used in social-image alt text and the hero eyebrow. */
-export const SITE_TAGLINE = 'AI-powered facilities operations for schools'
+/**
+ * Shared category definition. Industry-neutral on purpose: it is the eyebrow,
+ * social-image alt text, and machine-readable summary for the whole company.
+ * School-specific wording belongs on the school routes below, never here.
+ */
+export const SITE_TAGLINE = 'AI-powered facilities operations'
 /** Secondary brand statement (footer). */
 export const BRAND_STATEMENT = 'AI for the people who run the buildings.'
 /** Brand promise. */
@@ -14,7 +18,7 @@ export const BRAND_PROMISE = 'Find the problem. Coordinate the fix. Verify the r
 
 /** Canonical company definition — the one sentence every surface (site, blog, llms.txt) inherits. */
 export const DEFAULT_DESCRIPTION =
-  'Edviro connects building signals, work orders, assets, schedules, field teams, projects, and budgets so school facilities teams can detect problems, coordinate the response, and verify that the work succeeded.'
+  'Edviro connects building signals, work orders, assets, schedules, field teams, projects, and budgets so facilities teams can detect problems, coordinate the response, and verify that the work succeeded.'
 
 export const DEFAULT_OG_IMAGE = '/og-image.png'
 export const LOGO_PATH = '/logo-icon.png'
@@ -28,12 +32,61 @@ export const BLOG_URL = 'https://blog.edviroenergy.com'
  * the ranking energy-management URL — never repoint it.
  */
 export const SCHOOL_ENERGY_PATH = '/solutions/schools/'
-export const FACILITIES_OPS_PATH = '/solutions/school-facilities-operations/'
+/**
+ * The former school facilities-operations page, merged into the school page
+ * above on 2026-09-19. Only the generated Netlify _redirects reads this; every
+ * internal link goes to SCHOOL_ENERGY_PATH.
+ */
+export const LEGACY_FACILITIES_OPS_PATH = '/solutions/school-facilities-operations'
 export const WORK_ORDERS_PATH = '/school-work-order-software/'
 export const CMMS_PATH = '/cmms-for-schools/'
 export const ASSETS_PATH = '/school-asset-management-software/'
 export const CAPITAL_PLANNING_PATH = '/capital-planning/'
 export const MV_PATH = '/measurement-and-verification/'
+
+/**
+ * Industry-neutral platform destinations (the Platform menu and footer
+ * column). Each links to its school-specific equivalent above and vice versa;
+ * the school routes keep their own titles, canonicals, and schema.
+ * `/energy-management/` is deliberately absent: the school energy page is the
+ * ranking URL for that intent and a generic twin would compete with it.
+ */
+export const PLATFORM_FACILITIES_OPS_PATH = '/facilities-operations/'
+export const PLATFORM_WORK_ORDERS_PATH = '/work-orders/'
+export const PLATFORM_ASSETS_PATH = '/asset-management/'
+
+/** Industry destinations (the Industries menu and footer column). */
+export const SOLUTION_DATA_CENTERS_PATH = '/solutions/data-centers/'
+export const SOLUTION_REAL_ESTATE_PATH = '/solutions/real-estate/'
+export const SOLUTION_HEALTHCARE_PATH = '/solutions/healthcare/'
+export const SOLUTION_CONSTRUCTION_PATH = '/solutions/construction/'
+
+/*
+ * Published proof figures. Each is a public claim, so each has an owner and a
+ * source, and every page that repeats a figure imports it from here so the
+ * numbers cannot drift apart (EducationProof, the Book-a-demo / FAQ / school
+ * energy FAQ answers, and the M&V page). public/llms.txt ("Results") repeats
+ * the two education figures as static text: update it in the same commit.
+ * Re-confirm before each deploy; never add a figure from a conversational
+ * estimate.
+ *
+ * Owner: Tanuj (founder).
+ * - EDU_VERIFIED_SAVINGS — cumulative verified savings for education
+ *   customers. Source: customer savings ledger + M&V reports. First published
+ *   2026-06-30 (commit 369247c). Record the ledger export and as-of date here
+ *   when re-confirmed.
+ * - EDU_LIVE_SITES — live school sites in the schools registry. Source:
+ *   registry count on 2026-08-25 (commit 797ea60, same commit as the district
+ *   logos). Re-count before each deploy.
+ * - MV_HEADLINE_RESULT — one verified result at a live high-school site,
+ *   shown on the M&V page. Source: that site's M&V report (site anonymized).
+ *   First published 2026-06-30 (commit 369247c). Record report id + period
+ *   here when re-confirmed.
+ */
+export const EDU_VERIFIED_SAVINGS = '$400K'
+export const EDU_LIVE_SITES = 34
+export const MV_HEADLINE_RESULT = '\u221221.4%'
+
 export const FAQ_PATH = '/faq/'
 export const ABOUT_PATH = '/about/'
 /** Canonical public privacy policy. Also cited in the policy body itself. */

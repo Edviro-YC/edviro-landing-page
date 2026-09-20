@@ -86,13 +86,13 @@ onMounted(() => {
 <template>
   <main style="padding: 90px 32px 100px;">
     <div style="max-width: 700px; margin: 0 auto;">
-      <p style="margin: 0 0 22px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #75817B;">Demo booked</p>
-      <h1 style="margin: 0; font-weight: 400; font-size: clamp(34px, 5vw, 56px); line-height: 1.05; letter-spacing: -0.035em;">You're on the calendar<span v-if="firstName">, {{ firstName }}</span>.</h1>
+      <p style="margin: 0 0 22px; font-weight: 600; font-size: 12px; letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--muted);">Demo booked</p>
+      <h1 style="margin: 0; font-weight: 500; font-size: clamp(34px, 5vw, 56px); line-height: 1.05; letter-spacing: var(--track-display);">You're on the calendar<span v-if="firstName">, {{ firstName }}</span>.</h1>
       <p v-if="startTime" style="margin: 24px 0 0; font-weight: 500; font-size: 14.5px; letter-spacing: 0.02em; color: var(--accent);">{{ startTime }}</p>
       <p style="margin: 22px 0 0; max-width: 560px; font-size: 18px; line-height: 1.62; color: #4B5550;">A calendar invite is on its way, and we are looking forward to it.</p>
       <p style="margin: 18px 0 0; max-width: 560px; font-size: 17px; line-height: 1.62; color: #5F6B65;">These calls typically involve a director of maintenance, operations, facilities, sustainability, business, or finance — but anyone is welcome, so bring whoever should hear it.</p>
 
-      <h2 style="margin: 54px 0 28px; font-weight: 400; font-size: clamp(24px, 3.2vw, 34px); line-height: 1.1; letter-spacing: -0.03em;">What happens next</h2>
+      <h2 style="margin: 54px 0 28px; font-weight: 500; font-size: clamp(24px, 3.2vw, 34px); line-height: 1.1; letter-spacing: var(--track-display);">What happens next</h2>
       <ol style="margin: 0; padding: 0; list-style: none; display: grid; gap: 1px; background: #D8DED9; border: 1px solid #D8DED9; border-radius: 16px; overflow: hidden;">
         <li style="background: #F9FAF9; padding: 22px 24px;">
           <h3 style="margin: 0 0 6px; font-size: 17px; font-weight: 600;">A scoping call</h3>

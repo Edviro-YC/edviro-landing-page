@@ -2,7 +2,9 @@
 
 The Edviro marketing site (Vue 3 + Vite, prerendered with vite-ssg, deployed on Netlify at `edviroenergy.com`).
 
-Positioning: Edviro is an **AI-powered facilities operations platform for schools** (technical category: AI-native operations and maintenance platform). Energy management is a major entry point, not the product boundary; the site's energy pages keep their URLs and intent, and the O&M story lives on `/solutions/school-facilities-operations/` and the work-order / CMMS / asset capability pages. Canonical copy lives in `src/seo/site.ts` and the "What is Edviro?" Notion page.
+Positioning: Edviro is an **AI-powered facilities operations platform** (technical category: AI-native operations and maintenance platform). The shared surfaces — homepage, default metadata, nav, footer, schema, `public/llms.txt` — are industry-neutral and name the industries explicitly (data centers, education, commercial real estate, healthcare, construction). Education is where the proof comes from today, so it appears as labeled education proof below the neutral product story rather than as the category definition. Energy management is a major entry point, not the product boundary; the school energy/O&M/work-order/CMMS/asset pages keep their school-specific titles, canonicals, and structured data. Canonical copy lives in `src/seo/site.ts` and the "What is Edviro?" Notion page.
+
+Evidence gating: the homepage report excerpts and procurement badge are built but hidden behind `showEvidence` / `showProcurement` in `src/pages/HomePage.vue` until the figures, permissions, and listing wording are signed off. Every metric and logo carries an owner/source comment where it is defined.
 
 ## The Edviro ecosystem
 

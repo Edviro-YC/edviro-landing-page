@@ -1,84 +1,114 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import CtaSection from '@/components/CtaSection.vue'
-import PageBreadcrumbs from '@/components/PageBreadcrumbs.vue'
 import FaqList from '@/components/FaqList.vue'
+import MessageWorkOrderDemo from '@/components/MessageWorkOrderDemo.vue'
+import PageBreadcrumbs from '@/components/PageBreadcrumbs.vue'
+import ReportExcerpts from '@/components/ReportExcerpts.vue'
+import PlatformHero from '@/components/platform/PlatformHero.vue'
+import ReplaceOrConnect from '@/components/platform/ReplaceOrConnect.vue'
+import UiAssetRecord from '@/components/ui/UiAssetRecord.vue'
+import UiBeforeAfter from '@/components/ui/UiBeforeAfter.vue'
+import UiCapitalRank from '@/components/ui/UiCapitalRank.vue'
+import UiCauseCard from '@/components/ui/UiCauseCard.vue'
+import UiFieldPhone from '@/components/ui/UiFieldPhone.vue'
+import UiMeterTrend from '@/components/ui/UiMeterTrend.vue'
+import UiWorkQueue, { type Row } from '@/components/ui/UiWorkQueue.vue'
 import { usePageSeo } from '@/seo/usePageSeo'
 import { breadcrumbLd, faqLd, serviceLd, organizationLd, type FaqItem } from '@/seo/jsonld'
 import {
+  ASSETS_PATH,
   BLOG_URL,
-  BOOK_DEMO_PATH,
   CAPITAL_PLANNING_PATH,
-  FACILITIES_OPS_PATH,
+  CMMS_PATH,
+  EDU_LIVE_SITES,
+  EDU_VERIFIED_SAVINGS,
   MV_PATH,
   SCHOOL_ENERGY_PATH,
   WORK_ORDERS_PATH,
 } from '@/seo/site'
 
 /*
- * This is the ranking energy-management URL. Its path, canonical, and primary
- * intent (energy management software for schools) must not change; the
- * facilities-operations story lives on FACILITIES_OPS_PATH and is only bridged
- * to from here.
+ * The one school page: energy management (the ranking intent for this URL;
+ * path, canonical, and title stay put) plus the facilities-operations story
+ * that used to live at /solutions/school-facilities-operations/, which now
+ * 301s here. Copy is deliberately short: one sentence per point, the visuals
+ * carry the detail.
  */
 const breadcrumbs = [
   { name: 'Home', path: '/' },
-  { name: 'Energy management for schools', path: SCHOOL_ENERGY_PATH },
+  { name: 'Schools', path: SCHOOL_ENERGY_PATH },
 ]
 
-const loop = [
-  { n: '01', title: 'Monitor', body: 'Electricity, gas, water, solar, demand, and cost across every site, read from your meters, utility data, and building systems.' },
-  { n: '02', title: 'Spot the problem', body: 'Edviro learns how each school normally uses energy and flags abnormal changes—drift, faults, waste—as they start, not at the next audit.' },
-  { n: '03', title: 'Find the likely cause', body: 'It gathers the schedule, equipment, weather, and building-system context around the anomaly and explains what is most likely happening.' },
-  { n: '04', title: 'Coordinate the fix', body: 'A work order with the evidence attached goes to your team, or a schedule or setpoint change is staged for review and approval.' },
-  { n: '05', title: 'Verify the result', body: 'Edviro checks the meter data afterwards and reports whether the waste stopped and the savings held.' },
+/** What the detectors catch, and what Edviro does with each catch. */
+const catches = [
+  { title: 'Boiler short-cycling', line: '14 starts an hour. A work order with the reset steps.', action: 'Work order', icon: 'M12 3c-3 4-6 6-6 10a6 6 0 0 0 12 0c0-4-3-6-6-10z' },
+  { title: 'After-hours runtime', line: 'HVAC and lights running all weekend in an empty building.', action: 'Staged for approval', icon: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z M12 8v4l3 2' },
+  { title: 'Ventilation and comfort', line: 'CO\u2082 rising in a gym or classroom.', action: 'Schedule proposed', icon: 'M3 8c3-2 6-2 9 0s6 2 9 0 M3 14c3-2 6-2 9 0s6 2 9 0' },
+  { title: 'Demand spikes', line: 'Peak-risk days forecast each week. Pre-cooling proposed.', action: 'Forecast', icon: 'M3 17l6-6 4 4 8-8 M15 7h6v6' },
+  { title: 'Unexpected gas or water use', line: 'A gas meter running through a warm week. Water that never drops overnight.', action: 'Investigation opened', icon: 'M12 3l4 6a5 5 0 1 1-8 0z' },
+  { title: 'Solar underperformance', line: 'Production tracked against expected output.', action: 'Raised with installer', icon: 'M12 4v2 M12 18v2 M4 12h2 M18 12h2 M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z' },
+]
+
+const districtQueue: Row[] = [
+  { title: 'Room 214 too hot \u00B7 Lincoln HS', priority: 'High', trade: 'HVAC', status: 'Awaiting review' },
+  { title: 'Gas meter running \u00B7 Roosevelt MS', priority: 'Medium', trade: 'Plumbing', status: 'In progress' },
+  { title: 'RTU-7 belt \u00B7 Jefferson ES', priority: 'Low', trade: 'HVAC', status: 'Verified' },
+]
+
+const inspections: Row[] = [
+  { title: 'Fall boiler inspection \u00B7 Lincoln HS', priority: 'Medium', trade: 'Mechanical', status: 'Due Oct 15' },
+  { title: 'Belt check \u00B7 RTU-7 \u00B7 3rd failure', priority: 'High', trade: 'HVAC', status: 'Awaiting review' },
+  { title: 'Quarterly filters \u00B7 Roosevelt MS', priority: 'Low', trade: 'HVAC', status: 'In progress' },
+]
+
+const roles = [
+  { role: 'Director of maintenance and operations', gets: 'Every open issue, with its cause, priority, owner, and age.', icon: 'M3 3v18h18 M7 15v-4M12 15V8M17 15v-6' },
+  { role: 'Technicians and custodial leads', gets: 'Assignments on a phone, with the asset history and the steps.', icon: 'M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z M12 18h.01' },
+  { role: 'Business officials', gets: 'Verified savings and cost on the same record as the work.', icon: 'M3 7h18v10H3z M14.5 12a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0' },
+  { role: 'Superintendents and boards', gets: 'A capital plan that traces back to inspections and failures.', icon: 'M4 21V5l7-2v18M11 21h9V9h-9 M7 7h.01M7 11h.01M15 12h.01M15 16h.01' },
 ]
 
 const faqs: FaqItem[] = [
   {
-    question: 'How does Edviro help school facilities teams save energy?',
+    question: 'Do we need new hardware or a new BMS?',
     answer:
-      'Edviro connects to your existing meters, building management system, and utility bills, learns how each school normally uses energy, and continuously watches for waste. When it finds a problem—a boiler short-cycling, HVAC running in an empty wing—it finds the likely cause, raises a work order with the evidence attached or stages a schedule change for your team to approve, and then confirms the savings in the meter data.',
-  },
-  {
-    question: 'Do we need to install new hardware or replace our BMS?',
-    answer:
-      'No. Edviro is software that works with what you already have: your meters, building management system, sensors, and utility data. It does not replace your building controls, and no hardware install is required to get started, so districts can roll it out across many sites quickly. Where a site has no interval meter, optional metering can be added later.',
-  },
-  {
-    question: 'Is this a replacement for a periodic energy audit?',
-    answer:
-      'Edviro effectively performs a continuous energy audit. Instead of waiting for a quarterly or annual audit, it catches drift, faults, and waste the moment they start and verifies every correction against a learned baseline of how the building behaved before.',
+      'No. Edviro reads the meters, building management system, and utility bills you already have. Where a site has no interval meter, metering can be added later.',
   },
   {
     question: 'Does Edviro change setpoints or schedules on its own?',
     answer:
-      'Edviro proposes the change and tests it against the building\'s learned behavior first; your team reviews and approves it before anything is sent to the building. Nothing is written to a building system without authorization, and Edviro does not replace your staff, your controls contractor, or your BMS.',
+      'No. Edviro proposes the change and tests it against how the building behaved before. Your team approves it before anything is sent to the BMS.',
   },
   {
-    question: 'Can Edviro help with capital planning and bond season?',
+    question: 'Can Edviro replace our CMMS?',
     answer:
-      'Yes. Everything Edviro learns about your schools builds a living operational model of each building—a digital twin. You can test capital projects against it, such as replacing a boiler versus keeping it tuned or modeling what a new wing does to demand charges, and walk into budget or bond season with projects ranked by modeled payback from your own data.',
+      'Yes. Edviro has native work orders, asset records, inspections, and mobile field workflows. You can also keep your CMMS and connect it. Integration scope is confirmed system by system.',
   },
   {
-    question: 'How quickly can a district see results?',
+    question: 'How is this different from an energy audit?',
     answer:
-      'Edviro typically connects a few sites and shows what it catches within the first week, with no upfront audit and no rip-and-replace. To date Edviro has saved clients over $400K, with 34 school sites live and expanding.',
+      'An audit is a snapshot. Edviro checks every site every day, catches drift when it starts, and verifies each fix against the learned baseline.',
+  },
+  {
+    question: 'How fast does a district see results?',
+    // Proof figures come from src/seo/site.ts (owner + source noted there).
+    answer: `Edviro connects a few sites and shows what it catches in the first week. To date Edviro has saved education customers over ${EDU_VERIFIED_SAVINGS}, with ${EDU_LIVE_SITES} school sites live.`,
   },
 ]
 
 usePageSeo({
   title: 'Energy Management Software for Schools',
   description:
-    'Edviro is AI energy management software for schools that detects waste, diagnoses building issues, coordinates corrective work, and verifies energy and cost savings.',
+    'Edviro finds energy waste in every school, drafts the work order, and verifies the fix on the meter. Work orders, assets, inspections, and capital planning for K-12 districts.',
   path: SCHOOL_ENERGY_PATH,
   jsonLd: [
     organizationLd(),
     breadcrumbLd(breadcrumbs),
     serviceLd({
-      name: 'Edviro energy management software for schools',
+      name: 'Edviro energy management and facilities operations software for schools',
       description:
-        'AI energy management for K-12 school facilities: continuous monitoring, anomaly detection, diagnostics, coordinated corrective work, and verified savings.',
+        'AI energy management and facilities operations for K-12 districts: continuous monitoring, diagnostics, reviewed work orders, asset records, inspections, verified savings, and capital planning.',
       path: SCHOOL_ENERGY_PATH,
       serviceType: 'Energy management software for schools',
       areaServed: 'United States',
@@ -92,142 +122,203 @@ usePageSeo({
   <main>
     <PageBreadcrumbs :items="breadcrumbs" />
 
-    <!-- HERO -->
-    <section style="padding: 40px 32px 64px;">
-      <div style="max-width: 1180px; margin: 0 auto; width: 100%;">
-        <div style="max-width: 780px;">
-          <p style="margin: 0 0 22px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #75817B;">For school facilities</p>
-          <h1 style="margin: 0; font-weight: 400; font-size: clamp(36px, 5.2vw, 60px); line-height: 1.05; letter-spacing: -0.035em;">Energy management software for schools that <span style="color: var(--accent);">closes the loop</span></h1>
-          <p style="margin: 26px 0 0; max-width: 640px; font-size: 19px; line-height: 1.6; color: #4B5550;">Edviro gives K-12 facilities teams a continuous energy audit across every site: it detects waste as it starts, finds the likely cause, coordinates the fix with your team, and verifies the savings in the meter data. No new hardware required, and it works with the building controls you already have.</p>
-          <div style="margin-top: 32px; display: flex; gap: 14px; flex-wrap: wrap;">
-            <RouterLink :to="BOOK_DEMO_PATH" class="book-btn" style="font-size: 15px; font-weight: 500; text-decoration: none; color: #EDF0EE; background: var(--accent); padding: 13px 26px; border-radius: 999px;">Book a demo</RouterLink>
-            <RouterLink :to="MV_PATH" class="outline-btn" style="font-size: 15px; font-weight: 500; text-decoration: none; color: #171D1A; background: transparent; padding: 13px 24px; border-radius: 999px; border: 1px solid #C0CCC3;">See how we verify savings</RouterLink>
-          </div>
+    <PlatformHero
+      eyebrow="For school districts"
+      lede="Edviro reads your meters, BMS, and bills. It finds waste as it starts, drafts the work order, and checks the meter after the fix. Your team approves every change."
+      note="No new hardware. Works with the controls you have."
+      :secondary="{ label: 'How we verify savings', to: MV_PATH }"
+    >
+      Energy management software for schools that <span class="accent">fixes what it finds.</span>
+      <template #visual>
+        <div class="visuals">
+          <UiMeterTrend
+            title="Lincoln Middle · Main meter · 7 days"
+            flag="Weekend load +38%"
+            summary="Chart of a week of meter readings at Lincoln Middle against the learned baseline band, with weekend load flagged 38% above normal."
+          />
+          <UiCauseCard
+            title="Gym HVAC left in occupied mode over the weekend"
+            :evidence="['Runtime Fri 6 pm \u2013 Mon 5 am', 'Setpoint held at 68\u00B0F', 'No event on the facilities calendar']"
+            footer="WO-2418 · Awaiting review · J. Alvarez"
+            summary="Diagnosis card: the gym HVAC was left in occupied mode over the weekend, with three evidence points and a work order awaiting review by J. Alvarez."
+          />
         </div>
-      </div>
-    </section>
-
-    <!-- WHY SCHOOLS -->
-    <section style="padding: 30px 32px 60px;">
-      <div style="max-width: 1180px; margin: 0 auto; width: 100%;">
-        <h2 style="margin: 0 0 40px; font-weight: 400; font-size: clamp(28px, 3.6vw, 42px); line-height: 1.08; letter-spacing: -0.03em; max-width: 620px;">Built for the people who run the building.</h2>
-        <div class="r-cols-3" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;">
-          <div style="border-top: 1.5px solid #171D1A; padding-top: 18px;">
-            <h3 style="margin: 0 0 10px; font-size: 19px; font-weight: 600;">Connects what you already have</h3>
-            <p style="margin: 0; font-size: 15.5px; line-height: 1.6; color: #5F6B65;">Your meters, your BMS, your utility bills. Edviro reads them together into one live picture of every school—no rip-and-replace of your controls.</p>
-          </div>
-          <div style="border-top: 1.5px solid #171D1A; padding-top: 18px;">
-            <h3 style="margin: 0 0 10px; font-size: 19px; font-weight: 600;">Does the audit for you</h3>
-            <p style="margin: 0; font-size: 15.5px; line-height: 1.6; color: #5F6B65;">A continuous energy audit for every site. The moment something drifts, Edviro catches it and explains the likely cause—not at next quarter's review.</p>
-          </div>
-          <div style="border-top: 1.5px solid #171D1A; padding-top: 18px;">
-            <h3 style="margin: 0 0 10px; font-size: 19px; font-weight: 600;">Hands you the fix, then checks it</h3>
-            <p style="margin: 0; font-size: 15.5px; line-height: 1.6; color: #5F6B65;">A step-by-step work order in your pocket, or a schedule change staged for your approval and tested first. Either way, Edviro confirms in the meter data that it worked.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- HOW IT CLOSES THE LOOP -->
-    <section id="how-it-works" style="padding: 70px 32px; background: #F5F7F5; border-top: 1px solid #E3E8E4; border-bottom: 1px solid #E3E8E4;">
-      <div style="max-width: 1180px; margin: 0 auto; width: 100%;">
-        <p style="margin: 0 0 18px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #75817B;">How it works</p>
-        <h2 style="margin: 0 0 16px; font-weight: 400; font-size: clamp(28px, 3.6vw, 42px); line-height: 1.08; letter-spacing: -0.03em; max-width: 720px;">Energy monitoring that ends in a verified fix, not another chart.</h2>
-        <p style="margin: 0 0 36px; max-width: 760px; font-size: 16.5px; line-height: 1.6; color: #4B5550;">Most school energy management software stops at the dashboard. Edviro carries each finding through diagnosis, corrective work, and measurement and verification—so the district sees the savings on the bill, not just the anomaly on a screen.</p>
-        <ol style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px;">
-          <li v-for="s in loop" :key="s.n" style="background: #FFFFFF; border: 1px solid #D8DED9; border-radius: 16px; padding: 22px 20px;">
-            <div style="font-weight: 600; font-size: 12px; color: var(--accent); margin-bottom: 12px;">{{ s.n }}</div>
-            <h3 style="margin: 0 0 8px; font-size: 17px; font-weight: 600; letter-spacing: -0.01em;">{{ s.title }}</h3>
-            <p style="margin: 0; font-size: 14.5px; line-height: 1.55; color: #5F6B65;">{{ s.body }}</p>
-          </li>
-        </ol>
-      </div>
-    </section>
+      </template>
+    </PlatformHero>
 
     <!-- WHAT IT CATCHES -->
-    <section style="padding: 70px 32px; background: #101815; color: #EDF0EE;">
-      <div style="max-width: 1180px; margin: 0 auto; width: 100%;">
-        <p style="margin: 0 0 18px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #79867E;">What Edviro catches</p>
-        <h2 style="margin: 0 0 36px; font-weight: 400; font-size: clamp(28px, 3.8vw, 44px); line-height: 1.06; letter-spacing: -0.03em; color: #F2F5F1; max-width: 640px;">Waste hides in every school. Edviro finds it in the data.</h2>
-        <div class="r-cols-2" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: #26302A; border: 1px solid #26302A; border-radius: 16px; overflow: hidden;">
-          <div style="background: #17201B; padding: 26px;">
-            <div style="font-size: 17px; font-weight: 600; color: #EDF0EE; margin-bottom: 8px;">Boiler short-cycling</div>
-            <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #C4CBC5;">Detects a boiler starting 14 times an hour and dispatches a guided work order to reset the firing differential, then confirms the cycling stopped.</p>
-          </div>
-          <div style="background: #17201B; padding: 26px;">
-            <div style="font-size: 17px; font-weight: 600; color: #EDF0EE; margin-bottom: 8px;">After-hours runtime</div>
-            <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #C4CBC5;">Flags HVAC and lighting running all weekend in empty buildings and stages the corrected night setback for your team to approve.</p>
-          </div>
-          <div style="background: #17201B; padding: 26px;">
-            <div style="font-size: 17px; font-weight: 600; color: #EDF0EE; margin-bottom: 8px;">Ventilation and comfort</div>
-            <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #C4CBC5;">Spots CO₂ rising in a gym or classroom and proposes a ventilation schedule that restores comfort without overrunning energy.</p>
-          </div>
-          <div style="background: #17201B; padding: 26px;">
-            <div style="font-size: 17px; font-weight: 600; color: #EDF0EE; margin-bottom: 8px;">Demand spikes</div>
-            <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #C4CBC5;">Forecasts the peak-risk days each week and recommends pre-cooling and load shifting before the demand charge lands.</p>
-          </div>
-          <div style="background: #17201B; padding: 26px;">
-            <div style="font-size: 17px; font-weight: 600; color: #EDF0EE; margin-bottom: 8px;">Unexpected gas or water use</div>
-            <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #C4CBC5;">Catches a gas meter that keeps running through a warm week, or water use that never drops overnight, and opens the investigation with the evidence attached.</p>
-          </div>
-          <div style="background: #17201B; padding: 26px;">
-            <div style="font-size: 17px; font-weight: 600; color: #EDF0EE; margin-bottom: 8px;">Solar underperformance</div>
-            <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #C4CBC5;">Tracks production against expected output so a degrading array or a guarantee shortfall is raised with the installer, not discovered on the bill.</p>
-          </div>
-        </div>
+    <section id="what-it-catches" class="section is-dark">
+      <div class="shell">
+        <p class="eyebrow">What Edviro catches</p>
+        <h2 class="h2 dark-h2">Waste hides in every school. Edviro finds it in the data.</h2>
+        <ul class="catches" aria-label="What Edviro catches and what it does about each">
+          <li v-for="c in catches" :key="c.title" class="catch">
+            <span class="catch-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path :d="c.icon" /></svg>
+            </span>
+            <span class="catch-title">{{ c.title }}</span>
+            <span class="catch-line">{{ c.line }}</span>
+            <span class="ui-pill is-review catch-action">{{ c.action }}</span>
+          </li>
+        </ul>
       </div>
     </section>
 
-    <!-- MEASUREMENT AND VERIFICATION -->
-    <section style="padding: 90px 32px 70px;">
-      <div class="r-split" style="max-width: 1180px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;">
-        <div>
-          <p style="margin: 0 0 18px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #75817B;">Measurement and verification</p>
-          <h2 style="margin: 0 0 20px; font-weight: 400; font-size: clamp(28px, 3.6vw, 42px); line-height: 1.08; letter-spacing: -0.03em;">Savings the business office can take to the board.</h2>
-          <p style="margin: 0; font-size: 17px; line-height: 1.6; color: #4B5550;">Every fix is measured against a learned baseline of how the school behaved before. Measurement and verification (M&amp;V) is how the district knows a change actually saved what it was supposed to—Edviro produces it automatically, per site, in a form a business official or board member can read.</p>
-          <RouterLink :to="MV_PATH" class="text-link" style="display: inline-block; margin-top: 22px; font-size: 15px; font-weight: 500; color: var(--accent); text-decoration: none;">How Edviro's measurement and verification works →</RouterLink>
-        </div>
-        <div>
-          <p style="margin: 0 0 18px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #75817B;">Capital planning</p>
-          <h2 style="margin: 0 0 20px; font-weight: 400; font-size: clamp(28px, 3.6vw, 42px); line-height: 1.08; letter-spacing: -0.03em;">From this year's waste to next year's projects.</h2>
-          <p style="margin: 0; font-size: 17px; line-height: 1.6; color: #4B5550;">What Edviro learns about each school accumulates into a living operational model of the building. Use it to test a boiler replacement against a tune-up, or a new wing against the current tariff, and bring the board a ranked list backed by your own data.</p>
-          <RouterLink :to="CAPITAL_PLANNING_PATH" class="text-link" style="display: inline-block; margin-top: 22px; font-size: 15px; font-weight: 500; color: var(--accent); text-decoration: none;">Capital planning with Edviro →</RouterLink>
-        </div>
-      </div>
-    </section>
-
-    <!-- BRIDGE: BEYOND ENERGY -->
-    <section id="beyond-energy" style="padding: 70px 32px; background: #F5F7F5; border-top: 1px solid #E3E8E4; border-bottom: 1px solid #E3E8E4;">
-      <div style="max-width: 1180px; margin: 0 auto; width: 100%;">
-        <div class="r-split" style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center;">
+    <!-- HOW IT WORKS -->
+    <section id="how-it-works" class="section is-tint">
+      <div class="shell">
+        <div class="two-up head">
           <div>
-            <p style="margin: 0 0 18px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #75817B;">Beyond energy</p>
-            <h2 style="margin: 0 0 18px; font-weight: 400; font-size: clamp(28px, 3.6vw, 42px); line-height: 1.08; letter-spacing: -0.03em;">Go beyond energy management</h2>
-            <p style="margin: 0 0 16px; font-size: 17px; line-height: 1.6; color: #4B5550;">The same operational loop can manage work orders, assets, inspections, preventive maintenance, projects, and budgets. Replace your CMMS or connect the one you already use.</p>
-            <p style="margin: 0; font-size: 16px; line-height: 1.6; color: #4B5550;">Energy is where many districts start, because the meter data reveals operational problems fast. Edviro carries those problems through resolution, maintenance, and planning.</p>
+            <p class="eyebrow">How it works</p>
+            <h2 class="h2">From a text to a verified fix.</h2>
           </div>
-          <div style="display: grid; gap: 10px;">
-            <RouterLink :to="FACILITIES_OPS_PATH" class="card-link" style="text-decoration: none; color: inherit; border: 1px solid #D8DED9; border-radius: 14px; padding: 18px 20px; background: #FFFFFF; display: block;">
-              <div style="font-size: 16.5px; font-weight: 600; margin-bottom: 4px;">School facilities operations platform →</div>
-              <p style="margin: 0; font-size: 14.5px; line-height: 1.55; color: #5F6B65;">Work orders, assets, inspections, preventive maintenance, projects, budgets, and energy in one place.</p>
-            </RouterLink>
-            <RouterLink :to="WORK_ORDERS_PATH" class="card-link" style="text-decoration: none; color: inherit; border: 1px solid #D8DED9; border-radius: 14px; padding: 18px 20px; background: #FFFFFF; display: block;">
-              <div style="font-size: 16.5px; font-weight: 600; margin-bottom: 4px;">School work-order software →</div>
-              <p style="margin: 0; font-size: 14.5px; line-height: 1.55; color: #5F6B65;">Intake, triage, assignment, mobile completion, and verification—native, or connected to your existing CMMS.</p>
-            </RouterLink>
+          <p class="lede">One classroom request, start to finish: the likely cause, a drafted work order, the director's approval, the technician, and the data check that the room recovered.</p>
+        </div>
+        <div class="demo-wrap">
+          <MessageWorkOrderDemo :scenarios="['campus']" />
+        </div>
+        <RouterLink :to="WORK_ORDERS_PATH" class="text-link">School work-order software →</RouterLink>
+      </div>
+    </section>
+
+    <!-- OPERATIONS -->
+    <section id="work-orders" class="section">
+      <!-- Legacy anchors from the old facilities-operations page. -->
+      <span id="assets" aria-hidden="true" class="anchor-alias"></span>
+      <span id="preventive-maintenance" aria-hidden="true" class="anchor-alias"></span>
+      <span id="mobile" aria-hidden="true" class="anchor-alias"></span>
+      <div class="shell">
+        <div class="two-up head">
+          <div>
+            <p class="eyebrow">Operations</p>
+            <h2 class="h2">One record for every school, asset, and fix.</h2>
           </div>
+          <p class="lede">Use Edviro as your CMMS, or connect the one you have.</p>
+        </div>
+        <ul class="ops">
+          <li class="op">
+            <div class="op-crop">
+              <UiWorkQueue title="Open · All schools" :rows="districtQueue" summary="District-wide work queue: Room 214 too hot at Lincoln HS awaiting review, a gas meter running at Roosevelt MS in progress, and a verified RTU-7 belt repair at Jefferson ES." />
+            </div>
+            <h3 class="op-title">Work orders</h3>
+            <p class="op-body">Requests from the app, email, or a BMS alarm. Each gets a cause, a priority, and a named reviewer before dispatch.</p>
+            <RouterLink :to="WORK_ORDERS_PATH" class="text-link op-link">Work orders →</RouterLink>
+          </li>
+          <li class="op">
+            <div class="op-crop">
+              <UiAssetRecord
+                name="Boiler-2 · Hot-water boiler"
+                meta="Lochinvar CREST · 2009 · Lincoln HS gym wing"
+                :history="[
+                  { date: 'Sep 14', event: 'Short-cycling \u2014 flame sensor replaced' },
+                  { date: 'Feb 03', event: 'Short-cycling \u2014 control board reset' },
+                  { date: 'Sep 02', event: 'Fall inspection \u2014 combustion tuned' },
+                ]"
+                next="Next inspection Oct 15 · 3 failures in 12 months"
+                summary="Asset record for the Lincoln High School gym boiler: make, model, install year, three service-history entries, and the next inspection, with three failures in twelve months."
+              />
+            </div>
+            <h3 class="op-title">Assets and inspections</h3>
+            <p class="op-body">Every boiler, RTU, and panel has a record: nameplate, documents, service history, and the next inspection.</p>
+            <RouterLink :to="ASSETS_PATH" class="text-link op-link">Asset management →</RouterLink>
+          </li>
+          <li class="op">
+            <div class="op-crop">
+              <UiWorkQueue title="Inspections · Scheduled" :rows="inspections" summary="Inspection queue: a fall boiler inspection at Lincoln HS due October 15, a belt check on RTU-7 raised to high priority after a third failure, and quarterly filter changes at Roosevelt MS in progress." />
+            </div>
+            <h3 class="op-title">Preventive maintenance</h3>
+            <p class="op-body">Recurring work runs against the asset. Repeat failures and rising cost move it up the list.</p>
+          </li>
+          <li class="op">
+            <div class="op-crop is-phone">
+              <UiFieldPhone compact summary="Phone screen of an assigned work order for the Lincoln High School gym boiler with the last service entry and a step checklist." />
+            </div>
+            <h3 class="op-title">In the field</h3>
+            <p class="op-body">The technician gets the assignment, the history, and the steps on a phone. Photos and notes go on the record.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- REPLACE OR CONNECT -->
+    <section id="cmms" class="section is-dark">
+      <div class="shell">
+        <p class="eyebrow">Your CMMS</p>
+        <h2 class="h2 dark-h2">Replace your CMMS, or connect the one you use.</h2>
+        <p class="lede">Monitoring, diagnostics, and verification work the same either way.</p>
+        <div class="roc-wrap">
+          <ReplaceOrConnect />
+        </div>
+        <div class="links">
+          <RouterLink :to="CMMS_PATH" class="text-link">Compare Edviro with a traditional CMMS →</RouterLink>
         </div>
       </div>
     </section>
 
-    <FaqList eyebrow="Questions from districts" heading="School energy management FAQ" :items="faqs" />
+    <!-- MEASUREMENT AND VERIFICATION + CAPITAL PLANNING -->
+    <section id="mv" class="section">
+      <span id="planning" aria-hidden="true" class="anchor-alias"></span>
+      <div class="shell two-col">
+        <div class="col">
+          <p class="eyebrow">Measurement and verification</p>
+          <h2 class="h2 col-h2">Savings the business office can take to the board.</h2>
+          <p class="lede">Every fix is measured against how the school behaved before. One report per site, in plain language.</p>
+          <UiBeforeAfter
+            title="Verification · Boiler-2 schedule · Lincoln Middle"
+            :ratio="0.88"
+            delta="−12% therms"
+            note="Verified over 60 days against the learned baseline"
+            summary="Bar comparison: gas use after the Boiler-2 schedule fix at Lincoln Middle is 12% below the learned baseline, verified over 60 days."
+          />
+          <ReportExcerpts />
+          <RouterLink :to="MV_PATH" class="text-link col-link">How verification works →</RouterLink>
+        </div>
+        <div class="col">
+          <p class="eyebrow">Capital planning</p>
+          <h2 class="h2 col-h2">From this year's waste to next year's projects.</h2>
+          <p class="lede">Repeat failures and repair cost build the case. Test replace against repair with your own data, then rank the list.</p>
+          <UiCapitalRank
+            title="Capital plan · Northgate USD"
+            :rows="[
+              { title: 'Boiler-2 \u00B7 Lincoln HS gym wing', evidence: '3 failures in 12 months \u00B7 repair cost rising 3 years', decision: 'Replace', when: 'FY27' },
+              { title: 'RTU-3 to RTU-6 \u00B7 Roosevelt MS', evidence: '2011 units \u00B7 igniter faults on three of four', decision: 'Replace', when: 'FY28' },
+              { title: 'Chiller-1 compressor \u00B7 Jefferson ES', evidence: 'Single fault \u00B7 6 years of remaining life', decision: 'Repair', when: 'This quarter' },
+              { title: 'Gym lighting controls \u00B7 Lincoln HS', evidence: 'After-hours runtime verified', decision: 'Project', when: 'FY27' },
+            ]"
+            note="Each line traces back to inspections and work orders."
+            summary="Ranked capital priorities for Northgate USD: replace the Lincoln HS gym boiler in FY27 after three failures in twelve months; replace four 2011 rooftop units at Roosevelt MS in FY28; repair the Jefferson ES chiller compressor this quarter; a Lincoln HS gym lighting-controls project in FY27 justified by verified after-hours runtime."
+          />
+          <RouterLink :to="CAPITAL_PLANNING_PATH" class="text-link col-link">Capital planning →</RouterLink>
+        </div>
+      </div>
+    </section>
 
-    <section style="padding: 0 32px 90px;">
-      <div style="max-width: 820px; margin: 0 auto; width: 100%;">
-        <p style="margin: 0 0 14px; font-weight: 600; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #75817B;">Related reading</p>
-        <ul style="list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 15.5px;">
-          <li><a :href="`${BLOG_URL}/blog/best-energy-management-software-for-schools/`" class="text-link" style="color: var(--accent); text-decoration: none; font-weight: 500;">Best energy management software for schools: what districts should evaluate</a></li>
-          <li><a :href="`${BLOG_URL}/blog/give-school-facilities-teams-their-weekends-back/`" class="text-link" style="color: var(--accent); text-decoration: none; font-weight: 500;">Give school facilities teams their weekends back</a></li>
+    <!-- ROLES -->
+    <section id="roles" class="section is-tint">
+      <div class="shell">
+        <p class="eyebrow">Who uses it</p>
+        <h2 class="h2">One record, read by everyone who runs the district.</h2>
+        <ul class="roles">
+          <li v-for="r in roles" :key="r.role" class="role">
+            <span class="role-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path :d="r.icon" /></svg>
+            </span>
+            <h3>{{ r.role }}</h3>
+            <p>{{ r.gets }}</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <FaqList eyebrow="Questions from districts" heading="School FAQ" :items="faqs" />
+
+    <section class="related">
+      <div class="related-shell">
+        <p class="eyebrow">Related reading</p>
+        <ul class="related-list">
+          <li><a :href="`${BLOG_URL}/blog/best-energy-management-software-for-schools/`" class="text-link">Best energy management software for schools: what districts should evaluate</a></li>
+          <li><a :href="`${BLOG_URL}/blog/give-school-facilities-teams-their-weekends-back/`" class="text-link">Give school facilities teams their weekends back</a></li>
+          <li><a :href="`${BLOG_URL}/blog/cmms-vs-ai-native-om-platform-for-school-districts/`" class="text-link">CMMS vs. AI-native O&amp;M platform: what school districts actually need</a></li>
         </ul>
       </div>
     </section>
@@ -237,16 +328,233 @@ usePageSeo({
 </template>
 
 <style scoped>
-.book-btn:hover {
-  filter: brightness(1.12);
+.anchor-alias {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
-.outline-btn:hover {
-  border-color: #171D1A !important;
+#work-orders, #mv { position: relative; }
+.visuals {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
 }
-.card-link:hover {
-  border-color: #171D1A !important;
+.two-up {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px 56px;
+  align-items: center;
 }
-.text-link:hover {
-  text-decoration: underline;
+.head { align-items: end; margin-bottom: 32px; }
+.head .lede { margin: 0; }
+.demo-wrap {
+  max-width: 860px;
+  margin: 0 auto 24px;
+}
+#how-it-works .shell > .text-link { font-size: 15px; }
+.dark-h2 { color: #F2F5F1; max-width: 720px; }
+.is-dark .lede { max-width: 720px; }
+
+/* Detection tiles */
+.catches {
+  list-style: none;
+  margin: 36px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.catch {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  grid-template-areas: 'icon title' 'icon line' 'icon action';
+  column-gap: 12px;
+  row-gap: 4px;
+  padding: 16px;
+  background: var(--dark-2);
+  border: 1px solid var(--dark-line);
+  border-radius: 14px;
+  min-width: 0;
+}
+.catch-icon {
+  grid-area: icon;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--dark);
+  color: var(--success-bright);
+}
+.catch-title {
+  grid-area: title;
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--on-dark);
+}
+.catch-line {
+  grid-area: line;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--on-dark-muted);
+  text-wrap: pretty;
+}
+.catch-action {
+  grid-area: action;
+  justify-self: start;
+  margin-top: 4px;
+}
+
+/* Operations tiles */
+.ops {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+.op {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  align-content: start;
+  gap: 8px;
+  min-width: 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px 18px 20px;
+}
+/* Fixed-height crop with a soft bottom fade so the four titles sit on one line. */
+.op-crop {
+  display: grid;
+  align-items: start;
+  align-content: start;
+  height: 212px;
+  overflow: hidden;
+  margin: 0 -4px 10px;
+  padding: 10px 6px 0;
+  font-size: 12px;
+  mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
+}
+.op-crop.is-phone { justify-items: center; }
+.op-title {
+  margin: 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.op-body {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+.op-link { font-size: 14px; justify-self: start; }
+
+.roc-wrap { margin-top: 32px; }
+.links {
+  margin-top: 26px;
+  display: flex;
+  gap: 8px 24px;
+  flex-wrap: wrap;
+  font-size: 15px;
+}
+
+/* M&V + capital planning columns */
+.two-col {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 40px 56px;
+  align-items: start;
+}
+.col {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+  min-width: 0;
+}
+.col .eyebrow { margin-bottom: 0; }
+.col-h2 { font-size: clamp(26px, 3.2vw, 38px); }
+.col .lede { margin: 0; }
+.col-link { font-size: 15px; justify-self: start; }
+
+/* Roles */
+.roles {
+  list-style: none;
+  margin: 32px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+.role {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  min-width: 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px;
+}
+.role-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--status-ok-bg);
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.role h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.role p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.related { padding: 0 32px 72px; }
+.related-shell { max-width: 820px; margin: 0 auto; width: 100%; }
+.related .eyebrow { margin-bottom: 14px; }
+.related-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+  font-size: 15.5px;
+}
+@media (max-width: 1080px) {
+  .ops, .roles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 1024px) {
+  .catches { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .two-up, .two-col { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .head .lede { margin-top: 0; }
+}
+@media (max-width: 600px) {
+  .catches { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 560px) {
+  .ops, .roles { grid-template-columns: minmax(0, 1fr); }
 }
 </style>

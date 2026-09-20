@@ -3,20 +3,37 @@ import { RouterLink } from 'vue-router'
 import CtaSection from '@/components/CtaSection.vue'
 import PageBreadcrumbs from '@/components/PageBreadcrumbs.vue'
 import FaqList from '@/components/FaqList.vue'
+import IndustryFlow from '@/components/industry/IndustryFlow.vue'
+import PlatformHero from '@/components/platform/PlatformHero.vue'
+import UiBaselineFit from '@/components/ui/UiBaselineFit.vue'
+import UiCapitalRank from '@/components/ui/UiCapitalRank.vue'
+import UiModelInputs from '@/components/ui/UiModelInputs.vue'
+import UiScenarioCompare from '@/components/ui/UiScenarioCompare.vue'
 import { usePageSeo } from '@/seo/usePageSeo'
 import { breadcrumbLd, faqLd, serviceLd, organizationLd, type FaqItem } from '@/seo/jsonld'
 import {
   ASSETS_PATH,
-  BOOK_DEMO_PATH,
   CAPITAL_PLANNING_PATH,
-  FACILITIES_OPS_PATH,
   MV_PATH,
+  PLATFORM_FACILITIES_OPS_PATH,
   SCHOOL_ENERGY_PATH,
 } from '@/seo/site'
 
 const breadcrumbs = [
   { name: 'Home', path: '/' },
   { name: 'Capital planning', path: CAPITAL_PLANNING_PATH },
+]
+
+const flow = [
+  { label: 'Model', caption: 'Every source Edviro already reads, and every fix it verifies, keeps the model of each building current.' },
+  { label: 'Simulate', caption: 'Replacements, retrofits, schedule changes, and rate scenarios run against the model, with payback from your real usage.' },
+  { label: 'Decide', caption: 'A ranked plan for the board with the evidence behind each line, then verified results once the work is done.' },
+]
+
+const audiences = [
+  { title: 'Schools', to: SCHOOL_ENERGY_PATH, line: 'Walk into budget and bond season with a ranked project list and the data behind it.' },
+  { title: 'Data centers', to: '/solutions/data-centers/', line: 'How many racks a site can take before cooling is the constraint, simulated before you commit.' },
+  { title: 'Construction', to: '/solutions/construction/', line: 'Compare the as-built model to the design model and catch variance before handover.' },
 ]
 
 const faqs: FaqItem[] = [
@@ -71,74 +88,87 @@ usePageSeo({
   <main>
     <PageBreadcrumbs :items="breadcrumbs" />
 
-    <!-- HERO -->
-    <section style="padding: 40px 32px 56px;">
-      <div style="max-width: 1180px; margin: 0 auto; width: 100%;">
-        <div style="max-width: 820px;">
-          <p style="margin: 0 0 22px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #75817B;">Capital planning</p>
-          <h1 style="margin: 0; font-weight: 400; font-size: clamp(36px, 5.4vw, 62px); line-height: 1.05; letter-spacing: -0.035em;">Test the project before you spend the budget.</h1>
-          <p style="margin: 26px 0 0; max-width: 640px; font-size: 19px; line-height: 1.6; color: #4B5550;">Every bill, meter reading, BMS point, asset record, and work order Edviro touches builds a living operational model of your building—a digital twin. Use it to simulate replacements, retrofits, and schedule changes, and rank capital projects by real payback before committing a dollar.</p>
-          <div style="margin-top: 32px; display: flex; gap: 14px; flex-wrap: wrap;">
-            <RouterLink :to="BOOK_DEMO_PATH" class="book-btn" style="font-size: 15px; font-weight: 500; text-decoration: none; color: #EDF0EE; background: var(--accent); padding: 13px 26px; border-radius: 999px;">Book a demo</RouterLink>
-          </div>
-        </div>
-      </div>
-    </section>
+    <PlatformHero
+      eyebrow="Capital planning"
+      lede="Every bill, meter reading, BMS point, asset record, and work order builds a living model of your building. Simulate replacements, retrofits, and schedule changes against it, and rank capital projects by real payback before committing a dollar."
+      :secondary="{ label: 'How verification works', to: MV_PATH }"
+    >
+      Test the project <span class="accent">before you spend the budget.</span>
+      <template #visual>
+        <UiScenarioCompare />
+      </template>
+    </PlatformHero>
 
     <!-- DEFINITION -->
-    <section style="padding: 20px 32px 60px;">
-      <div style="max-width: 820px; margin: 0 auto; width: 100%;">
-        <h2 style="margin: 0 0 16px; font-weight: 400; font-size: clamp(26px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.025em;">Capital decisions, made with evidence.</h2>
-        <p style="margin: 0 0 16px; font-size: 17px; line-height: 1.7; color: #4B5550;">Most capital plans are built on equipment age, vendor quotes, and gut feel. The data that could answer the real questions — replace or repair? which retrofit pays back first? what does the new wing do to demand charges? — is scattered across bills, spreadsheets, BMS exports, and work-order systems where no one can use it.</p>
-        <p style="margin: 0 0 16px; font-size: 17px; line-height: 1.7; color: #4B5550;">Edviro already pulls that data into one place to run your buildings day to day. Capital planning is what it compounds into: a living operational model of each building, accurate enough to simulate an intervention and project its payback before you bring it to the board.</p>
-        <p style="margin: 0; font-size: 17px; line-height: 1.7; color: #4B5550;">The maintenance side feeds the plan directly. <RouterLink :to="ASSETS_PATH" class="text-link" style="color: var(--accent); text-decoration: none; font-weight: 500;">Asset records and equipment history</RouterLink> accumulate as work orders and inspections are completed; repeated failures and rising repair cost flag equipment for repair-or-replace review; and projects carry an owner, a funding source, and a budget so the multi-year priority list traces back to what actually happened in the buildings. That is the connection between today's work order and tomorrow's <RouterLink :to="FACILITIES_OPS_PATH" class="text-link" style="color: var(--accent); text-decoration: none; font-weight: 500;">facilities operations</RouterLink> plan.</p>
+    <section class="section">
+      <div class="shell two-up">
+        <div>
+          <p class="eyebrow">Evidence, not gut feel</p>
+          <h2 class="h2">Capital decisions, made with evidence.</h2>
+          <p class="lede">Most capital plans run on equipment age, vendor quotes, and instinct, while the data that could answer replace-or-repair sits in bills, spreadsheets, BMS exports, and work-order systems. Edviro already pulls it into one place to run the buildings; the capital plan is what it compounds into.</p>
+          <ul class="points">
+            <li><RouterLink :to="ASSETS_PATH" class="text-link">Asset records and equipment history</RouterLink> accumulate as work is completed; repeat failures flag repair-or-replace review.</li>
+            <li>Projects carry an owner, a funding source, and a budget, so the multi-year list traces back to what happened in the buildings.</li>
+            <li>That is the link between today's work order and tomorrow's <RouterLink :to="PLATFORM_FACILITIES_OPS_PATH" class="text-link">facilities operations</RouterLink> plan.</li>
+          </ul>
+        </div>
+        <UiModelInputs />
       </div>
     </section>
 
     <!-- HOW IT WORKS -->
-    <section style="padding: 50px 32px; background: #101815; color: #EDF0EE;">
-      <div style="max-width: 1180px; margin: 0 auto; width: 100%;">
-        <p style="margin: 0 0 18px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #79867E;">How it works</p>
-        <h2 style="margin: 0 0 40px; font-weight: 400; font-size: clamp(28px, 3.8vw, 44px); line-height: 1.06; letter-spacing: -0.03em; color: #F2F5F1; max-width: 640px;">A model that learns, simulations you can defend.</h2>
-        <div class="r-cols-3" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #26302A; border: 1px solid #26302A; border-radius: 16px; overflow: hidden;">
-          <div style="background: #17201B; padding: 28px;">
-            <div style="font-weight: 600; font-size: 12px; color: #6FCF97; margin-bottom: 14px;">01 / Model</div>
-            <h3 style="margin: 0 0 8px; font-size: 18px; font-weight: 600; color: #EDF0EE;">Build the model</h3>
-            <p style="margin: 0; font-size: 14.5px; line-height: 1.6; color: #C4CBC5;">Every data source Edviro connects, every work order, and every fix it verifies feeds a living operational model of each building. No extra setup, it comes from running your operations.</p>
+    <section class="section is-tint">
+      <div class="shell">
+        <div class="two-up head">
+          <div>
+            <p class="eyebrow">How it works</p>
+            <h2 class="h2">A model that learns, simulations you can defend.</h2>
           </div>
-          <div style="background: #17201B; padding: 28px;">
-            <div style="font-weight: 600; font-size: 12px; color: #6FCF97; margin-bottom: 14px;">02 / Simulate</div>
-            <h3 style="margin: 0 0 8px; font-size: 18px; font-weight: 600; color: #EDF0EE;">Test the intervention</h3>
-            <p style="margin: 0; font-size: 14.5px; line-height: 1.6; color: #C4CBC5;">Run replacements, retrofits, schedule changes, and rate scenarios against the model. See projected savings and payback from your real usage, not industry averages.</p>
-          </div>
-          <div style="background: #17201B; padding: 28px;">
-            <div style="font-weight: 600; font-size: 12px; color: #6FCF97; margin-bottom: 14px;">03 / Decide</div>
-            <h3 style="margin: 0 0 8px; font-size: 18px; font-weight: 600; color: #EDF0EE;">Rank and prove</h3>
-            <p style="margin: 0; font-size: 14.5px; line-height: 1.6; color: #C4CBC5;">Bring the board a prioritized capital plan with modeled payback for each option, then <RouterLink :to="MV_PATH" class="text-link" style="color: #6FCF97; text-decoration: none; font-weight: 500;">verified results</RouterLink> after the work is done.</p>
-          </div>
+          <p class="lede">Replace versus repair, answered from your own meter data before the purchase order.</p>
         </div>
-        <div style="margin-top: 28px; display: inline-flex; align-items: baseline; gap: 12px; font-weight: 500; font-size: 12px; color: #79867E;">
-          <span style="color: #6FCF97; font-size: 15px;">Replace vs. repair</span> answered from your own meter data, before the purchase order
-        </div>
+        <IndustryFlow
+          title="Capital planning · Model, simulate, decide"
+          tag="Illustrative"
+          :steps="flow"
+          summary="Three-step flow: a baseline model fitted to metered data, a simulation comparing a gym lighting-controls retrofit against doing nothing, and a ranked capital plan with the evidence behind each line."
+        >
+          <template #step-1>
+            <UiBaselineFit
+              title="Building B · Model fit"
+              flag="Calibrated nightly"
+              note="Fitted to metered data and weather; every simulation starts from this curve."
+              summary="Scatter chart of daily kWh against outdoor temperature for Building B with a fitted baseline curve, calibrated nightly against metered data."
+            />
+          </template>
+          <template #step-2>
+            <UiScenarioCompare
+              title="Simulation · Gym lighting"
+              question="Controls retrofit, or leave as is?"
+              :scenarios="[
+                { label: 'Leave as is', detail: 'After-hours runtime continues', ratio: 1, cost: '$186k' },
+                { label: 'Occupancy controls', detail: 'Verified after-hours use removed', ratio: 0.64, cost: '$119k', winner: true },
+              ]"
+              result="Retrofit wins · payback 3.1 years"
+              note="10-year cost from measured after-hours use and your tariff."
+              summary="Simulation comparing leaving gym lighting as is at a projected $186k over ten years against an occupancy-controls retrofit at $119k. The retrofit wins with a 3.1-year payback."
+            />
+          </template>
+          <template #step-3>
+            <UiCapitalRank />
+          </template>
+        </IndustryFlow>
+        <RouterLink :to="MV_PATH" class="text-link flow-link">How results are verified after the work →</RouterLink>
       </div>
     </section>
 
     <!-- WHO USES IT -->
-    <section style="padding: 56px 32px 20px;">
-      <div style="max-width: 1180px; margin: 0 auto; width: 100%;">
-        <h2 style="margin: 0 0 28px; font-weight: 400; font-size: clamp(26px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.025em;">Where simulation matters most</h2>
-        <div class="r-cols-3" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;">
-          <RouterLink :to="SCHOOL_ENERGY_PATH" class="card-link" style="text-decoration: none; color: inherit; border: 1px solid #D8DED9; border-radius: 16px; padding: 24px; background: #F9FAF9; display: block;">
-            <div style="font-size: 18px; font-weight: 600; margin-bottom: 6px;">Schools &rarr;</div>
-            <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #5F6B65;">Walk into budget and bond season with a ranked project list and the data behind it.</p>
-          </RouterLink>
-          <RouterLink to="/solutions/data-centers/" class="card-link" style="text-decoration: none; color: inherit; border: 1px solid #D8DED9; border-radius: 16px; padding: 24px; background: #F9FAF9; display: block;">
-            <div style="font-size: 18px; font-weight: 600; margin-bottom: 6px;">Data centers &rarr;</div>
-            <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #5F6B65;">Find how many racks a site can take before cooling is the constraint — simulated before you commit.</p>
-          </RouterLink>
-          <RouterLink to="/solutions/construction/" class="card-link" style="text-decoration: none; color: inherit; border: 1px solid #D8DED9; border-radius: 16px; padding: 24px; background: #F9FAF9; display: block;">
-            <div style="font-size: 18px; font-weight: 600; margin-bottom: 6px;">Construction &rarr;</div>
-            <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #5F6B65;">Compare the as-built twin to the design model and catch variance before handover.</p>
+    <section class="section">
+      <div class="shell">
+        <h2 class="h2 mid-h2">Where simulation matters most</h2>
+        <div class="audiences">
+          <RouterLink v-for="a in audiences" :key="a.title" :to="a.to" class="audience">
+            <span class="audience-title">{{ a.title }} →</span>
+            <span class="audience-line">{{ a.line }}</span>
           </RouterLink>
         </div>
       </div>
@@ -151,13 +181,63 @@ usePageSeo({
 </template>
 
 <style scoped>
-.book-btn:hover {
-  filter: brightness(1.12);
+.two-up {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px 56px;
+  align-items: center;
 }
-.card-link:hover {
-  border-color: #171D1A !important;
+.head { align-items: end; margin-bottom: 32px; }
+.head .lede { margin: 0; }
+.points {
+  margin: 20px 0 0;
+  padding: 0 0 0 18px;
+  display: grid;
+  gap: 10px;
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--ink-2);
 }
-.text-link:hover {
-  text-decoration: underline;
+.points li::marker { color: var(--accent); }
+.flow-link {
+  display: inline-block;
+  margin-top: 22px;
+  font-size: 15px;
+}
+.mid-h2 {
+  font-size: clamp(26px, 3.4vw, 38px);
+  margin-bottom: 28px;
+}
+.audiences {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.audience {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  padding: 22px 24px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 160ms ease;
+}
+.audience:hover { border-color: var(--ink); }
+.audience-title {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.audience-line {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+@media (max-width: 900px) {
+  .two-up { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .audiences { grid-template-columns: minmax(0, 1fr); }
 }
 </style>

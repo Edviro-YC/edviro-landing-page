@@ -3,15 +3,19 @@ import { RouterLink } from 'vue-router'
 import CtaSection from '@/components/CtaSection.vue'
 import PageBreadcrumbs from '@/components/PageBreadcrumbs.vue'
 import FaqList from '@/components/FaqList.vue'
+import PlatformHero from '@/components/platform/PlatformHero.vue'
+import ReplaceOrConnect from '@/components/platform/ReplaceOrConnect.vue'
+import StepStrip, { type Step } from '@/components/platform/StepStrip.vue'
+import UiClosedVsVerified from '@/components/ui/UiClosedVsVerified.vue'
+import UiWorkQueue, { type Row } from '@/components/ui/UiWorkQueue.vue'
 import { usePageSeo } from '@/seo/usePageSeo'
 import { breadcrumbLd, faqLd, serviceLd, organizationLd, type FaqItem } from '@/seo/jsonld'
 import {
   ASSETS_PATH,
   BLOG_URL,
-  BOOK_DEMO_PATH,
   CAPITAL_PLANNING_PATH,
   CMMS_PATH,
-  FACILITIES_OPS_PATH,
+  SCHOOL_ENERGY_PATH,
   WORK_ORDERS_PATH,
 } from '@/seo/site'
 
@@ -20,16 +24,35 @@ const breadcrumbs = [
   { name: 'CMMS for schools', path: CMMS_PATH },
 ]
 
-/** Intent boundary for this page: native functionality, replacement vs. integration, migration, comparison with a conventional CMMS. */
+/** School-labeled queue for the hero: the record a CMMS keeps, with Edviro's verification on it. */
+const queue: Row[] = [
+  { title: 'RTU-3 heating stage not firing · Room 214', priority: 'High', trade: 'HVAC', status: 'Awaiting review' },
+  { title: 'Boiler-2 short cycling overnight · Building B', priority: 'Medium', trade: 'Mechanical', status: 'In progress' },
+  { title: 'Gym lighting on after hours', priority: 'Low', trade: 'Electrical', status: 'Verified' },
+]
+
+/**
+ * Intent boundary for this page: native functionality, replacement vs.
+ * integration, migration, comparison with a conventional CMMS. The comparison
+ * is by capability category, not against a named vendor.
+ */
 const comparison = [
-  { area: 'Work orders and requests', cmms: 'Stores tickets someone creates, assigns, and closes.', edviro: 'Same record-keeping, plus work opened from detected problems and verified against building data after closure.' },
-  { area: 'Prioritization', cmms: 'Manual, or a fixed priority field set by the requester.', edviro: 'Proposed from impact—comfort, safety, cost, recurrence—for the director to review.' },
-  { area: 'Assets and history', cmms: 'A registry and service log, maintained by hand.', edviro: 'The same registry, with inspections, photos, known issues, and related building and energy signals attached automatically.' },
-  { area: 'Building systems and utilities', cmms: 'Usually not connected; alarms and bills live elsewhere.', edviro: 'BMS alarms, interval meters, utility bills, and schedules read alongside the work.' },
-  { area: 'Preventive maintenance', cmms: 'Calendar-based recurring tasks.', edviro: 'Recurring tasks plus history-based priority and early signals from equipment behavior.' },
-  { area: 'Did the fix work?', cmms: 'Closed means done.', edviro: 'Closed means verified—or reopened with evidence when the problem returns.' },
-  { area: 'Capital planning', cmms: 'Export and rebuild in a spreadsheet.', edviro: 'Repeated failures and cost history carry into repair-or-replace analysis and multi-year priorities.' },
-  { area: 'Energy and cost outcomes', cmms: 'Out of scope.', edviro: 'Measurement and verification against a learned baseline, in board-readable form.' },
+  { area: 'Work orders', cmms: 'Tickets people create and close', edviro: 'Also opened from detected problems, verified after closure' },
+  { area: 'Priority', cmms: 'Set by the requester', edviro: 'Proposed from impact, reviewed by the director' },
+  { area: 'Assets', cmms: 'Registry kept by hand', edviro: 'Registry with inspections, photos, and signals attached' },
+  { area: 'Building systems', cmms: 'Alarms and bills live elsewhere', edviro: 'BMS, meters, bills, and schedules read with the work' },
+  { area: 'Preventive maintenance', cmms: 'Calendar tasks', edviro: 'Calendar tasks plus history-based priority' },
+  { area: 'Did the fix work?', cmms: 'Closed means done', edviro: 'Closed means verified, or reopened with evidence' },
+  { area: 'Capital planning', cmms: 'Rebuilt in a spreadsheet', edviro: 'Failure and cost history carried into repair-or-replace' },
+  { area: 'Energy outcomes', cmms: 'Out of scope', edviro: 'Measured and verified against a learned baseline' },
+]
+
+const migration: Step[] = [
+  { title: 'Export', detail: 'Assets, open work, and history from the current system.', icon: 'export' },
+  { title: 'Map', detail: 'Locations, equipment, and trades, with your team.', icon: 'map' },
+  { title: 'Review', detail: 'Your team checks the imported record before anything cuts over.', human: true, tag: 'Your team signs off', icon: 'review' },
+  { title: 'Cut over', detail: 'By site or by trade; technicians land on mobile with their assignments.', icon: 'cutover' },
+  { title: 'Retire', detail: 'The old system goes once the record is confirmed.', icon: 'retire' },
 ]
 
 const faqs: FaqItem[] = [
@@ -85,118 +108,101 @@ usePageSeo({
   <main>
     <PageBreadcrumbs :items="breadcrumbs" />
 
-    <!-- HERO -->
-    <section style="padding: 40px 32px 64px;">
-      <div style="max-width: 1180px; margin: 0 auto; width: 100%;">
-        <div style="max-width: 800px;">
-          <p style="margin: 0 0 22px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #75817B;">CMMS software for schools</p>
-          <h1 style="margin: 0; font-weight: 400; font-size: clamp(36px, 5.2vw, 60px); line-height: 1.05; letter-spacing: -0.035em;">A CMMS for schools you can adopt—<span style="color: var(--accent);">or connect to the one you have</span></h1>
-          <p style="margin: 26px 0 0; max-width: 680px; font-size: 19px; line-height: 1.6; color: #4B5550;">A computerized maintenance management system (CMMS) keeps the record of work orders and assets. Edviro keeps that record too—and connects it to the buildings, so problems are found in the data, work is prioritized by impact, and every closed work order is verified.</p>
-          <p style="margin: 16px 0 0; max-width: 640px; font-size: 16px; line-height: 1.55; color: #171D1A; font-weight: 500;">Use Edviro as your work-order and asset system—or connect the systems you already have.</p>
-          <div style="margin-top: 32px; display: flex; gap: 14px; flex-wrap: wrap;">
-            <RouterLink :to="BOOK_DEMO_PATH" class="book-btn" style="font-size: 15px; font-weight: 500; text-decoration: none; color: #EDF0EE; background: var(--accent); padding: 13px 26px; border-radius: 999px;">Book a demo</RouterLink>
-            <a href="#comparison" class="outline-btn" style="font-size: 15px; font-weight: 500; text-decoration: none; color: #171D1A; background: transparent; padding: 13px 24px; border-radius: 999px; border: 1px solid #C0CCC3;">See the comparison</a>
-          </div>
-        </div>
-      </div>
-    </section>
+    <PlatformHero
+      eyebrow="CMMS software for schools"
+      lede="A computerized maintenance management system keeps the record of work orders and assets. Edviro keeps that record too, and connects it to the buildings: problems found in the data, work prioritized by impact, every closed order verified."
+      note="Use Edviro as your work-order and asset system, or connect the one you already have."
+      :secondary="{ label: 'See the comparison', to: `${CMMS_PATH}#comparison` }"
+    >
+      A CMMS for schools you can adopt—<span class="accent">or connect to the one you have</span>
+      <template #visual>
+        <UiWorkQueue
+          title="Work orders · Lincoln Middle"
+          :rows="queue"
+          summary="School work-order queue with three rows: a high-priority RTU-3 heating fault awaiting review, a boiler short-cycling order in progress, and an after-hours gym lighting order marked verified."
+        />
+      </template>
+    </PlatformHero>
 
     <!-- TWO PATHS -->
-    <section id="paths" style="padding: 30px 32px 70px;">
-      <div style="max-width: 1180px; margin: 0 auto; width: 100%;">
-        <h2 style="margin: 0 0 20px; font-weight: 400; font-size: clamp(28px, 3.6vw, 42px); line-height: 1.08; letter-spacing: -0.03em; max-width: 720px;">Two ways to run it. Same outcome.</h2>
-        <p style="margin: 0 0 36px; max-width: 760px; font-size: 17px; line-height: 1.6; color: #4B5550;">Districts unhappy with their current system—slow to update, ignored by technicians, disconnected from the buildings—can replace it. Districts that like theirs can keep it. Edviro does not require either decision to get value from monitoring, diagnostics, and verification.</p>
-        <div class="r-cols-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
-          <div style="background: #FFFFFF; border: 1px solid #D8DED9; border-radius: 18px; padding: 28px;">
-            <p style="margin: 0 0 10px; font-weight: 600; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);">Replace</p>
-            <h3 style="margin: 0 0 12px; font-size: 21px; font-weight: 600; letter-spacing: -0.01em;">Use Edviro as your CMMS</h3>
-            <p style="margin: 0 0 16px; font-size: 15.5px; line-height: 1.6; color: #4B5550;">Native request intake, work orders, asset registry, service history, inspections, preventive maintenance, and mobile field workflows. One record from the first signal to the verified fix, with cost and energy outcomes on the same page.</p>
-            <ul style="margin: 0; padding: 0 0 0 18px; font-size: 14.5px; line-height: 1.6; color: #5F6B65;">
-              <li>Asset lists and open work imported during onboarding</li>
-              <li>Cutover planned with your team, by site or by trade</li>
-              <li>Technicians on phone or tablet from day one</li>
-            </ul>
+    <section id="paths" class="section">
+      <div class="shell">
+        <div class="two-up head">
+          <div>
+            <p class="eyebrow">Replace or connect</p>
+            <h2 class="h2">Two ways to run it. Same outcome.</h2>
           </div>
-          <div style="background: #FFFFFF; border: 1px solid #D8DED9; border-radius: 18px; padding: 28px;">
-            <p style="margin: 0 0 10px; font-weight: 600; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);">Integrate</p>
-            <h3 style="margin: 0 0 12px; font-size: 21px; font-weight: 600; letter-spacing: -0.01em;">Connect your existing CMMS</h3>
-            <p style="margin: 0 0 16px; font-size: 15.5px; line-height: 1.6; color: #4B5550;">Edviro finds and diagnoses the problem, routes the work into the system your team already uses, and reads the outcome back to verify it. Your technicians keep their workflow; your director gets the diagnostics, prioritization, and verification.</p>
-            <ul style="margin: 0; padding: 0 0 0 18px; font-size: 14.5px; line-height: 1.6; color: #5F6B65;">
-              <li>Integration scope confirmed system by system</li>
-              <li>Start with energy and diagnostics; expand later if you choose</li>
-              <li>No forced migration</li>
-            </ul>
-          </div>
+          <p class="lede">Replace a system your team has stopped updating, or keep one they like. Neither decision is required to get value from monitoring, diagnostics, and verification.</p>
         </div>
+        <ReplaceOrConnect />
+        <p class="aside">Many districts start with energy and diagnostics connected to their current CMMS and move work orders and assets into Edviro later.</p>
       </div>
     </section>
 
     <!-- COMPARISON -->
-    <section id="comparison" style="padding: 80px 32px; background: #F5F7F5; border-top: 1px solid #E3E8E4; border-bottom: 1px solid #E3E8E4;">
-      <div style="max-width: 1180px; margin: 0 auto; width: 100%;">
-        <p style="margin: 0 0 18px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #75817B;">Comparison</p>
-        <h2 style="margin: 0 0 16px; font-weight: 400; font-size: clamp(28px, 3.6vw, 42px); line-height: 1.08; letter-spacing: -0.03em; max-width: 720px;">A traditional CMMS versus Edviro.</h2>
-        <p style="margin: 0 0 36px; max-width: 760px; font-size: 16px; line-height: 1.6; color: #4B5550;">This compares categories of capability, not a specific vendor. Conventional CMMS products vary; the pattern below is what most school districts describe.</p>
-        <div style="overflow-x: auto;">
-          <table style="width: 100%; border-collapse: separate; border-spacing: 0; background: #FFFFFF; border: 1px solid #D8DED9; border-radius: 16px; overflow: hidden; font-size: 15px; line-height: 1.5;">
-            <thead>
-              <tr style="background: #F9FAF9;">
-                <th scope="col" style="text-align: left; padding: 14px 18px; font-weight: 600; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #75817B; border-bottom: 1px solid #D8DED9;">Area</th>
-                <th scope="col" style="text-align: left; padding: 14px 18px; font-weight: 600; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #75817B; border-bottom: 1px solid #D8DED9;">Traditional CMMS</th>
-                <th scope="col" style="text-align: left; padding: 14px 18px; font-weight: 600; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid #D8DED9;">Edviro</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="row in comparison" :key="row.area">
-                <th scope="row" style="text-align: left; vertical-align: top; padding: 14px 18px; font-weight: 600; color: #171D1A; border-bottom: 1px solid #E3E8E4; min-width: 170px;">{{ row.area }}</th>
-                <td style="vertical-align: top; padding: 14px 18px; color: #5F6B65; border-bottom: 1px solid #E3E8E4; min-width: 220px;">{{ row.cmms }}</td>
-                <td style="vertical-align: top; padding: 14px 18px; color: #171D1A; border-bottom: 1px solid #E3E8E4; min-width: 260px;">{{ row.edviro }}</td>
-              </tr>
-            </tbody>
-          </table>
+    <section id="comparison" class="section is-tint">
+      <div class="shell">
+        <div class="two-up">
+          <div>
+            <p class="eyebrow">Comparison</p>
+            <h2 class="h2">A traditional CMMS versus Edviro.</h2>
+            <p class="lede">Both keep the record. Only one checks the building after the ticket closes.</p>
+            <p class="aside">Categories of capability, not a specific vendor; conventional products vary.</p>
+          </div>
+          <UiClosedVsVerified />
+        </div>
+
+        <div class="matrix" role="table" aria-label="Capability comparison: traditional CMMS versus Edviro">
+          <div class="matrix-row matrix-head" role="row">
+            <span role="columnheader">Area</span>
+            <span role="columnheader">Traditional CMMS</span>
+            <span role="columnheader" class="is-edviro">Edviro</span>
+          </div>
+          <div v-for="row in comparison" :key="row.area" class="matrix-row" role="row">
+            <span role="rowheader" class="matrix-area">{{ row.area }}</span>
+            <span role="cell" class="matrix-cmms"><span class="matrix-glyph is-dash" aria-hidden="true"></span>{{ row.cmms }}</span>
+            <span role="cell" class="matrix-edviro"><span class="matrix-glyph is-check" aria-hidden="true"></span>{{ row.edviro }}</span>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- MIGRATION -->
-    <section id="migration" style="padding: 90px 32px 70px;">
-      <div class="r-split" style="max-width: 1180px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;">
-        <div>
-          <p style="margin: 0 0 18px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #75817B;">Migration</p>
-          <h2 style="margin: 0 0 20px; font-weight: 400; font-size: clamp(28px, 3.6vw, 42px); line-height: 1.08; letter-spacing: -0.03em;">Switching without losing the record.</h2>
-          <p style="margin: 0; font-size: 17px; line-height: 1.6; color: #4B5550;">If you replace, the history matters: which assets exist, what has been done to them, and what is still open. Edviro imports asset lists, open work orders, and useful service history, maps them to buildings and equipment, and cuts over on a schedule your team sets—by site or by trade. Technicians move to the mobile workflow with their current assignments already in it.</p>
+    <section id="migration" class="section">
+      <div class="shell">
+        <div class="two-up head">
+          <div>
+            <p class="eyebrow">Migration</p>
+            <h2 class="h2">Switching without losing the record.</h2>
+          </div>
+          <p class="lede">If you replace, the history comes with you: which assets exist, what has been done to them, and what is still open.</p>
         </div>
-        <ol style="list-style: none; margin: 0; padding: 0; display: grid; gap: 10px;">
-          <li v-for="(s, i) in ['Export assets, open work, and history from the current system', 'Map locations, equipment, and trades with your team', 'Import and review the record before cutover', 'Cut over by site or by trade; technicians onboarded on mobile', 'Retire the old system once the record is confirmed']" :key="s" style="display: flex; gap: 14px; align-items: center; background: #FFFFFF; border: 1px solid #D8DED9; border-radius: 12px; padding: 14px 16px;">
-            <span style="flex: none; width: 28px; height: 28px; border-radius: 8px; background: color-mix(in oklab, var(--accent) 10%, #fff); color: var(--accent); display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 12.5px;">{{ i + 1 }}</span>
-            <span style="font-size: 15px; font-weight: 500; color: #171D1A;">{{ s }}</span>
-          </li>
-        </ol>
+        <StepStrip :steps="migration" label="Migration steps" />
       </div>
     </section>
 
     <!-- BEYOND THE CMMS -->
-    <section style="padding: 70px 32px; background: #101815; color: #EDF0EE;">
-      <div style="max-width: 1180px; margin: 0 auto; width: 100%;">
-        <h2 style="margin: 0 0 20px; font-weight: 400; font-size: clamp(28px, 3.6vw, 42px); line-height: 1.08; letter-spacing: -0.03em; color: #F2F5F1; max-width: 720px;">A CMMS is where Edviro keeps the record. It is not where Edviro stops.</h2>
-        <p style="margin: 0 0 28px; max-width: 760px; font-size: 17px; line-height: 1.6; color: #C4CBC5;">The same record feeds energy monitoring and diagnostics, asset lifecycle decisions, and the capital plan—so the work your team does every day becomes evidence for the budget conversation, not just a closed ticket count.</p>
-        <div style="display: flex; gap: 22px; flex-wrap: wrap;">
-          <RouterLink :to="WORK_ORDERS_PATH" class="text-link" style="font-size: 15px; font-weight: 500; color: #6FCF97; text-decoration: none;">School work-order software →</RouterLink>
-          <RouterLink :to="ASSETS_PATH" class="text-link" style="font-size: 15px; font-weight: 500; color: #6FCF97; text-decoration: none;">School asset management →</RouterLink>
-          <RouterLink :to="CAPITAL_PLANNING_PATH" class="text-link" style="font-size: 15px; font-weight: 500; color: #6FCF97; text-decoration: none;">Capital planning →</RouterLink>
-          <RouterLink :to="FACILITIES_OPS_PATH" class="text-link" style="font-size: 15px; font-weight: 500; color: #6FCF97; text-decoration: none;">The full school facilities platform →</RouterLink>
+    <section class="section is-dark">
+      <div class="shell">
+        <h2 class="h2 dark-h2">A CMMS is where Edviro keeps the record. It is not where Edviro stops.</h2>
+        <p class="lede">The same record feeds energy diagnostics, asset lifecycle decisions, and the capital plan, so daily work becomes evidence for the budget conversation.</p>
+        <div class="links">
+          <RouterLink :to="WORK_ORDERS_PATH" class="text-link">School work-order software →</RouterLink>
+          <RouterLink :to="ASSETS_PATH" class="text-link">School asset management →</RouterLink>
+          <RouterLink :to="CAPITAL_PLANNING_PATH" class="text-link">Capital planning →</RouterLink>
+          <RouterLink :to="SCHOOL_ENERGY_PATH" class="text-link">Edviro for schools →</RouterLink>
         </div>
       </div>
     </section>
 
     <FaqList eyebrow="Questions from districts" heading="CMMS for schools FAQ" :items="faqs" />
 
-    <section style="padding: 0 32px 90px;">
-      <div style="max-width: 820px; margin: 0 auto; width: 100%;">
-        <p style="margin: 0 0 14px; font-weight: 600; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #75817B;">Related reading</p>
-        <ul style="list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 15.5px;">
-          <li><a :href="`${BLOG_URL}/blog/cmms-vs-ai-native-om-platform-for-school-districts/`" class="text-link" style="color: var(--accent); text-decoration: none; font-weight: 500;">CMMS vs. AI-native O&amp;M platform: what school districts actually need</a></li>
-          <li><a :href="`${BLOG_URL}/blog/what-ai-powered-operations-and-maintenance-means-for-a-school-district/`" class="text-link" style="color: var(--accent); text-decoration: none; font-weight: 500;">What AI-powered operations and maintenance means for a school district</a></li>
+    <section class="related">
+      <div class="related-shell">
+        <p class="eyebrow">Related reading</p>
+        <ul class="related-list">
+          <li><a :href="`${BLOG_URL}/blog/cmms-vs-ai-native-om-platform-for-school-districts/`" class="text-link">CMMS vs. AI-native O&amp;M platform: what school districts actually need</a></li>
+          <li><a :href="`${BLOG_URL}/blog/what-ai-powered-operations-and-maintenance-means-for-a-school-district/`" class="text-link">What AI-powered operations and maintenance means for a school district</a></li>
         </ul>
       </div>
     </section>
@@ -206,13 +212,113 @@ usePageSeo({
 </template>
 
 <style scoped>
-.book-btn:hover {
-  filter: brightness(1.12);
+.two-up {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px 56px;
+  align-items: center;
 }
-.outline-btn:hover {
-  border-color: #171D1A !important;
+.head { align-items: end; margin-bottom: 32px; }
+.head .lede { margin: 0; }
+.aside {
+  margin: 18px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted-2);
+  max-width: 620px;
 }
-.text-link:hover {
-  text-decoration: underline;
+.dark-h2 { color: #F2F5F1; max-width: 720px; }
+.is-dark .lede { max-width: 720px; }
+.links {
+  margin-top: 26px;
+  display: flex;
+  gap: 8px 24px;
+  flex-wrap: wrap;
+  font-size: 15px;
+}
+
+/* Comparison matrix: one line per cell, a glyph carrying the verdict. */
+.matrix {
+  margin-top: 36px;
+  display: grid;
+  gap: 6px;
+}
+.matrix-row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: 16px;
+  align-items: center;
+  padding: 11px 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.matrix-head {
+  background: transparent;
+  border-color: transparent;
+  padding-top: 0;
+  padding-bottom: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.matrix-head .is-edviro { color: var(--accent); }
+.matrix-area { font-weight: 600; color: var(--ink); }
+.matrix-cmms { color: var(--ink-2); display: flex; align-items: center; gap: 9px; }
+.matrix-edviro { color: var(--ink); display: flex; align-items: center; gap: 9px; }
+.matrix-glyph {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  position: relative;
+}
+.matrix-glyph.is-dash { background: var(--surface-2); border: 1px solid var(--line-strong); }
+.matrix-glyph.is-dash::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  top: 50%;
+  border-top: 1.5px solid var(--muted);
+}
+.matrix-glyph.is-check { background: var(--accent); }
+.matrix-glyph.is-check::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 3px;
+  width: 4px;
+  height: 8px;
+  border-right: 1.5px solid var(--on-dark);
+  border-bottom: 1.5px solid var(--on-dark);
+  transform: rotate(45deg);
+}
+.related { padding: 0 32px 72px; }
+.related-shell { max-width: 820px; margin: 0 auto; width: 100%; }
+.related .eyebrow { margin-bottom: 14px; }
+.related-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+  font-size: 15.5px;
+}
+@media (max-width: 900px) {
+  .two-up { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+}
+@media (max-width: 680px) {
+  .matrix-head { display: none; }
+  .matrix-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+    align-items: start;
+  }
+  .matrix-area { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 }
 </style>

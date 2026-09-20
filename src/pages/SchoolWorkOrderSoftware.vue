@@ -3,15 +3,22 @@ import { RouterLink } from 'vue-router'
 import CtaSection from '@/components/CtaSection.vue'
 import PageBreadcrumbs from '@/components/PageBreadcrumbs.vue'
 import FaqList from '@/components/FaqList.vue'
+import MessageWorkOrderDemo from '@/components/MessageWorkOrderDemo.vue'
+import PlatformHero from '@/components/platform/PlatformHero.vue'
+import ReplaceOrConnect from '@/components/platform/ReplaceOrConnect.vue'
+import StepStrip, { type Step } from '@/components/platform/StepStrip.vue'
+import UiBeforeAfter from '@/components/ui/UiBeforeAfter.vue'
+import UiCauseCard from '@/components/ui/UiCauseCard.vue'
+import UiWorkQueue, { type Row } from '@/components/ui/UiWorkQueue.vue'
 import { usePageSeo } from '@/seo/usePageSeo'
 import { breadcrumbLd, faqLd, serviceLd, organizationLd, type FaqItem } from '@/seo/jsonld'
 import {
   ASSETS_PATH,
   BLOG_URL,
-  BOOK_DEMO_PATH,
   CMMS_PATH,
-  FACILITIES_OPS_PATH,
   MV_PATH,
+  PLATFORM_WORK_ORDERS_PATH,
+  SCHOOL_ENERGY_PATH,
   WORK_ORDERS_PATH,
 } from '@/seo/site'
 
@@ -21,35 +28,22 @@ const breadcrumbs = [
 ]
 
 /** Intent boundary for this page: intake → triage → priority → assignment → technician updates → closure → verification. */
-const lifecycle = [
-  {
-    title: 'Intake',
-    body: 'Teachers, office staff, and custodians submit requests through the web or supported messaging workflows. Edviro can also open work itself from a detected problem—an after-hours runtime pattern, a short-cycling boiler, an inspection finding—so the queue is not only what people remembered to report.',
-  },
-  {
-    title: 'Triage',
-    body: 'Each request is categorized (HVAC, plumbing, electrical, grounds, custodial, safety) and matched to the building, the likely asset, and any related alarms, energy signals, or open work. Duplicates of an issue already in progress are surfaced instead of becoming a second ticket.',
-  },
-  {
-    title: 'Priority',
-    body: 'Priority is proposed from impact—comfort, safety, cost, occupancy, and whether the asset has a history of the same fault—so the director reviews an ordered list rather than building one by hand.',
-  },
-  {
-    title: 'Assignment',
-    body: 'Route by school, asset, project, or trade to in-house staff or a contractor. Technicians are notified on their phone or tablet with the priority, location, and asset record attached.',
-  },
-  {
-    title: 'Technician updates',
-    body: 'Photos, readings, inspection results, parts, and notes are added from the field. Status is visible to the requester and the director without a phone call.',
-  },
-  {
-    title: 'Closure',
-    body: 'Completion is recorded against the asset\'s service history with labor, parts, and contractor cost, so the same problem next year starts from a record, not a memory.',
-  },
-  {
-    title: 'Verification',
-    body: 'After closure, Edviro checks the subsequent building and energy data. If the runtime pattern, fault, or consumption returns, the work order is reopened with the evidence attached rather than quietly counted as done.',
-  },
+const lifecycle: Step[] = [
+  { title: 'Intake', detail: 'Staff requests, plus work Edviro opens from a detected problem.', icon: 'inbox' },
+  { title: 'Triage', detail: 'Matched to the building, likely asset, related alarms, and open work.', icon: 'search' },
+  { title: 'Priority and review', detail: 'Priority proposed from comfort, safety, cost, and recurrence; the director reviews.', human: true, tag: 'Director approval', icon: 'review' },
+  { title: 'Assignment', detail: 'Routed by school, asset, or trade to staff or a contractor, record attached.', icon: 'send' },
+  { title: 'Technician updates', detail: 'Photos, readings, parts, and notes; status visible to the requester.', icon: 'phone' },
+  { title: 'Closure', detail: 'Completion recorded against the asset with labor, parts, and cost.', icon: 'check' },
+  { title: 'Verification', detail: 'Building data checked afterwards; if the problem returns, the order reopens.', icon: 'verify' },
+]
+
+/** Backlog by impact: what the director reviews on Monday. Illustrative rows. */
+const backlog: Row[] = [
+  { title: 'Boiler #2 short-cycling · Lincoln HS · 3rd occurrence', priority: 'High', trade: 'Mechanical', status: 'Awaiting review' },
+  { title: 'Room 214 too hot · matched to stuck damper', priority: 'High', trade: 'HVAC', status: 'In progress' },
+  { title: 'Gym lights on after 9 pm · Roosevelt MS', priority: 'Medium', trade: 'Electrical', status: 'Awaiting review' },
+  { title: 'RTU-7 belt · Jefferson ES · closed Tue', priority: 'Low', trade: 'HVAC', status: 'Verifying' },
 ]
 
 const faqs: FaqItem[] = [
@@ -105,118 +99,107 @@ usePageSeo({
   <main>
     <PageBreadcrumbs :items="breadcrumbs" />
 
-    <!-- HERO -->
-    <section style="padding: 40px 32px 64px;">
-      <div style="max-width: 1180px; margin: 0 auto; width: 100%;">
-        <div style="max-width: 780px;">
-          <p style="margin: 0 0 22px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #75817B;">Work orders and maintenance</p>
-          <h1 style="margin: 0; font-weight: 400; font-size: clamp(36px, 5.2vw, 60px); line-height: 1.05; letter-spacing: -0.035em;">Work order software built for <span style="color: var(--accent);">school maintenance teams</span></h1>
-          <p style="margin: 26px 0 0; max-width: 660px; font-size: 19px; line-height: 1.6; color: #4B5550;">Edviro's school work order software takes a request or a detected problem from intake through triage, priority, assignment, and field completion—then verifies in the building data that the problem is actually gone.</p>
-          <p style="margin: 16px 0 0; max-width: 640px; font-size: 16px; line-height: 1.55; color: #171D1A; font-weight: 500;">Use it as your work-order system, or connect the one you already have.</p>
-          <div style="margin-top: 32px; display: flex; gap: 14px; flex-wrap: wrap;">
-            <RouterLink :to="BOOK_DEMO_PATH" class="book-btn" style="font-size: 15px; font-weight: 500; text-decoration: none; color: #EDF0EE; background: var(--accent); padding: 13px 26px; border-radius: 999px;">Book a demo</RouterLink>
-            <RouterLink :to="CMMS_PATH" class="outline-btn" style="font-size: 15px; font-weight: 500; text-decoration: none; color: #171D1A; background: transparent; padding: 13px 24px; border-radius: 999px; border: 1px solid #C0CCC3;">Replace or integrate your CMMS</RouterLink>
-          </div>
-        </div>
-      </div>
-    </section>
+    <PlatformHero
+      eyebrow="Work orders and maintenance"
+      lede="Edviro's school work order software takes a request or a detected problem from intake through triage, priority, assignment, and field completion—then verifies in the building data that the problem is actually gone."
+      note="Use it as your work-order system, or connect the one you already have."
+      :secondary="{ label: 'Replace or integrate your CMMS', to: CMMS_PATH }"
+    >
+      Work order software built for <span class="accent">school maintenance teams</span>
+      <template #visual>
+        <MessageWorkOrderDemo :scenarios="['campus']" />
+      </template>
+    </PlatformHero>
 
     <!-- WHY A SCHOOL-SPECIFIC WORK ORDER SYSTEM -->
-    <section style="padding: 30px 32px 70px;">
-      <div style="max-width: 1180px; margin: 0 auto; width: 100%;">
-        <h2 style="margin: 0 0 20px; font-weight: 400; font-size: clamp(28px, 3.6vw, 42px); line-height: 1.08; letter-spacing: -0.03em; max-width: 720px;">A work order should end when the problem does—not when someone shows up.</h2>
-        <p style="margin: 0 0 40px; max-width: 760px; font-size: 17px; line-height: 1.6; color: #4B5550;">Most maintenance work order software for schools is a ticket queue: requests come in, get assigned, get closed. Nobody checks whether the gym is still cold on Monday or whether the boiler is still short-cycling. Edviro is built around the missing step. Because it reads the same building and energy data that revealed the problem, it can confirm the fix—and reopen the work with evidence when it did not hold.</p>
-        <div class="r-cols-3" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;">
-          <div style="border-top: 1.5px solid #171D1A; padding-top: 18px;">
-            <h3 style="margin: 0 0 10px; font-size: 19px; font-weight: 600;">Requests and detections in one queue</h3>
-            <p style="margin: 0; font-size: 15.5px; line-height: 1.6; color: #5F6B65;">A teacher's "too hot" request and a detected stuck damper are often the same problem. Edviro puts them together instead of in two systems.</p>
-          </div>
-          <div style="border-top: 1.5px solid #171D1A; padding-top: 18px;">
-            <h3 style="margin: 0 0 10px; font-size: 19px; font-weight: 600;">Triage that automates the paperwork</h3>
-            <p style="margin: 0; font-size: 15.5px; line-height: 1.6; color: #5F6B65;">Categorization, likely asset, related history, and proposed priority are drafted for the director to review—not typed from scratch at 6 a.m.</p>
-          </div>
-          <div style="border-top: 1.5px solid #171D1A; padding-top: 18px;">
-            <h3 style="margin: 0 0 10px; font-size: 19px; font-weight: 600;">Closure with proof</h3>
-            <p style="margin: 0; font-size: 15.5px; line-height: 1.6; color: #5F6B65;">Completion is recorded with cost against the asset, and verification runs in the data afterwards. The record shows the outcome, not just the visit.</p>
-          </div>
+    <section id="why" class="section">
+      <div class="shell two-up">
+        <div>
+          <h2 class="h2">A work order should end when the problem does—not when someone shows up.</h2>
+          <p class="lede">Most maintenance work order software for schools is a ticket queue: requests come in, get assigned, get closed. Nobody checks whether the gym is still cold on Monday. Edviro reads the same building and energy data that revealed the problem, so it can confirm the fix—and reopen the work with evidence when it did not hold.</p>
+          <ul class="points">
+            <li><strong>Requests and detections in one queue.</strong> A teacher's "too hot" request and a detected stuck damper are usually the same problem.</li>
+            <li><strong>Triage that drafts the paperwork.</strong> Category, likely asset, related history, and proposed priority are ready for the director to review—not typed from scratch at 6 a.m.</li>
+            <li><strong>Closure with proof.</strong> Completion is recorded with cost against the asset, and verification runs in the data afterwards.</li>
+          </ul>
+        </div>
+        <div class="visuals">
+          <UiCauseCard
+            title="Stuck outside-air damper on RTU-3 — Room 214 overheating"
+            :evidence="['Supply air 92°F vs 78°F expected', 'Damper position 100% since Tue 6:10 am', 'Same fault closed Aug 21']"
+            footer="WO-2418 · Awaiting review · D. Park"
+            summary="Diagnosis card: likely cause is a stuck outside-air damper on RTU-3 overheating Room 214, with three evidence points and a work order awaiting the facilities director's review."
+          />
+          <UiBeforeAfter
+            title="Verification · RTU-3 damper fix"
+            delta="−18% kWh"
+            note="Checked over 30 days against the learned baseline after closure"
+            summary="Bar comparison: RTU-3 energy after the damper fix is 18% below the learned baseline, verified over 30 days."
+          />
+          <p class="ui-note">Illustrative product views with fictional data.</p>
         </div>
       </div>
     </section>
 
     <!-- LIFECYCLE -->
-    <section id="lifecycle" style="padding: 80px 32px; background: #F5F7F5; border-top: 1px solid #E3E8E4; border-bottom: 1px solid #E3E8E4;">
-      <div style="max-width: 1180px; margin: 0 auto; width: 100%;">
-        <p style="margin: 0 0 18px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #75817B;">The work-order lifecycle</p>
-        <h2 style="margin: 0 0 40px; font-weight: 400; font-size: clamp(28px, 3.6vw, 42px); line-height: 1.08; letter-spacing: -0.03em; max-width: 720px;">Seven steps, one record.</h2>
-        <ol style="list-style: none; margin: 0; padding: 0; display: grid; gap: 12px;">
-          <li v-for="(step, i) in lifecycle" :key="step.title" class="r-split" style="display: grid; grid-template-columns: 260px 1fr; gap: 24px; background: #FFFFFF; border: 1px solid #D8DED9; border-radius: 16px; padding: 22px 24px;">
-            <div style="display: flex; align-items: flex-start; gap: 12px;">
-              <span style="flex: none; width: 30px; height: 30px; border-radius: 9px; background: color-mix(in oklab, var(--accent) 10%, #fff); color: var(--accent); display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px;">{{ i + 1 }}</span>
-              <h3 style="margin: 4px 0 0; font-size: 18px; font-weight: 600; letter-spacing: -0.01em;">{{ step.title }}</h3>
-            </div>
-            <p style="margin: 0; font-size: 15.5px; line-height: 1.6; color: #4B5550;">{{ step.body }}</p>
-          </li>
-        </ol>
+    <section id="lifecycle" class="section is-tint">
+      <div class="shell">
+        <div class="two-up head">
+          <div>
+            <p class="eyebrow">The work-order lifecycle</p>
+            <h2 class="h2">Seven steps, one record.</h2>
+          </div>
+          <p class="lede">Review is a step, not a setting: nothing is dispatched until the director, or someone they name, says so.</p>
+        </div>
+        <StepStrip :steps="lifecycle" label="School work-order lifecycle" />
       </div>
     </section>
 
     <!-- BACKLOG AND REVIEW -->
-    <section style="padding: 90px 32px 70px;">
-      <div class="r-split" style="max-width: 1180px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;">
+    <section id="backlog" class="section">
+      <div class="shell two-up">
         <div>
-          <p style="margin: 0 0 18px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #75817B;">Backlog and review</p>
-          <h2 style="margin: 0 0 20px; font-weight: 400; font-size: clamp(28px, 3.6vw, 42px); line-height: 1.08; letter-spacing: -0.03em;">See what is open, what is late, and what should move first.</h2>
-          <p style="margin: 0 0 16px; font-size: 17px; line-height: 1.6; color: #4B5550;">The director's view is the backlog by impact: overdue work, requests waiting on parts or a contractor, and issues that keep recurring on the same asset. Each item carries its reasoning—why it was prioritized, what has been tried, what the data shows—so weekly review is a decision, not a reconstruction.</p>
-          <p style="margin: 0; font-size: 17px; line-height: 1.6; color: #4B5550;">Repeated work on the same equipment is flagged automatically and can be handed to <RouterLink :to="ASSETS_PATH" class="text-link" style="color: var(--accent); text-decoration: none; font-weight: 500;">asset management</RouterLink> for a repair-or-replace review.</p>
+          <p class="eyebrow">Backlog and review</p>
+          <h2 class="h2">See what is open, what is late, and what should move first.</h2>
+          <p class="lede">The director's view is the backlog by impact: overdue work, requests waiting on parts or a contractor, and issues that keep recurring on the same asset. Each item carries its reasoning, so weekly review is a decision, not a reconstruction.</p>
+          <p class="lede">Repeated work on the same equipment is flagged automatically and can be handed to <RouterLink :to="ASSETS_PATH" class="text-link">asset management</RouterLink> for a repair-or-replace review.</p>
         </div>
-        <div style="background: #101815; border-radius: 22px; padding: 30px; box-shadow: 0 40px 80px -40px rgba(0,0,0,0.45);">
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
-            <span style="font-weight: 600; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #79867E;">Backlog · by impact</span>
-            <span style="font-weight: 600; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #101815; background: #6FCF97; padding: 3px 9px; border-radius: 999px;">Illustrative</span>
-          </div>
-          <div style="display: grid; gap: 10px;">
-            <div style="background: #17201B; border: 1px solid #26302A; border-radius: 12px; padding: 14px 16px; display: flex; justify-content: space-between; gap: 12px;">
-              <div><div style="font-size: 14.5px; font-weight: 600; color: #EDF0EE;">Boiler #2 short-cycling · Lincoln HS</div><div style="font-size: 12px; color: #79867E; margin-top: 3px;">3rd occurrence · overdue 2 days · zone tech</div></div>
-              <span style="font-size: 11px; font-weight: 600; color: #E0B15C; white-space: nowrap;">HIGH</span>
-            </div>
-            <div style="background: #17201B; border: 1px solid #26302A; border-radius: 12px; padding: 14px 16px; display: flex; justify-content: space-between; gap: 12px;">
-              <div><div style="font-size: 14.5px; font-weight: 600; color: #EDF0EE;">Room 214 too hot · matched to stuck damper</div><div style="font-size: 12px; color: #79867E; margin-top: 3px;">request + BMS signal · assigned · parts ordered</div></div>
-              <span style="font-size: 11px; font-weight: 600; color: #E0B15C; white-space: nowrap;">HIGH</span>
-            </div>
-            <div style="background: #17201B; border: 1px solid #26302A; border-radius: 12px; padding: 14px 16px; display: flex; justify-content: space-between; gap: 12px;">
-              <div><div style="font-size: 14.5px; font-weight: 600; color: #EDF0EE;">Gym lights on after 9pm · Roosevelt MS</div><div style="font-size: 12px; color: #79867E; margin-top: 3px;">schedule change proposed · awaiting approval</div></div>
-              <span style="font-size: 11px; font-weight: 600; color: #A7B4AB; white-space: nowrap;">MEDIUM</span>
-            </div>
-            <div style="background: #17201B; border: 1px solid #26302A; border-radius: 12px; padding: 14px 16px; display: flex; justify-content: space-between; gap: 12px;">
-              <div><div style="font-size: 14.5px; font-weight: 600; color: #EDF0EE;">RTU-7 belt · Jefferson ES</div><div style="font-size: 12px; color: #79867E; margin-top: 3px;">closed Tue · verifying · runtime normal so far</div></div>
-              <span style="font-size: 11px; font-weight: 600; color: #6FCF97; white-space: nowrap;">VERIFYING</span>
-            </div>
-          </div>
+        <div class="visuals">
+          <UiWorkQueue
+            title="Backlog · By impact"
+            :rows="backlog"
+            summary="Backlog of four work orders ordered by impact: a short-cycling boiler at Lincoln HS on its third occurrence awaiting review, a Room 214 overheating request matched to a stuck damper in progress, a proposed schedule change for gym lights at Roosevelt MS awaiting review, and a closed RTU-7 belt repair at Jefferson ES still verifying."
+          />
+          <p class="ui-note">Illustrative product view with fictional data.</p>
         </div>
       </div>
     </section>
 
     <!-- REPLACE OR INTEGRATE -->
-    <section style="padding: 70px 32px; background: #101815; color: #EDF0EE;">
-      <div style="max-width: 1180px; margin: 0 auto; width: 100%;">
-        <h2 style="margin: 0 0 20px; font-weight: 400; font-size: clamp(28px, 3.6vw, 42px); line-height: 1.08; letter-spacing: -0.03em; color: #F2F5F1; max-width: 720px;">Replace your current work-order system or connect Edviro to it.</h2>
-        <p style="margin: 0 0 28px; max-width: 720px; font-size: 17px; line-height: 1.6; color: #C4CBC5;">Everything on this page is native to Edviro. If your district already has a CMMS it wants to keep, Edviro can diagnose the problem and route the work into that system, then read the outcome back to verify it. The choice is yours, and it can change later.</p>
-        <div style="display: flex; gap: 22px; flex-wrap: wrap;">
-          <RouterLink :to="CMMS_PATH" class="text-link" style="font-size: 15px; font-weight: 500; color: #6FCF97; text-decoration: none;">Compare with a traditional CMMS →</RouterLink>
-          <RouterLink :to="FACILITIES_OPS_PATH" class="text-link" style="font-size: 15px; font-weight: 500; color: #6FCF97; text-decoration: none;">See the full school facilities platform →</RouterLink>
-          <RouterLink :to="MV_PATH" class="text-link" style="font-size: 15px; font-weight: 500; color: #6FCF97; text-decoration: none;">How verification works →</RouterLink>
+    <section class="section is-dark">
+      <div class="shell">
+        <h2 class="h2 dark-h2">Replace your current work-order system or connect Edviro to it.</h2>
+        <p class="lede">Everything on this page is native to Edviro. A district that keeps its CMMS gets the same diagnosis, routing, and verification.</p>
+        <div class="roc-wrap">
+          <ReplaceOrConnect system="work-order system" />
+        </div>
+        <div class="links">
+          <RouterLink :to="CMMS_PATH" class="text-link">Compare with a traditional CMMS →</RouterLink>
+          <RouterLink :to="SCHOOL_ENERGY_PATH" class="text-link">Edviro for schools →</RouterLink>
+          <RouterLink :to="MV_PATH" class="text-link">How verification works →</RouterLink>
+          <RouterLink :to="PLATFORM_WORK_ORDERS_PATH" class="text-link">Work orders for other facility types →</RouterLink>
         </div>
       </div>
     </section>
 
     <FaqList eyebrow="Questions from districts" heading="Work-order software FAQ" :items="faqs" />
 
-    <section style="padding: 0 32px 90px;">
-      <div style="max-width: 820px; margin: 0 auto; width: 100%;">
-        <p style="margin: 0 0 14px; font-weight: 600; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #75817B;">Related reading</p>
-        <ul style="list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 15.5px;">
-          <li><a :href="`${BLOG_URL}/blog/from-bas-alert-to-completed-work-order/`" class="text-link" style="color: var(--accent); text-decoration: none; font-weight: 500;">From BAS alert to completed work order: closing the facilities operations loop</a></li>
-          <li><a :href="`${BLOG_URL}/blog/give-school-facilities-teams-their-weekends-back/`" class="text-link" style="color: var(--accent); text-decoration: none; font-weight: 500;">Give school facilities teams their weekends back</a></li>
+    <section class="related">
+      <div class="related-shell">
+        <p class="eyebrow">Related reading</p>
+        <ul class="related-list">
+          <li><a :href="`${BLOG_URL}/blog/from-bas-alert-to-completed-work-order/`" class="text-link">From BAS alert to completed work order: closing the facilities operations loop</a></li>
+          <li><a :href="`${BLOG_URL}/blog/give-school-facilities-teams-their-weekends-back/`" class="text-link">Give school facilities teams their weekends back</a></li>
         </ul>
       </div>
     </section>
@@ -226,13 +209,52 @@ usePageSeo({
 </template>
 
 <style scoped>
-.book-btn:hover {
-  filter: brightness(1.12);
+.two-up {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px 56px;
+  align-items: center;
 }
-.outline-btn:hover {
-  border-color: #171D1A !important;
+.head { align-items: end; margin-bottom: 32px; }
+.head .lede { margin: 0; }
+.points {
+  margin: 20px 0 0;
+  padding: 0 0 0 18px;
+  display: grid;
+  gap: 10px;
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--ink-2);
 }
-.text-link:hover {
-  text-decoration: underline;
+.points li::marker { color: var(--accent); }
+.points strong { color: var(--ink); font-weight: 600; }
+.visuals {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+.dark-h2 { color: #F2F5F1; max-width: 720px; }
+.roc-wrap { margin-top: 32px; }
+.is-dark .lede { max-width: 720px; }
+.links {
+  margin-top: 26px;
+  display: flex;
+  gap: 8px 24px;
+  flex-wrap: wrap;
+  font-size: 15px;
+}
+.related { padding: 0 32px 72px; }
+.related-shell { max-width: 820px; margin: 0 auto; width: 100%; }
+.related .eyebrow { margin-bottom: 14px; }
+.related-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+  font-size: 15.5px;
+}
+@media (max-width: 900px) {
+  .two-up { grid-template-columns: minmax(0, 1fr); gap: 28px; }
 }
 </style>

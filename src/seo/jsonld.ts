@@ -31,13 +31,16 @@ export function organizationLd(): JsonLd {
     sameAs: SOCIAL_URLS,
     foundingDate: '2024',
     knowsAbout: [
-      'School facilities operations and maintenance',
+      'Facilities operations and maintenance',
       'Work order management',
       'Asset management',
       'Preventive maintenance',
       'Energy management',
       'Measurement and verification',
       'Capital planning',
+      'K-12 and higher-education facilities',
+      'Data center facilities operations',
+      'Commercial real estate operations',
     ],
     founder: [
       { '@type': 'Person', name: 'Hursh', jobTitle: 'Founder & CEO' },
@@ -86,18 +89,16 @@ export function softwareApplicationLd(): JsonLd {
     featureList: [
       'Work orders',
       'Asset management',
-      'Inspections',
       'Preventive maintenance',
       'Mobile field workflows',
       'Energy management',
-      'Project and budget management',
-      'Capital planning',
       'Measurement and verification',
+      'Capital planning',
     ],
     audience: {
       '@type': 'BusinessAudience',
       audienceType:
-        'School district facilities, maintenance, and business teams; building owners; construction teams; data center operators',
+        'Facilities, maintenance, and operations teams across education, data centers, commercial real estate, healthcare, and construction',
     },
   }
 }

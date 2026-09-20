@@ -3,13 +3,19 @@ import { RouterLink } from 'vue-router'
 import CtaSection from '@/components/CtaSection.vue'
 import PageBreadcrumbs from '@/components/PageBreadcrumbs.vue'
 import FaqList from '@/components/FaqList.vue'
+import IndustryFlow from '@/components/industry/IndustryFlow.vue'
+import PlatformHero from '@/components/platform/PlatformHero.vue'
+import UiBaselineFit from '@/components/ui/UiBaselineFit.vue'
+import UiBeforeAfter from '@/components/ui/UiBeforeAfter.vue'
+import UiMeterTrend from '@/components/ui/UiMeterTrend.vue'
+import UiSavingsReport from '@/components/ui/UiSavingsReport.vue'
 import { usePageSeo } from '@/seo/usePageSeo'
 import { breadcrumbLd, faqLd, serviceLd, organizationLd, type FaqItem } from '@/seo/jsonld'
 import {
-  BOOK_DEMO_PATH,
   CAPITAL_PLANNING_PATH,
-  FACILITIES_OPS_PATH,
+  MV_HEADLINE_RESULT,
   MV_PATH,
+  PLATFORM_FACILITIES_OPS_PATH,
   SCHOOL_ENERGY_PATH,
   WORK_ORDERS_PATH,
 } from '@/seo/site'
@@ -17,6 +23,18 @@ import {
 const breadcrumbs = [
   { name: 'Home', path: '/' },
   { name: 'Measurement and verification', path: MV_PATH },
+]
+
+const flow = [
+  { label: 'Baseline · learn the building', caption: 'A model fit to meter data, weather, schedules, and tariffs predicts what normal would have used.' },
+  { label: 'Measure · compare to actual', caption: 'Real consumption tracked against the baseline continuously, per site, from the moment a fix lands.' },
+  { label: 'Report · prove the savings', caption: 'The difference, the method, and whether it held, generated as a report a board can read.' },
+]
+
+const audiences = [
+  { title: 'School energy management', to: SCHOOL_ENERGY_PATH, line: 'Show the board verified savings across every site, not quarterly estimates.' },
+  { title: 'Data centers', to: '/solutions/data-centers/', line: 'Model predictions verified against measured pod telemetry, so headroom numbers are proven.' },
+  { title: 'Construction', to: '/solutions/construction/', line: 'Lender-ready verification against an independent baseline from day one.' },
 ]
 
 const faqs: FaqItem[] = [
@@ -71,74 +89,91 @@ usePageSeo({
   <main>
     <PageBreadcrumbs :items="breadcrumbs" />
 
-    <!-- HERO -->
-    <section style="padding: 40px 32px 56px;">
-      <div style="max-width: 1180px; margin: 0 auto; width: 100%;">
-        <div style="max-width: 820px;">
-          <p style="margin: 0 0 22px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #75817B;">Measurement and verification</p>
-          <h1 style="margin: 0; font-weight: 400; font-size: clamp(36px, 5.4vw, 62px); line-height: 1.05; letter-spacing: -0.035em;">Measurement and verification your board can read.</h1>
-          <p style="margin: 26px 0 0; max-width: 640px; font-size: 19px; line-height: 1.6; color: #4B5550;">Every fix and every project is measured against a learned baseline of how the building behaved before, so you can show what changed, why it was done, what it cost, whether performance improved, and whether the savings persisted. Board-ready, audit-grade, generated automatically.</p>
-          <div style="margin-top: 32px; display: flex; gap: 14px; flex-wrap: wrap;">
-            <RouterLink :to="BOOK_DEMO_PATH" class="book-btn" style="font-size: 15px; font-weight: 500; text-decoration: none; color: #EDF0EE; background: var(--accent); padding: 13px 26px; border-radius: 999px;">Book a demo</RouterLink>
-          </div>
-        </div>
-      </div>
-    </section>
+    <PlatformHero
+      eyebrow="Measurement and verification"
+      lede="Every fix and every project is measured against a learned baseline of how the building behaved before: what changed, what it cost, whether performance improved, and whether the savings persisted. Board-ready, audit-grade, generated automatically."
+      :secondary="{ label: 'How it feeds capital planning', to: CAPITAL_PLANNING_PATH }"
+    >
+      Measurement and verification <span class="accent">your board can read.</span>
+      <template #visual>
+        <UiBeforeAfter />
+      </template>
+    </PlatformHero>
 
     <!-- DEFINITION -->
-    <section style="padding: 20px 32px 60px;">
-      <div style="max-width: 820px; margin: 0 auto; width: 100%;">
-        <h2 style="margin: 0 0 16px; font-weight: 400; font-size: clamp(26px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.025em;">What is measurement and verification?</h2>
-        <p style="margin: 0 0 16px; font-size: 17px; line-height: 1.7; color: #4B5550;">Measurement and verification (M&amp;V) is how you prove energy savings with data instead of estimates. It works in three steps: establish a baseline of how a building would have used energy, measure what it actually uses after a change, and report the difference. Done well, M&amp;V turns "we think we saved" into "here is exactly what we saved, and here is the proof."</p>
-        <p style="margin: 0 0 16px; font-size: 17px; line-height: 1.7; color: #4B5550;">Traditional M&amp;V is slow and manual, done once per project by a consultant. Edviro makes it continuous: every fix is verified against a live baseline the moment it lands, and the reporting is generated for you.</p>
-        <p style="margin: 0; font-size: 17px; line-height: 1.7; color: #4B5550;">It is not only for energy projects. When a <RouterLink :to="WORK_ORDERS_PATH" class="text-link" style="color: var(--accent); text-decoration: none; font-weight: 500;">work order</RouterLink> that came from a detected problem is closed, Edviro checks the building and energy data afterwards to confirm the problem actually stopped—the last step of the <RouterLink :to="FACILITIES_OPS_PATH" class="text-link" style="color: var(--accent); text-decoration: none; font-weight: 500;">facilities operations loop</RouterLink>, and the evidence that makes <RouterLink :to="CAPITAL_PLANNING_PATH" class="text-link" style="color: var(--accent); text-decoration: none; font-weight: 500;">capital planning</RouterLink> defensible.</p>
+    <section class="section">
+      <div class="shell two-up">
+        <div>
+          <p class="eyebrow">Definition</p>
+          <h2 class="h2">What is measurement and verification?</h2>
+          <p class="lede">Measurement and verification (M&amp;V) is how you prove energy savings with data instead of estimates: establish a baseline of how a building would have used energy, measure what it actually uses after a change, and report the difference. Done well, it turns "we think we saved" into "here is exactly what we saved, and here is the proof."</p>
+          <ul class="points">
+            <li><strong>Continuous, not once per project.</strong> Traditional M&amp;V is a consultant's one-time study; Edviro verifies every fix against a live baseline as it lands.</li>
+            <li><strong>Work orders too.</strong> When a <RouterLink :to="WORK_ORDERS_PATH" class="text-link">work order</RouterLink> from a detected problem closes, the data has to confirm the problem stopped: the last step of the <RouterLink :to="PLATFORM_FACILITIES_OPS_PATH" class="text-link">facilities operations loop</RouterLink>.</li>
+            <li><strong>Evidence for the budget.</strong> Verified results are what make <RouterLink :to="CAPITAL_PLANNING_PATH" class="text-link">capital planning</RouterLink> defensible.</li>
+          </ul>
+        </div>
+        <UiSavingsReport />
       </div>
     </section>
 
-    <!-- HOW EDVIRO DOES IT -->
-    <section style="padding: 50px 32px; background: #101815; color: #EDF0EE;">
-      <div style="max-width: 1180px; margin: 0 auto; width: 100%;">
-        <p style="margin: 0 0 18px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #79867E;">How Edviro verifies</p>
-        <h2 style="margin: 0 0 40px; font-weight: 400; font-size: clamp(28px, 3.8vw, 44px); line-height: 1.06; letter-spacing: -0.03em; color: #F2F5F1; max-width: 640px;">A baseline that learns, and proof that updates itself.</h2>
-        <div class="r-cols-3" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #26302A; border: 1px solid #26302A; border-radius: 16px; overflow: hidden;">
-          <div style="background: #17201B; padding: 28px;">
-            <div style="font-weight: 600; font-size: 12px; color: #6FCF97; margin-bottom: 14px;">01 / Baseline</div>
-            <h3 style="margin: 0 0 8px; font-size: 18px; font-weight: 600; color: #EDF0EE;">Learn the building</h3>
-            <p style="margin: 0; font-size: 14.5px; line-height: 1.6; color: #C4CBC5;">Fit a model to meter data, weather, schedules, and tariffs to predict normal usage.</p>
+    <!-- HOW EDVIRO VERIFIES -->
+    <section class="section is-tint">
+      <div class="shell">
+        <div class="two-up head">
+          <div>
+            <p class="eyebrow">How Edviro verifies</p>
+            <h2 class="h2">A baseline that learns, and proof that updates itself.</h2>
           </div>
-          <div style="background: #17201B; padding: 28px;">
-            <div style="font-weight: 600; font-size: 12px; color: #6FCF97; margin-bottom: 14px;">02 / Measure</div>
-            <h3 style="margin: 0 0 8px; font-size: 18px; font-weight: 600; color: #EDF0EE;">Compare to actual</h3>
-            <p style="margin: 0; font-size: 14.5px; line-height: 1.6; color: #C4CBC5;">Track real consumption against the predicted baseline, continuously and per site.</p>
-          </div>
-          <div style="background: #17201B; padding: 28px;">
-            <div style="font-weight: 600; font-size: 12px; color: #6FCF97; margin-bottom: 14px;">03 / Report</div>
-            <h3 style="margin: 0 0 8px; font-size: 18px; font-weight: 600; color: #EDF0EE;">Prove the savings</h3>
-            <p style="margin: 0; font-size: 14.5px; line-height: 1.6; color: #C4CBC5;">Generate board-ready, audit-grade reports that show what changed and what it saved.</p>
-          </div>
+          <p class="lede">Three steps, run continuously for every site instead of once per project.</p>
         </div>
-        <div style="margin-top: 28px; display: inline-flex; align-items: baseline; gap: 12px; font-weight: 500; font-size: 12px; color: #79867E;">
-          <span style="color: #6FCF97; font-size: 15px;">−21.4%</span> verified vs baseline at a live high-school site
-        </div>
+        <IndustryFlow
+          title="Measurement and verification · Baseline, measure, report"
+          tag="Illustrative"
+          :steps="flow"
+          summary="Three-step flow: a baseline fitted to metered data and weather, a week of meter readings dropping back inside the baseline band after a fix, and a bar comparison showing gas use 12% below baseline verified over 60 days."
+        >
+          <template #step-1>
+            <UiBaselineFit
+              title="Building B · Learned baseline"
+              flag="Weather-adjusted"
+              note="Fit to metered data, weather, schedules, and tariffs; the reference every claim is measured against."
+              summary="Scatter chart of daily kWh against outdoor temperature with a fitted, weather-adjusted baseline curve for Building B."
+            />
+          </template>
+          <template #step-2>
+            <UiMeterTrend
+              variant="verified"
+              title="Main meter · after the fix"
+              flag="Back inside the band"
+              summary="Week of meter readings that start above the learned baseline band and drop back inside it after the fix is applied."
+            />
+          </template>
+          <template #step-3>
+            <UiBeforeAfter
+              title="Verification · Boiler-2 schedule"
+              before-label="Baseline"
+              after-label="After fix"
+              :ratio="0.88"
+              delta="−12% therms"
+              note="Verified over 60 days; savings held through the heating season"
+              summary="Bar comparison: gas use after the Boiler-2 schedule fix is 12% below the learned baseline, verified over 60 days and held through the heating season."
+            />
+          </template>
+        </IndustryFlow>
+        <!-- Public figure; owner + source are noted beside MV_HEADLINE_RESULT in src/seo/site.ts. -->
+        <p class="headline"><span class="headline-figure">{{ MV_HEADLINE_RESULT }}</span> verified vs baseline at a live high-school site</p>
       </div>
     </section>
 
     <!-- WHO USES IT -->
-    <section style="padding: 56px 32px 20px;">
-      <div style="max-width: 1180px; margin: 0 auto; width: 100%;">
-        <h2 style="margin: 0 0 28px; font-weight: 400; font-size: clamp(26px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -0.025em;">Where M&amp;V matters most</h2>
-        <div class="r-cols-3" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;">
-          <RouterLink :to="SCHOOL_ENERGY_PATH" class="card-link" style="text-decoration: none; color: inherit; border: 1px solid #D8DED9; border-radius: 16px; padding: 24px; background: #F9FAF9; display: block;">
-            <div style="font-size: 18px; font-weight: 600; margin-bottom: 6px;">School energy management &rarr;</div>
-            <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #5F6B65;">Show the board verified savings across every site, not quarterly estimates.</p>
-          </RouterLink>
-          <RouterLink to="/solutions/data-centers/" class="card-link" style="text-decoration: none; color: inherit; border: 1px solid #D8DED9; border-radius: 16px; padding: 24px; background: #F9FAF9; display: block;">
-            <div style="font-size: 18px; font-weight: 600; margin-bottom: 6px;">Data centers &rarr;</div>
-            <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #5F6B65;">Model predictions verified against measured pod telemetry, so headroom numbers are proven, not assumed.</p>
-          </RouterLink>
-          <RouterLink to="/solutions/construction/" class="card-link" style="text-decoration: none; color: inherit; border: 1px solid #D8DED9; border-radius: 16px; padding: 24px; background: #F9FAF9; display: block;">
-            <div style="font-size: 18px; font-weight: 600; margin-bottom: 6px;">Construction &rarr;</div>
-            <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #5F6B65;">Lender-ready verification against an independent baseline from day one.</p>
+    <section class="section">
+      <div class="shell">
+        <h2 class="h2 mid-h2">Where M&amp;V matters most</h2>
+        <div class="audiences">
+          <RouterLink v-for="a in audiences" :key="a.title" :to="a.to" class="audience">
+            <span class="audience-title">{{ a.title }} →</span>
+            <span class="audience-line">{{ a.line }}</span>
           </RouterLink>
         </div>
       </div>
@@ -151,13 +186,75 @@ usePageSeo({
 </template>
 
 <style scoped>
-.book-btn:hover {
-  filter: brightness(1.12);
+.two-up {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px 56px;
+  align-items: center;
 }
-.card-link:hover {
-  border-color: #171D1A !important;
+.head { align-items: end; margin-bottom: 32px; }
+.head .lede { margin: 0; }
+.points {
+  margin: 20px 0 0;
+  padding: 0 0 0 18px;
+  display: grid;
+  gap: 10px;
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--ink-2);
 }
-.text-link:hover {
-  text-decoration: underline;
+.points li::marker { color: var(--accent); }
+.points strong { color: var(--ink); font-weight: 600; }
+.headline {
+  margin: 26px 0 0;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--muted-2);
+}
+.headline-figure {
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+}
+.mid-h2 {
+  font-size: clamp(26px, 3.4vw, 38px);
+  margin-bottom: 28px;
+}
+.audiences {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.audience {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  padding: 22px 24px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 160ms ease;
+}
+.audience:hover { border-color: var(--ink); }
+.audience-title {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.audience-line {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+@media (max-width: 900px) {
+  .two-up { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .audiences { grid-template-columns: minmax(0, 1fr); }
 }
 </style>

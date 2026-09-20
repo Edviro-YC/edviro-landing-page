@@ -26,8 +26,8 @@ onMounted(() => {
 <template>
   <main style="padding: 140px 32px; min-height: 60vh;">
     <div style="max-width: 560px; margin: 0 auto; text-align: center;">
-      <p style="margin: 0 0 18px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #75817B;">Book a demo</p>
-      <h1 style="margin: 0; font-weight: 400; font-size: clamp(30px, 4.4vw, 44px); line-height: 1.06; letter-spacing: -0.03em;">Taking you to our scheduling page.</h1>
+      <p style="margin: 0 0 18px; font-weight: 600; font-size: 12px; letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--muted);">Book a demo</p>
+      <h1 style="margin: 0; font-weight: 500; font-size: clamp(30px, 4.4vw, 44px); line-height: 1.06; letter-spacing: var(--track-display);">Taking you to our scheduling page.</h1>
       <p style="margin: 22px auto 0; max-width: 440px; font-size: 17px; line-height: 1.6; color: #4B5550;">If nothing happens in a moment, use the link below.</p>
       <div style="margin-top: 28px;">
         <a :href="BOOKING_URL" class="book-btn" style="font-size: 15px; font-weight: 500; text-decoration: none; color: #EDF0EE; background: var(--accent); padding: 13px 26px; border-radius: 999px;">Pick a time</a>

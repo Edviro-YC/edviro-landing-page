@@ -1,7 +1,7 @@
 {
-  "name": "Edviro — AI for building operations",
+  "name": "Edviro — AI-powered facilities operations",
   "short_name": "Edviro",
-  "description": "Edviro puts AI across your fragmented building data, catches energy waste as it starts, fixes it, proves the savings, and builds a digital twin for capital planning.",
+  "description": "Edviro connects building signals, work orders, assets, schedules, field teams, projects, and budgets so facilities teams can detect problems, coordinate the response, and verify that the work succeeded.",
   "start_url": "/",
   "id": "/",
   "icons": [

@@ -36,8 +36,8 @@ usePageSeo({
 
     <section style="padding: 40px 32px 24px;">
       <div style="max-width: 820px; margin: 0 auto; width: 100%;">
-        <p style="margin: 0 0 22px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #75817B;">Legal</p>
-        <h1 style="margin: 0; font-weight: 400; font-size: clamp(36px, 5.4vw, 60px); line-height: 1.05; letter-spacing: -0.035em;">Privacy Policy</h1>
+        <p style="margin: 0 0 22px; font-weight: 600; font-size: 12px; letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--muted);">Legal</p>
+        <h1 style="margin: 0; font-weight: 500; font-size: clamp(36px, 5.4vw, 60px); line-height: 1.05; letter-spacing: var(--track-display);">Privacy Policy</h1>
         <p style="margin: 18px 0 0; font-size: 15px; line-height: 1.6; color: #5F6B65;">Last updated: May 3, 2026</p>
       </div>
     </section>

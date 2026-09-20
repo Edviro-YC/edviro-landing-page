@@ -5,7 +5,15 @@ import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 // Type-only import to load vite-ssg's `ssgOptions` module augmentation on `vite`.
 import type {} from 'vite-ssg'
-import { BOOKING_URL, DEMO_REDIRECT_PATH, IUSD_DEMO_PATH, IUSD_DEMO_URL, PRIVACY_PATH } from './src/seo/site'
+import {
+  BOOKING_URL,
+  DEMO_REDIRECT_PATH,
+  IUSD_DEMO_PATH,
+  IUSD_DEMO_URL,
+  LEGACY_FACILITIES_OPS_PATH,
+  PRIVACY_PATH,
+  SCHOOL_ENERGY_PATH,
+} from './src/seo/site'
 
 /**
  * Emits Netlify's `_redirects` so vanity paths forward at the edge. Generated
@@ -26,6 +34,9 @@ import { BOOKING_URL, DEMO_REDIRECT_PATH, IUSD_DEMO_PATH, IUSD_DEMO_URL, PRIVACY
  *
  * /privacy-policy is the dashboard's route name; the public canonical is
  * /privacy/ (the URL cited inside the policy itself).
+ *
+ * /solutions/school-facilities-operations was merged into /solutions/schools/
+ * (2026-09-19); the 301 consolidates its links and any indexed copies there.
  */
 function netlifyRedirects(): Plugin {
   let isSsrBuild = false
@@ -49,7 +60,9 @@ function netlifyRedirects(): Plugin {
           `/home  /  301\n` +
           `/home/  /  301\n` +
           `/privacy-policy  ${PRIVACY_PATH}  301\n` +
-          `/privacy-policy/  ${PRIVACY_PATH}  301\n`,
+          `/privacy-policy/  ${PRIVACY_PATH}  301\n` +
+          `${LEGACY_FACILITIES_OPS_PATH}  ${SCHOOL_ENERGY_PATH}  301\n` +
+          `${LEGACY_FACILITIES_OPS_PATH}/  ${SCHOOL_ENERGY_PATH}  301\n`,
       })
     },
   }

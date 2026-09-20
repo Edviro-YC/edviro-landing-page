@@ -8,7 +8,8 @@ import { breadcrumbLd, faqLd, organizationLd, type FaqItem } from '@/seo/jsonld'
 import {
   CAPITAL_PLANNING_PATH,
   CMMS_PATH,
-  FACILITIES_OPS_PATH,
+  EDU_LIVE_SITES,
+  EDU_VERIFIED_SAVINGS,
   FAQ_PATH,
   MV_PATH,
   SCHOOL_ENERGY_PATH,
@@ -29,17 +30,17 @@ const faqs: FaqItem[] = [
   {
     question: 'What is Edviro?',
     answer:
-      'Edviro is an AI-powered facilities operations platform for schools. It connects building signals, work orders, assets, schedules, field teams, projects, and budgets so school facilities teams can detect problems, coordinate the response, and verify that the work succeeded. It brings energy monitoring, diagnostics, work orders, assets, and capital planning into one place, and it can serve as the district\'s work-order and asset system or connect to the systems already in use. Edviro is backed by Y Combinator.',
+      'Edviro is an AI-powered facilities operations platform for the teams that run buildings. It connects building signals, staff requests, work orders, assets, schedules, field teams, and budgets so a facilities team can find problems early, route reviewed work to the right person, and verify in the building data that the fix held. It brings energy monitoring, diagnostics, work orders, assets, and capital planning into one place, and it can serve as your work-order and asset system or connect to the systems already in use. Edviro is backed by Y Combinator.',
   },
   {
     question: 'Does Edviro include work orders, or is it only an energy tool?',
     answer:
-      'Edviro includes a complete native work-order system: request intake, AI-assisted categorization and priority, assignment by school, asset, or trade, mobile notifications and instructions for technicians, photos and inspections, backlog and overdue-work review, and verification that the original problem was resolved. Energy monitoring is a major entry point because the meter data reveals operational problems quickly, but it is not the boundary of the product.',
+      'Edviro includes a complete native work-order system: request intake, AI-assisted categorization and priority, assignment by site, asset, or trade, mobile notifications and instructions for technicians, photos and inspections, backlog and overdue-work review, and verification that the original problem was resolved. Energy monitoring is a major entry point because meter data reveals operational problems quickly, but it is not the boundary of the product.',
   },
   {
     question: 'Do we have to replace our CMMS to use Edviro?',
     answer:
-      'No. Use Edviro as your work-order and asset system, or connect the systems you already have. Districts dissatisfied with their current CMMS can replace it with Edviro\'s native work orders and assets; districts that like theirs can keep it and let Edviro route detected problems into it and verify the outcome. Neither choice is required to get value from monitoring, diagnostics, and verification.',
+      'No. Use Edviro as your work-order and asset system, or connect the systems you already have. Teams unhappy with their current CMMS can replace it with Edviro\'s native work orders and assets; teams that like theirs can keep it and let Edviro route detected problems into it and verify the outcome. Neither choice is required to get value from monitoring, diagnostics, and verification.',
   },
   {
     question: 'What is autonomous building energy management?',
@@ -69,7 +70,7 @@ const faqs: FaqItem[] = [
   {
     question: 'How does Edviro prove the savings are real?',
     answer:
-      'Every change is measured against a learned baseline and confirmed in the meter data and on the bill. Edviro generates board-ready measurement and verification (M&V) automatically, shows whether savings persisted, and flags any change that did not save as expected.',
+      'Every change is measured against a learned baseline and confirmed in the meter data and on the bill. Edviro generates measurement and verification (M&V) reports you can take to leadership, shows whether savings persisted, and flags any change that did not save as expected.',
   },
   {
     question: 'What is the digital twin, and what is it for?',
@@ -79,22 +80,22 @@ const faqs: FaqItem[] = [
   {
     question: 'How does Edviro help with capital planning?',
     answer:
-      'Instead of ranking capital projects by equipment age or gut feel, Edviro connects asset history, repeated failures, and repair cost to repair-or-replace analysis, simulates each candidate project against the building\'s model, and ranks them by modeled payback. When budget or bond season comes, you bring the board a prioritized list with the data behind it, and verified results on projects already funded.',
+      'Instead of ranking capital projects by equipment age or gut feel, Edviro connects asset history, repeated failures, and repair cost to repair-or-replace analysis, simulates each candidate project against the building\'s model, and ranks them by modeled payback. When budget season comes, you bring leadership a prioritized list with the data behind it, and verified results on projects already funded.',
   },
   {
     question: 'Who is Edviro for?',
     answer:
-      'Edviro is built for the people who run buildings: school district facilities, maintenance, and business teams first—directors of maintenance and operations, technicians in the field, business officials, and superintendents—along with construction teams that need independent baselining and verification for new builds, and data center operators who need to know how much cooling headroom a site actually has.',
+      'Edviro is built for the people who run buildings: facilities directors, maintenance and operations leads, technicians in the field, and the finance and leadership teams they report to. It is used across data centers, K-12 and higher-education campuses, commercial real estate, healthcare, and construction. Education is where Edviro has its deepest deployments and strongest verified results; data center operators use it to verify cooling changes against telemetry, and construction teams use it for independent baselining and verification of new builds.',
   },
   {
     question: 'How does occupancy-based control work?',
     answer:
-      'In commercial buildings, Edviro reads occupancy from the WiFi routers already on each floor and ties HVAC and lighting to who is actually present, so you only condition space that is in use. No new sensors are required.',
+      'In commercial buildings, Edviro can read occupancy from signals the building already produces—such as network presence, badge systems, or existing sensors—and use it to schedule HVAC and lighting around who is actually present. Every proposed schedule change is reviewed and approved by your team before it is made, and the load change is verified in the meter data afterward. Which occupancy sources are available is confirmed site by site.',
   },
   {
     question: 'How quickly can we get started and see results?',
-    answer:
-      'Edviro typically connects a few of your sites and shows what it catches within the first week, with no upfront audit and no rip-and-replace. To date Edviro has saved clients over $400K, with 34 school sites live and expanding.',
+    // Proof figures come from src/seo/site.ts (owner + source noted there).
+    answer: `Edviro typically connects a few of your sites and shows what it catches within the first week, with no upfront audit and no rip-and-replace. To date, Edviro's education customers have verified more than ${EDU_VERIFIED_SAVINGS} in savings across ${EDU_LIVE_SITES} live school sites.`,
   },
   {
     question: 'How much does Edviro cost?',
@@ -106,7 +107,7 @@ const faqs: FaqItem[] = [
 usePageSeo({
   title: 'Edviro FAQ',
   description:
-    'Answers to common questions about Edviro: what an AI-powered facilities operations platform does, whether it replaces or connects to your CMMS and BMS, how it detects and fixes building problems, and how it proves savings with measurement and verification.',
+    'Common questions about Edviro: what an AI-powered facilities operations platform does, how it works with your CMMS and BMS, and how it proves savings.',
   path: FAQ_PATH,
   jsonLd: [organizationLd(), breadcrumbLd(breadcrumbs), faqLd(faqs)],
 })
@@ -119,16 +120,15 @@ usePageSeo({
     <!-- HERO -->
     <section style="padding: 40px 32px 24px;">
       <div style="max-width: 820px; margin: 0 auto; width: 100%;">
-        <p style="margin: 0 0 22px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #75817B;">Frequently asked questions</p>
-        <h1 style="margin: 0; font-weight: 400; font-size: clamp(36px, 5.4vw, 60px); line-height: 1.05; letter-spacing: -0.035em;">Edviro, answered.</h1>
+        <p style="margin: 0 0 22px; font-weight: 600; font-size: 12px; letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--muted);">Frequently asked questions</p>
+        <h1 style="margin: 0; font-weight: 500; font-size: clamp(36px, 5.4vw, 60px); line-height: 1.05; letter-spacing: var(--track-display);">Edviro, answered.</h1>
         <p style="margin: 26px 0 0; max-width: 620px; font-size: 19px; line-height: 1.6; color: #4B5550;">What Edviro is, how it works with what you already have, and how it proves that the work succeeded.</p>
         <p style="margin: 18px 0 0; font-size: 15px; line-height: 1.6; color: #5F6B65;">Looking for something specific? See the detailed questions on
-          <RouterLink :to="FACILITIES_OPS_PATH" class="text-link" style="color: var(--accent); text-decoration: none; font-weight: 500;">school facilities operations</RouterLink>,
-          <RouterLink :to="WORK_ORDERS_PATH" class="text-link" style="color: var(--accent); text-decoration: none; font-weight: 500;">work orders</RouterLink>,
-          <RouterLink :to="CMMS_PATH" class="text-link" style="color: var(--accent); text-decoration: none; font-weight: 500;">CMMS replacement or integration</RouterLink>,
-          <RouterLink :to="SCHOOL_ENERGY_PATH" class="text-link" style="color: var(--accent); text-decoration: none; font-weight: 500;">energy management for schools</RouterLink>,
-          <RouterLink :to="MV_PATH" class="text-link" style="color: var(--accent); text-decoration: none; font-weight: 500;">measurement and verification</RouterLink>, and
-          <RouterLink :to="CAPITAL_PLANNING_PATH" class="text-link" style="color: var(--accent); text-decoration: none; font-weight: 500;">capital planning</RouterLink>.
+          <RouterLink :to="MV_PATH" class="text-link" style="color: var(--accent); text-decoration: none; font-weight: 500;">measurement and verification</RouterLink> and
+          <RouterLink :to="CAPITAL_PLANNING_PATH" class="text-link" style="color: var(--accent); text-decoration: none; font-weight: 500;">capital planning</RouterLink>, or the education pages on
+          <RouterLink :to="WORK_ORDERS_PATH" class="text-link" style="color: var(--accent); text-decoration: none; font-weight: 500;">school work orders</RouterLink>,
+          <RouterLink :to="CMMS_PATH" class="text-link" style="color: var(--accent); text-decoration: none; font-weight: 500;">CMMS for schools</RouterLink>, and
+          <RouterLink :to="SCHOOL_ENERGY_PATH" class="text-link" style="color: var(--accent); text-decoration: none; font-weight: 500;">energy management for schools</RouterLink>.
         </p>
       </div>
     </section>

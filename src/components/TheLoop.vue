@@ -1,66 +1,291 @@
 <script setup lang="ts">
+import UiApprovalCard from '@/components/ui/UiApprovalCard.vue'
+import UiModelInputs from '@/components/ui/UiModelInputs.vue'
+
 /**
  * The technical loop. Lives on /about/ (linked from the homepage workflow's
  * "Read the technical version"), so buyers meet the solution sections before
- * this; each stage is introduced with the buyer-facing phrase first and the
- * technical term second.
+ * this. Each stage is introduced with the buyer-facing phrase first and the
+ * technical term second, and carries the concrete inputs or outputs as chips
+ * instead of a paragraph. The two callouts underneath show the model the loop
+ * accumulates into and the approval gate every side effect passes through.
  */
 const stages = [
   {
-    n: '01',
-    plain: 'Connect your systems',
     tech: 'Ingest',
-    body: 'Bills, interval meters, BMS exports, spreadsheets, staff requests, and work-order systems are read into one operational record per building. Keep what works; nothing has to be replaced to start.',
+    plain: 'Connect your systems',
+    detail: 'One operational record per building. Keep what works; nothing has to be replaced to start.',
+    chips: ['Bills', 'Interval meters', 'BMS exports', 'Staff requests', 'Work-order systems'],
+    icon: 'M4 7h16 M4 12h16 M4 17h10',
   },
   {
-    n: '02',
-    plain: 'Spot the problem and find the likely cause',
     tech: 'Detect and diagnose',
-    body: 'Edviro learns each building\'s normal load, schedules, and equipment behavior, flags drift and faults, then gathers the context—calendar, weather, asset history—to explain what is most likely happening.',
+    plain: 'Spot the problem, find the likely cause',
+    detail: 'Learned normal load, schedules, and equipment behavior; drift and faults explained with context.',
+    chips: ['Learned baseline', 'Drift', 'Faults', 'Calendar · weather · asset history'],
+    icon: 'M3 12h4l3-7 4 14 3-7h4',
   },
   {
-    n: '03',
-    plain: 'Assign or make the fix',
     tech: 'Act',
-    body: 'It raises and routes the work order, gives the technician the steps, or proposes a schedule or setpoint change. Changes are staged for review and approval before anything runs.',
+    plain: 'Assign or make the fix',
+    detail: 'The work order, the technician\'s steps, or a schedule change, staged for approval before anything runs.',
+    chips: ['Work order', 'Technician steps', 'Schedule or setpoint change'],
+    icon: 'M14 6l4 4-9 9H5v-4z M13 7l4 4',
+    human: true,
   },
   {
-    n: '04',
-    plain: 'Confirm that it worked',
     tech: 'Verify',
-    body: 'Every change is checked against the learned baseline in the meter and building data. If it did not hold, you know—and the record says why.',
+    plain: 'Confirm that it worked',
+    detail: 'Every change checked against the learned baseline in the meter and building data. If it did not hold, the record says why.',
+    chips: ['Baseline comparison', 'Held', 'Did not hold → reopened'],
+    icon: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z M8 12l3 3 5-6',
   },
 ]
 </script>
 
 <template>
   <!-- THE TECHNICAL LOOP -->
-  <section id="loop" style="padding: 40px 32px 90px; scroll-margin-top: 80px;">
-    <div style="max-width: 1180px; margin: 0 auto; width: 100%;">
-      <div style="max-width: 820px;">
-        <p style="margin: 0 0 18px; font-weight: 600; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #75817B;">Under the hood: the closed loop</p>
-        <h2 style="margin: 0; font-weight: 400; font-size: clamp(30px, 3.6vw, 44px); line-height: 1.07; letter-spacing: -0.03em;">Monitoring tools stop at the chart.<br />Edviro is the layer that acts on it.</h2>
-        <p style="margin: 24px 0 0; max-width: 620px; font-size: 18px; line-height: 1.6; color: #4B5550;">Dashboards and alarm lists leave the fixing on your plate. Edviro runs one closed loop across energy, diagnostics, work orders, assets, and planning: it connects the data, finds the problem, coordinates the fix, then checks its own work in the building data.</p>
+  <section id="loop" class="section is-tint">
+    <div class="shell">
+      <div class="loop-head">
+        <div>
+          <p class="eyebrow">Under the hood: the closed loop</p>
+          <h2 class="h2">Monitoring tools stop at the chart. Edviro is the layer that acts on it.</h2>
+        </div>
+        <p class="lede">One loop across energy, diagnostics, work orders, assets, and planning: connect the data, find the problem, coordinate the fix, then check the result in the building data.</p>
       </div>
 
-      <div class="r-cols-4" style="margin-top: 56px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #D8DED9; border: 1px solid #D8DED9; border-radius: 18px; overflow: hidden;">
-        <div v-for="s in stages" :key="s.n" style="background: #F9FAF9; padding: 30px 26px;">
-          <div style="font-weight: 600; font-size: 12px; color: var(--accent); margin-bottom: 18px;">{{ s.n }} / {{ s.tech }}</div>
-          <h3 style="margin: 0 0 10px; font-size: 20px; font-weight: 600; letter-spacing: -0.01em;">{{ s.plain }}</h3>
-          <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #5F6B65;">{{ s.body }}</p>
-        </div>
-      </div>
+      <ol class="tloop" aria-label="The technical loop">
+        <li v-for="(s, i) in stages" :key="s.tech" class="tloop-node" :class="{ 'is-human': s.human }">
+          <div class="tloop-top">
+            <span class="tloop-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path :d="s.icon" /></svg>
+            </span>
+            <span class="tloop-tech">{{ String(i + 1).padStart(2, '0') }} / {{ s.tech }}</span>
+          </div>
+          <h3 class="tloop-title">{{ s.plain }}</h3>
+          <p class="tloop-detail">{{ s.detail }}</p>
+          <ul class="tloop-chips" aria-label="Inputs and outputs">
+            <li v-for="c in s.chips" :key="c" class="chip">{{ c }}</li>
+          </ul>
+          <span v-if="s.human" class="ui-pill is-verified tloop-tag">Human approval before anything runs</span>
+        </li>
+      </ol>
+      <p class="tloop-return"><span>Verified outcomes retrain the model; recurrence feeds preventive maintenance and the capital plan</span></p>
 
-      <div class="r-split" style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start;">
-        <div style="padding: 22px 24px; border-radius: 16px; background: #F5F7F5; border: 1px solid #E3E8E4;">
-          <h3 style="margin: 0 0 8px; font-size: 17px; font-weight: 600;">A living operational model of each building</h3>
-          <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #5F6B65;">Every reading, work order, inspection, and verified fix accumulates into one model per building—what engineers call a digital twin. It is what lets Edviro test a repair-or-replace decision or a new schedule against the building's real behavior before anyone commits money.</p>
+      <div class="tloop-callouts">
+        <div class="tloop-callout">
+          <div>
+            <h3>A living operational model of each building</h3>
+            <p>Every reading, work order, inspection, and verified fix accumulates into one model per building, what engineers call a digital twin. It is how a repair-or-replace decision or a new schedule is tested against real behavior before anyone commits money.</p>
+          </div>
+          <UiModelInputs
+            model-title="Living model · one per building"
+            model-meta="Recalibrated as every fix is verified"
+            flag="Digital twin"
+            summary="Seven data sources, from utility bills to work orders and fixes, flow into one living model per building that is recalibrated as every fix is verified."
+          />
         </div>
-        <div style="padding: 22px 24px; border-radius: 16px; background: #F5F7F5; border: 1px solid #E3E8E4;">
-          <h3 style="margin: 0 0 8px; font-size: 17px; font-weight: 600;">Edviro monitors and follows up automatically</h3>
-          <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #5F6B65;">Behind the scenes, AI agents do the watching, investigating, and chasing—reading the data around the clock, drafting the work order, checking whether the fix held. People stay in charge: side effects are reviewed and approved by your team, and Edviro does not replace your staff, engineers, contractors, or building controls.</p>
+        <div class="tloop-callout">
+          <div>
+            <h3>Edviro watches and follows up; people stay in charge</h3>
+            <p>AI agents read the data around the clock, draft the work order, and check whether the fix held. Every side effect is reviewed and approved by your team, and Edviro does not replace your staff, engineers, contractors, or building controls.</p>
+          </div>
+          <UiApprovalCard />
         </div>
       </div>
     </div>
   </section>
 </template>
+
+<style scoped>
+#loop { scroll-margin-top: 80px; }
+.loop-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px 48px;
+  align-items: end;
+  margin-bottom: 40px;
+}
+.loop-head .lede { margin: 0; }
+.tloop {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 26px;
+}
+.tloop-node {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  padding: 18px 16px 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  min-width: 0;
+}
+.tloop-node:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -22px;
+  width: 18px;
+  height: 1.5px;
+  background: var(--line-strong);
+  transform: translateY(-50%);
+}
+.tloop-node:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -8px;
+  width: 7px;
+  height: 7px;
+  border-top: 1.5px solid var(--line-strong);
+  border-right: 1.5px solid var(--line-strong);
+  transform: translateY(-50%) rotate(45deg);
+}
+.tloop-node.is-human {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(22, 73, 61, 0.08);
+}
+.tloop-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tloop-icon {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  color: var(--accent);
+}
+.is-human .tloop-icon {
+  background: var(--accent);
+  color: var(--on-dark);
+}
+.tloop-tech {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+}
+.tloop-title {
+  margin: 4px 0 0;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.tloop-detail {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+.tloop-chips {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.tloop-chips .chip {
+  white-space: normal;
+  font-size: 12px;
+  padding: 4px 9px;
+  background: var(--surface);
+}
+.tloop-tag {
+  justify-self: start;
+  margin-top: 2px;
+  white-space: normal;
+}
+.tloop-return {
+  position: relative;
+  margin: 22px 0 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted-2);
+}
+.tloop-return::before {
+  content: '';
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 50%;
+  border-top: 1.5px dashed var(--line-strong);
+}
+.tloop-return span {
+  position: relative;
+  background: var(--surface-2);
+  padding: 0 12px;
+}
+.tloop-callouts {
+  margin-top: 44px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.tloop-callout {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+  padding: 22px 24px 24px;
+  border-radius: 18px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  min-width: 0;
+}
+.tloop-callout h3 {
+  margin: 0 0 8px;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.tloop-callout p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+@media (max-width: 1024px) {
+  .tloop { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tloop-node:nth-child(2)::after,
+  .tloop-node:nth-child(2)::before { display: none; }
+}
+@media (max-width: 768px) {
+  .loop-head { grid-template-columns: minmax(0, 1fr); margin-bottom: 28px; }
+  .tloop { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .tloop-node:nth-child(2)::after,
+  .tloop-node:nth-child(2)::before { display: block; }
+  .tloop-node:not(:last-child)::after {
+    top: auto;
+    right: auto;
+    bottom: -18px;
+    left: 32px;
+    width: 1.5px;
+    height: 14px;
+    transform: none;
+  }
+  .tloop-node:not(:last-child)::before {
+    top: auto;
+    right: auto;
+    bottom: -14px;
+    left: 29px;
+    transform: rotate(135deg);
+  }
+  .tloop-return::before { left: 0; right: 0; }
+  .tloop-callouts { grid-template-columns: minmax(0, 1fr); }
+}
+</style>
