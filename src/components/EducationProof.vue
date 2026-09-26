@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
 import pausdLogo from '@/assets/img/pausd-logo.svg'
 import lgsuhsdLogo from '@/assets/img/lgsuhsd-logo.png'
-import { EDU_LIVE_SITES, EDU_VERIFIED_SAVINGS, SCHOOL_ENERGY_PATH } from '@/seo/site'
+import { EDU_LIVE_SITES, EDU_VERIFIED_SAVINGS } from '@/seo/site'
 
 /**
  * Education proof, labeled as such, placed below the neutral product story.
@@ -26,8 +25,8 @@ defineProps<{
 // 24/7 is a product fact, not a customer metric: the nightly pipeline and the
 // case agent cover every connected site (flask-server + edviro-caseagent).
 const metrics = [
-  { value: EDU_VERIFIED_SAVINGS, label: 'verified savings for education customers' },
-  { value: String(EDU_LIVE_SITES), label: 'school sites live and expanding' },
+  { value: EDU_VERIFIED_SAVINGS, label: 'verified savings' },
+  { value: String(EDU_LIVE_SITES), label: 'live sites' },
   { value: '24/7', label: 'monitoring across every connected site' },
 ]
 
@@ -48,12 +47,7 @@ const logos = [
     <div class="shell">
       <div class="edu-grid">
         <div class="edu-copy">
-          <p class="eyebrow">Education proof</p>
-          <h2 class="h2">Proven in school districts first.</h2>
-          <p class="lede">Edviro’s deepest deployments are K‑12 districts; the results below are education results.</p>
-          <div class="edu-links">
-            <RouterLink :to="SCHOOL_ENERGY_PATH" class="text-link">Energy management software for schools →</RouterLink>
-          </div>
+          <h2 class="h2">Featured customers</h2>
         </div>
 
         <div class="edu-proof">
@@ -91,13 +85,6 @@ const logos = [
   align-items: center;
 }
 .edu-copy { min-width: 0; }
-.edu-links {
-  margin-top: 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-size: 15px;
-}
 .edu-proof {
   display: grid;
   gap: 28px;

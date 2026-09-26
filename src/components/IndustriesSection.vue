@@ -78,8 +78,7 @@ const industries: Industry[] = [
     <span id="who" aria-hidden="true" class="anchor-alias"></span>
     <div class="shell">
       <div class="ind-head">
-        <p class="eyebrow">Industries</p>
-        <h2 class="h2">Built for the teams that run buildings.</h2>
+        <h2 class="h2">Install Edviro in:</h2>
       </div>
       <ul class="ind-grid">
         <li v-for="ind in industries" :key="ind.id" class="ind">

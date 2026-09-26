@@ -1,29 +1,25 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
 import CtaSection from '@/components/CtaSection.vue'
 import FaqList from '@/components/FaqList.vue'
 import PageBreadcrumbs from '@/components/PageBreadcrumbs.vue'
 import IndustryFlow from '@/components/industry/IndustryFlow.vue'
 import PlatformHero from '@/components/platform/PlatformHero.vue'
 import StepStrip, { type Step } from '@/components/platform/StepStrip.vue'
-import UiCapacityGauge from '@/components/ui/UiCapacityGauge.vue'
+import UiCauseCard from '@/components/ui/UiCauseCard.vue'
 import UiRackHeatmap from '@/components/ui/UiRackHeatmap.vue'
 import UiTelemetryList from '@/components/ui/UiTelemetryList.vue'
+import UiWorkQueue, { type Row } from '@/components/ui/UiWorkQueue.vue'
 import { usePageSeo } from '@/seo/usePageSeo'
 import { breadcrumbLd, faqLd, organizationLd, serviceLd, type FaqItem } from '@/seo/jsonld'
-import {
-  CAPITAL_PLANNING_PATH,
-  PLATFORM_ASSETS_PATH,
-  PLATFORM_FACILITIES_OPS_PATH,
-  SOLUTION_DATA_CENTERS_PATH,
-} from '@/seo/site'
+import { SOLUTION_DATA_CENTERS_PATH } from '@/seo/site'
 
 /**
- * Data centers. Scope is deliberately narrow — thermal headroom modeling,
- * verified on one live pod — and stays that way here. The page implies no
- * existing data-center customers, no uptime guarantee, and no control of
- * the cooling plant (Edviro models and simulates; the team decides). Copy is
- * one short sentence per point; the visuals carry the detail.
+ * Data centers. Lead story: noisy controls telemetry in, a short reviewed work
+ * list out. Second story: calibrated physics models the team can ask
+ * questions of (headroom is one example, not the pitch). The page implies no
+ * existing data-center customers, no uptime guarantee, and no control of the
+ * cooling plant (Edviro reads, diagnoses, and simulates; the team decides).
+ * All UI values are illustrative.
  */
 const breadcrumbs = [
   { name: 'Home', path: '/' },
@@ -31,62 +27,78 @@ const breadcrumbs = [
   { name: 'Data centers', path: SOLUTION_DATA_CENTERS_PATH },
 ]
 
-const flowSteps = [
-  { label: 'Telemetry', caption: 'Power, cooling, and environmental feeds the site already records. Nothing new is installed.' },
-  { label: 'Calibrated model', caption: 'A physics-based model fit to measured inlet temperatures. Re-checked as load and layout change.' },
-  { label: 'Headroom', caption: 'Cooling headroom at the design inlet limit, plus one simulated density step. Simulated, never applied.' },
+const feeds = [
+  { name: 'BMS alarms (24h)', value: '312', fill: 0.86 },
+  { name: 'CRAH-2 supply temp', value: '21.9 °C', fill: 0.62 },
+  { name: 'CRAH-2 fan speed', value: '100%', fill: 1 },
+  { name: 'Rack inlet, row C', value: '27.4 °C', fill: 0.74 },
+  { name: 'Chilled water ΔT', value: '3.1 K', fill: 0.26 },
 ]
 
-const pilot: Step[] = [
-  { title: 'Connect', detail: 'Read-only access to the PDU, CRAH, and sensor exports the site already produces.', icon: 'connect' },
-  { title: 'Calibrate', detail: 'Fit the thermal model to the pod\u2019s measured inlet temperatures.', icon: 'calibrate' },
-  { title: 'Simulate', detail: 'Run a density scenario against the model, not the live floor.', icon: 'simulate' },
-  { title: 'Verify', detail: 'Compare predicted with measured inlet temperatures. Report how far the model can be trusted.', icon: 'verify' },
-  { title: 'Decide', detail: 'Any change to the floor or the cooling plant stays with your team and your vendors.', human: true, tag: 'Your team decides', icon: 'review' },
+const queue: Row[] = [
+  { title: 'CRAH-2 chilled water valve stuck at 40%', priority: 'High', trade: 'Mechanical', status: 'Awaiting review' },
+  { title: 'Row C blanking panels missing, racks 12–15', priority: 'Medium', trade: 'Facilities', status: 'In progress' },
+  { title: 'Humidity sensor H-7 drifting, recalibrate', priority: 'Low', trade: 'Controls', status: 'Verified' },
+]
+
+const flowSteps = [
+  { label: 'Telemetry', caption: 'BMS, EPMS, PDU and sensor feeds you already have. Hundreds of alarms a day, most of them noise.' },
+  { label: 'Diagnosis', caption: 'We tie related alarms together and point to the likely cause, with the evidence attached.' },
+  { label: 'Work list', caption: 'Your operators get a short list of what to fix. Nothing goes out until someone approves it.' },
+]
+
+const questions = [
+  'How many more racks can Pod 3 take before cooling runs out?',
+  'If CRAH-2 goes down, which rows go over the inlet limit, and how fast?',
+  'Can we raise supply air a degree without creating hot spots?',
+  'Why does row C run hot every afternoon?',
+]
+
+const loop: Step[] = [
+  { title: 'Watch', detail: 'Read your BMS, EPMS and sensor feeds around the clock.', icon: 'monitor' },
+  { title: 'Diagnose', detail: 'Group the alarms and find what\u2019s actually wrong.', icon: 'search' },
+  { title: 'Fix', detail: 'Your team approves the fix and does the work.', human: true, tag: 'Your team decides', icon: 'wrench' },
+  { title: 'Verify', detail: 'Check the telemetry to confirm the fix held.', icon: 'verify' },
+  { title: 'Learn', detail: 'The model updates, so the next issue gets caught sooner.', icon: 'repeat' },
 ]
 
 const faqs: FaqItem[] = [
   {
-    question: 'What data does Edviro need from a data center?',
+    question: 'What data does Edviro need?',
     answer:
-      'The telemetry the site already exports: power at the rack, pod, and site level, cooling plant data, supply and return temperatures, and environmental sensors. Nothing new is installed. Access is read-only.',
+      'Whatever your controls already export: BMS points and alarms, EPMS and PDU power, cooling plant data, and environmental sensors. Nothing new gets installed and access is read-only.',
   },
   {
-    question: 'How is this different from a one-time CFD study?',
+    question: 'We already have a DCIM and a BMS. Why add this?',
     answer:
-      'A study answers one design question, then goes stale as the floor changes. Edviro keeps the model calibrated to measured telemetry, so the headroom answer stays current.',
+      'Those systems collect the data and fire the alarms. Edviro sits on top, figures out which alarms actually matter, and turns them into work your team can act on.',
   },
   {
-    question: 'What does the pilot look like?',
+    question: 'What are the physics models for?',
     answer:
-      'One live pod. Edviro calibrates the thermal model to the pod\u2019s telemetry, simulates a density scenario, and verifies predictions against measured data. You get a stated model accuracy and a headroom figure. A short pilot outline is available on request.',
+      'Asking "what if" before you try it on the live floor. Cooling headroom, a unit failing, a setpoint change, a new row of high-density racks. The model is calibrated to your site and we show you how accurate it is.',
   },
   {
     question: 'Does Edviro control the cooling plant?',
     answer:
-      'No. Edviro models and simulates. Any change to the floor or the cooling plant stays with your team and your vendors.',
-  },
-  {
-    question: 'What question does it answer?',
-    answer:
-      'How many more racks the site can take before cooling becomes the constraint, on the infrastructure you have, and how confident that answer is.',
+      'No. Edviro reads, diagnoses, and simulates. Any change to the floor or the plant stays with your team and your vendors.',
   },
 ]
 
 usePageSeo({
-  title: 'Thermal headroom modeling for data centers',
+  title: '24/7 Monitoring and Optimization for Data Centers',
   description:
-    'A physics-based thermal model of your data center, calibrated to the telemetry you already export. It quantifies cooling headroom and is verified on one live pod.',
+    'Edviro reads the telemetry your controls already produce, cuts through alarm noise, and gives operators a short list of what to fix. Calibrated physics models answer what-if questions like cooling headroom.',
   path: SOLUTION_DATA_CENTERS_PATH,
   jsonLd: [
     organizationLd(),
     breadcrumbLd(breadcrumbs),
     serviceLd({
-      name: 'Edviro thermal headroom modeling for data centers',
+      name: 'Edviro 24/7 Monitoring and Optimization for Data Centers',
       description:
-        'Physics-based thermal modeling, cooling headroom quantification, and density simulation for data centers, verified against measured telemetry on one live pod.',
+        'Alarm triage and fault diagnosis from existing BMS, EPMS, and sensor telemetry, plus calibrated physics models for what-if simulation such as cooling headroom and equipment failure.',
       path: SOLUTION_DATA_CENTERS_PATH,
-      serviceType: 'Thermal capacity modeling',
+      serviceType: 'Facility monitoring and fault diagnostics',
       areaServed: 'United States',
     }),
     faqLd(faqs),
@@ -100,11 +112,9 @@ usePageSeo({
 
     <PlatformHero
       eyebrow="For data center operators"
-      lede="Edviro fits a physics-based thermal model to the telemetry your site already exports. It answers one question: how many more racks a pod can take before cooling becomes the constraint."
-      note="Pilot scope: one live pod. Edviro models and simulates. Changes to the floor stay with your team."
-      :secondary="{ label: 'See decision simulation', to: CAPITAL_PLANNING_PATH }"
+      lede="Edviro connects to your telemetry feeds and watches for issues 24/7. We turn noisy alarms, alerts, and charts into a short list your operators can actually act on."
     >
-      Thermal headroom, modeled <span class="accent">from the data you already have.</span>
+      Noise to <span class="accent">signal.</span>
     </PlatformHero>
 
     <!-- IN PRACTICE -->
@@ -113,46 +123,74 @@ usePageSeo({
         <div class="two-up head">
           <div>
             <p class="eyebrow">In practice</p>
-            <h2 class="h2">One pod, measured proof.</h2>
+            <h2 class="h2">312 alarms. One real problem.</h2>
           </div>
-          <p class="lede">Telemetry in. Calibrated model. Headroom out. The model is checked against measured inlet temperatures before anyone plans capacity with it.</p>
+          <p class="lede">Your controls already tell you a lot. The hard part is knowing which alarm matters. We do that sorting so your team spends time fixing, not scrolling.</p>
         </div>
         <IndustryFlow
-          title="Pod 3 · Telemetry → model → headroom"
+          title="Pod 3 · Telemetry → diagnosis → work list"
           :steps="flowSteps"
-          summary="Three-step flow for a data center pod: existing telemetry feeds (rack power, supply and return temperatures, inlet sensors, chilled-water delta-T); a modeled inlet-temperature heat map calibrated within 0.4 °C of measured sensors; and a cooling-headroom gauge showing today's load, the modeled headroom, and one simulated density scenario inside the design limit."
+          summary="Three-step flow for a data center pod: existing telemetry with 312 BMS alarms in 24 hours, a CRAH at full fan speed, a hot row, and low chilled-water delta-T; a diagnosis card tracing them to a stuck chilled-water valve on CRAH-2; and an operator work list with that fix awaiting review."
         >
-          <template #step-1><UiTelemetryList /></template>
-          <template #step-2><UiRackHeatmap /></template>
-          <template #step-3><UiCapacityGauge /></template>
+          <template #step-1>
+            <UiTelemetryList
+              title="Pod 3 · Controls telemetry"
+              flag="Existing feeds"
+              :feeds="feeds"
+              note="Read-only. Nothing new installed."
+              summary="Telemetry for Pod 3: 312 BMS alarms in 24 hours, CRAH-2 supply temperature 21.9 °C, CRAH-2 fan at 100%, row C rack inlet 27.4 °C, chilled-water delta-T 3.1 K."
+            />
+          </template>
+          <template #step-2>
+            <UiCauseCard
+              title="CRAH-2 chilled water valve stuck at 40%"
+              :evidence="['Fan pinned at 100% for 3 days', 'Low ΔT on CRAH-2 only', 'Row C inlets climbing each afternoon']"
+              footer="Ties together 41 alarms"
+              footer-tone="info"
+              summary="Diagnosis card: likely cause is the CRAH-2 chilled water valve stuck at 40%, supported by the fan pinned at full speed, low delta-T on that unit, and rising row C inlet temperatures. It ties together 41 alarms."
+            />
+          </template>
+          <template #step-3>
+            <UiWorkQueue
+              title="Operator work list"
+              :rows="queue"
+              summary="Operator work list with three items: CRAH-2 valve fix awaiting review, missing blanking panels in row C in progress, and a drifting humidity sensor verified."
+            />
+          </template>
         </IndustryFlow>
       </div>
     </section>
 
-    <!-- PILOT -->
-    <section id="pilot" class="section">
+    <!-- PHYSICS MODELS -->
+    <section id="models" class="section">
       <div class="shell">
         <div class="two-up head">
           <div>
-            <p class="eyebrow">The pilot</p>
-            <h2 class="h2">Five steps, one live pod.</h2>
+            <p class="eyebrow">Physics models</p>
+            <h2 class="h2">Models that learn how your site runs.</h2>
           </div>
-          <p class="lede">The pilot ends with a stated model accuracy and a headroom figure. What you do with it is your call.</p>
+          <p class="lede">We fit a physics model to your own telemetry and keep it calibrated as load and layout change. Then you can ask it questions before you touch the floor.</p>
         </div>
-        <StepStrip :steps="pilot" label="Pilot steps" />
+        <div class="two-up models">
+          <ul class="questions">
+            <li v-for="q in questions" :key="q">{{ q }}</li>
+          </ul>
+          <UiRackHeatmap />
+        </div>
       </div>
     </section>
 
-    <!-- BEYOND HEADROOM -->
-    <section class="section is-dark">
+    <!-- LOOP -->
+    <section id="loop" class="section is-tint">
       <div class="shell">
-        <h2 class="h2 dark-h2">Headroom is one answer. The record is the rest.</h2>
-        <p class="lede">The same platform keeps the asset registry, reviewed work orders, and capital scenarios for the rest of the site. The headroom answer lands next to the equipment history and the budget it affects.</p>
-        <div class="links">
-          <RouterLink :to="PLATFORM_ASSETS_PATH" class="text-link">Asset management →</RouterLink>
-          <RouterLink :to="CAPITAL_PLANNING_PATH" class="text-link">Capital planning →</RouterLink>
-          <RouterLink :to="PLATFORM_FACILITIES_OPS_PATH" class="text-link">See the full platform →</RouterLink>
+        <div class="two-up head">
+          <div>
+            <p class="eyebrow">How it runs</p>
+            <h2 class="h2">One continuous loop.</h2>
+          </div>
+          <p class="lede">Every fix makes the model a little sharper. Over time the site runs tighter and wastes less.</p>
         </div>
+        <StepStrip :steps="loop" label="Continuous improvement loop" />
       </div>
     </section>
 
@@ -171,14 +209,22 @@ usePageSeo({
 }
 .head { align-items: end; margin-bottom: 32px; }
 .head .lede { margin: 0; }
-.dark-h2 { color: #F2F5F1; max-width: 720px; }
-.is-dark .lede { max-width: 720px; }
-.links {
-  margin-top: 26px;
-  display: flex;
-  gap: 8px 24px;
-  flex-wrap: wrap;
+.questions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.questions li {
+  padding: 14px 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
   font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-wrap: pretty;
 }
 @media (max-width: 900px) {
   .two-up { grid-template-columns: minmax(0, 1fr); gap: 28px; }
