@@ -30,7 +30,7 @@ const outputs = [
       </div>
 
       <div class="sys-map" role="img" aria-label="Diagram: building systems, utility data, and requests flow into Edviro; Edviro produces work orders, field updates, and plans and reports.">
-        <ul class="sys-col" aria-hidden="true">
+        <ul class="sys-col" data-label="Connects to" aria-hidden="true">
           <li v-for="item in inputs" :key="item.title" class="sys-node">
             <span class="sys-title">{{ item.title }}</span>
             <span class="sys-detail">{{ item.detail }}</span>
@@ -50,7 +50,7 @@ const outputs = [
             <path d="M0 100 C40 100 50 171 100 171" />
           </svg>
         </div>
-        <ul class="sys-col" aria-hidden="true">
+        <ul class="sys-col" data-label="Produces" aria-hidden="true">
           <li v-for="item in outputs" :key="item.title" class="sys-node">
             <span class="sys-title">{{ item.title }}</span>
             <span class="sys-detail">{{ item.detail }}</span>
@@ -150,11 +150,48 @@ const outputs = [
   color: var(--on-dark);
 }
 .sys-foot .text-link { font-weight: 500; }
+/* Stacked: each side collapses into one divided list, joined by a thin rail through a compact hub pill. */
 @media (max-width: 900px) {
-  .sys-head { grid-template-columns: minmax(0, 1fr); margin-bottom: 28px; }
-  .sys-map { grid-template-columns: minmax(0, 1fr); gap: 18px; }
-  .sys-hub { grid-template-columns: 1fr; justify-items: center; }
+  .sys-head { grid-template-columns: minmax(0, 1fr); gap: 14px; margin-bottom: 28px; }
+  .sys-map { grid-template-columns: minmax(0, 1fr); max-width: 560px; }
+  .sys-col {
+    gap: 0;
+    padding: 4px 18px;
+    background: var(--dark-2);
+    border: 1px solid var(--dark-line);
+    border-radius: 16px;
+  }
+  .sys-col::before {
+    content: attr(data-label);
+    padding: 14px 0 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--success);
+  }
+  .sys-node {
+    padding: 12px 0;
+    background: none;
+    border: 0;
+    border-radius: 0;
+  }
+  .sys-node + .sys-node { border-top: 1px solid var(--dark-line); }
+  .sys-hub {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    height: 72px;
+    background: linear-gradient(rgba(51, 141, 104, 0.6), rgba(51, 141, 104, 0.6)) center / 1.5px 100% no-repeat;
+  }
   .sys-lines { display: none; }
-  .sys-core { width: 84px; height: 84px; font-size: 15px; }
+  .sys-core {
+    width: auto;
+    height: 34px;
+    padding: 0 18px;
+    border-radius: 999px;
+    font-size: 14px;
+    box-shadow: 0 0 0 6px rgba(22, 73, 61, 0.35);
+  }
+  .sys-foot { flex-direction: column; margin-top: 28px; }
 }
 </style>
