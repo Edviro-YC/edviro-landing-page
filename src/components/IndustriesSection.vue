@@ -1,10 +1,5 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
-import UiMeterTrend from '@/components/ui/UiMeterTrend.vue'
-import UiOccupancyTrend from '@/components/ui/UiOccupancyTrend.vue'
-import UiRackHeatmap from '@/components/ui/UiRackHeatmap.vue'
-import UiVarianceChart from '@/components/ui/UiVarianceChart.vue'
-import UiWorkQueue from '@/components/ui/UiWorkQueue.vue'
 import {
   SCHOOL_ENERGY_PATH,
   SOLUTION_CONSTRUCTION_PATH,
@@ -15,8 +10,7 @@ import {
 
 /**
  * Industries: one config, one module template, so every industry gets the
- * same dimensions, copy length (one sentence), and fidelity — including the
- * product crop, which sits in a fixed-height slot for every module.
+ * same dimensions, copy length (one sentence), and fidelity.
  * Education is explicit here; it is not the category definition above.
  */
 interface Industry {
@@ -82,44 +76,6 @@ const industries: Industry[] = [
       </div>
       <ul class="ind-grid">
         <li v-for="ind in industries" :key="ind.id" class="ind">
-          <div class="ind-crop">
-            <UiRackHeatmap
-              v-if="ind.id === 'data-centers'"
-              title="Pod 3 · Modeled inlet"
-              flag="±0.4 °C"
-              note="Warm end of aisle B closest to the design limit."
-              summary="Heatmap of modeled rack inlet temperatures for one pod, within 0.4 degrees Celsius of measured; the warm end of aisle B sits closest to the design inlet limit."
-            />
-            <UiMeterTrend
-              v-else-if="ind.id === 'education'"
-              title="Main meter · 7 days"
-              flag="Weekend load +38%"
-              summary="Chart of a week of school meter readings against the learned baseline band, with weekend load 38 percent above it flagged."
-            />
-            <UiOccupancyTrend
-              v-else-if="ind.id === 'real-estate'"
-              title="Floor 4 East · Devices"
-              flag="Still occupied mode"
-              note="Devices near zero after 6 pm; zone still conditioned."
-              summary="Bar chart of WiFi devices on Floor 4 East through the evening: counts fall to near zero after 6 pm while the zone is still conditioned as occupied."
-            />
-            <UiWorkQueue
-              v-else-if="ind.id === 'healthcare'"
-              title="Open · Support spaces"
-              :rows="[
-                { title: 'AHU-2 filter ΔP · Wing C', priority: 'High', trade: 'HVAC', status: 'Reviewed' },
-                { title: 'Pharmacy cooler alarm', priority: 'Medium', trade: 'Refrig.', status: 'In progress' },
-              ]"
-              summary="Work queue for hospital support spaces: a high-priority AHU-2 filter pressure issue in Wing C, reviewed; a pharmacy cooler alarm in progress."
-            />
-            <UiVarianceChart
-              v-else
-              title="Tower A · Model vs measured"
-              flag="+8% flagged"
-              note="Weeks 3–4 ran over the design model; back to model after commissioning."
-              summary="Grouped bar chart of weekly energy for Tower A, design model beside measured: weeks 3 and 4 ran 8 to 9 percent over and were flagged; measured returned to model after the commissioning fix."
-            />
-          </div>
           <div class="ind-title-row">
             <span class="ind-icon" aria-hidden="true">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path :d="ind.icon" /></svg>
@@ -155,27 +111,14 @@ const industries: Industry[] = [
 }
 .ind {
   display: grid;
-  grid-template-rows: auto auto 1fr auto;
+  grid-template-rows: auto 1fr auto;
   gap: 10px;
-  padding: 12px 16px 18px;
+  padding: 18px 18px 20px;
   background: var(--surface-2);
   border: 1px solid var(--line);
   border-radius: 18px;
   min-width: 0;
 }
-/* Same slot for every industry: fixed height, top-aligned, soft crop at the foot. */
-.ind-crop {
-  height: 168px;
-  overflow: hidden;
-  border-radius: 14px;
-  mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
-  margin: 0 -4px 4px;
-  padding: 4px 4px 0;
-}
-/* Crops are narrow: let the card head wrap so the label isn't cut to three letters. */
-.ind-crop :deep(.ui-head) { flex-wrap: wrap; row-gap: 6px; }
-.ind-crop :deep(.ui-head > :first-child) { flex: 1 1 100%; }
 .ind-title-row {
   display: flex;
   align-items: center;
@@ -220,7 +163,7 @@ const industries: Industry[] = [
   .ind-head { margin-bottom: 24px; }
 }
 @media (max-width: 520px) {
-  .ind-grid { grid-template-columns: minmax(0, 1fr); }
-  .ind-crop { height: auto; mask-image: none; -webkit-mask-image: none; overflow: visible; }
+  .ind-grid { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .ind { padding: 16px 16px 18px; gap: 8px; }
 }
 </style>
