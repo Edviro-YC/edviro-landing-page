@@ -112,15 +112,16 @@ export const X_HANDLE = '@hursheybar2'
 export const SOCIAL_URLS = [LINKEDIN_URL, X_URL]
 
 /**
- * Every "Book a demo" CTA points at this page, which explains the demo and
- * pricing.
+ * The former Demo & pricing page, removed on 2026-11-10. Only the generated
+ * Netlify _redirects reads this, to send old links and ads to the homepage's
+ * demo section.
  */
-export const BOOK_DEMO_PATH = '/book-a-demo/'
+export const LEGACY_BOOK_DEMO_PATH = '/book-a-demo'
 
 /**
- * Scheduling links point here rather than straight at BOOKING_URL, so changing
- * schedulers (or the Calendly event) is a one-line edit below. Only the
- * redirect page reads BOOKING_URL.
+ * Every "Book a demo" button points here rather than straight at BOOKING_URL,
+ * so changing schedulers (or the Calendly event) is a one-line edit below.
+ * Only the redirect page reads BOOKING_URL.
  */
 export const DEMO_REDIRECT_PATH = '/demo/'
 export const BOOKING_URL = 'https://calendly.com/tanuj-edviroenergy/30min'

@@ -131,11 +131,13 @@ const vendors: { name: string; src?: string; className?: string }[] = [
   { name: 'KMC Controls', src: kmcControls, className: 'tall' },
 ]
 
+// The modules that are free with the AI Crew subscription. Work orders is a
+// paid module, so it is not listed here.
 const modules = [
   ['Utility tracking', 'Bills, interval meters and Green Button data', '/modules#utility-tracking'],
-  ['Work orders', 'Requests, dispatch and repair history', '/work-orders'],
   ['Project management', 'Capital projects, budgets and schedules', '/modules#project-management'],
   ['Asset logging', 'Equipment, age and condition', '/asset-management'],
+  ['Facilities scheduling', 'Bookings for gyms, fields and rooms', '/facilities-scheduling'],
 ]
 
 const faqs = [
@@ -146,7 +148,7 @@ const faqs = [
   },
   {
     question: 'Can Edviro work with our existing CMMS?',
-    answer: 'Yes. Use the built-in work orders, or keep your CMMS and let Edviro write to it.',
+    answer: 'Yes. Add Edviro’s work-order module, or keep your CMMS and let Edviro write to it.',
   },
   {
     question: 'Who reviews planned fixes?',
@@ -486,7 +488,7 @@ usePageSeo({
             <h3>Keep what works. Consolidate what doesn’t.</h3>
             <p>
               The AI Crew is the core of Edviro, and it works alongside whatever you already run. If
-              you are missing a piece, add any Edviro module at no extra cost.
+              you are missing a piece, add any of these modules at no extra cost.
             </p>
             <SiteLink class="more" href="/modules">See all modules →</SiteLink>
           </div>

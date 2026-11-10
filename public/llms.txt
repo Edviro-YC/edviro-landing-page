@@ -75,7 +75,8 @@ Modern BMS integrations, legacy controls, utility portals (including PG&E Green 
 - [Healthcare](https://edviroenergy.com/solutions/healthcare/): Documented, reviewed work across critical environments and support spaces — pressure and temperature monitoring, work orders with a named reviewer, asset records that stand in for survey binders, and verified energy savings.
 - [Building intelligence](https://edviroenergy.com/building-intelligence/): Fault detection that names the likely cause, with the evidence, for a person to review.
 - [Integrations](https://edviroenergy.com/integrations/): The building controls, meters, utility data, and work-order systems Edviro connects to.
-- [Modules](https://edviroenergy.com/modules/): Utility tracking, work orders, project management, and asset logging, which can be added to the AI Crew subscription at no extra cost.
+- [Modules](https://edviroenergy.com/modules/): Utility tracking, project management, asset logging, and facilities scheduling can be added to the AI Crew subscription at no extra cost. Work orders is a paid module.
+- [Facilities scheduling](https://edviroenergy.com/facilities-scheduling/): Requests to use gyms, fields, auditoriums, and rooms, approved by a person and kept on one calendar per site. A free module.
 - [K-12 districts](https://edviroenergy.com/solutions/schools/k-12/): Edviro for school districts with many sites and a small facilities team.
 - [Universities and campuses](https://edviroenergy.com/solutions/schools/higher-ed/): Edviro for central plants, labs, housing, and large building portfolios.
 - [Data center cooling and capacity](https://edviroenergy.com/solutions/data-centers/cooling/): A calibrated model of cooling headroom per pod, and what-if tests before changes.
@@ -85,7 +86,6 @@ Modern BMS integrations, legacy controls, utility portals (including PG&E Green 
 - [Glossary](https://edviroenergy.com/glossary/): Short definitions of facilities, energy, and data center terms.
 - [Careers](https://edviroenergy.com/careers/): Open roles.
 - [Contact](https://edviroenergy.com/contact/): How to reach Edviro.
-- [Demo & pricing](https://edviroenergy.com/book-a-demo/): What the demo covers and how pricing works.
 - [FAQ](https://edviroenergy.com/faq/): Common questions about Edviro, CMMS replacement or integration, and M&V.
 - [About](https://edviroenergy.com/about/): The team and mission behind Edviro.
 
@@ -118,7 +118,7 @@ All published results come from Edviro's education deployments.
 ## Contact
 
 - Email: founders@edviroenergy.com
-- Book a demo: https://edviroenergy.com/book-a-demo/
+- Book a demo: https://edviroenergy.com/demo/
 - Privacy policy: https://edviroenergy.com/privacy/
 - LinkedIn: https://www.linkedin.com/company/edviro/
 - X: https://x.com/hursheybar2

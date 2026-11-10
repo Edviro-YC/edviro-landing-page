@@ -99,7 +99,7 @@ const pages: ContentPage[] = [
         type: 'cards',
         title: 'Work orders, assets and maintenance',
         intro:
-          'The AI Crew is the subscription. If you don’t already have a tool for work orders, asset logging, utility tracking or project management, you can add ours as free modules.',
+          'The AI Crew is the subscription. If you don’t already have a tool for asset logging, utility tracking, project management or facilities scheduling, you can add ours as free modules. Work orders is a paid module.',
         cards: [
           {
             title: 'Work orders',
@@ -136,7 +136,7 @@ const pages: ContentPage[] = [
           {
             tag: 'Add',
             title: 'Use Edviro’s modules',
-            text: 'Work orders, assets, inspections and mobile field workflows, added free on top of the AI Crew subscription. We import your lists and open work first.',
+            text: 'Work orders, assets, inspections and mobile field workflows. Asset logging is free with the AI Crew subscription, and work orders is a paid module. We import your lists and open work first.',
             link: ['Modules', '/modules'],
           },
           {
@@ -202,7 +202,7 @@ const pages: ContentPage[] = [
           ],
           [
             'Can Edviro replace our CMMS?',
-            'Yes. The modules cover work orders, asset records, inspections and mobile field workflows, and they’re free on top of the AI Crew subscription. You can also keep your CMMS and connect it.',
+            'Yes. The modules cover work orders, asset records, inspections and mobile field workflows. Asset logging is free with the AI Crew subscription, and work orders is a paid module. You can also keep your CMMS and connect it.',
           ],
           [
             'How is this different from an energy audit?',
@@ -323,7 +323,7 @@ const pages: ContentPage[] = [
         type: 'cards',
         title: 'Keep your CMMS or use ours',
         intro:
-          'The AI Crew is the subscription. Work orders, asset logging, utility tracking and project management are modules you can add free if you don’t already have a tool for them.',
+          'The AI Crew is the subscription. Asset logging, utility tracking, project management and facilities scheduling are modules you can add free if you don’t already have a tool for them. Work orders is a paid module.',
         cards: [
           {
             title: 'Work orders',
@@ -398,7 +398,7 @@ const pages: ContentPage[] = [
           ],
           [
             'Can Edviro replace our CMMS?',
-            'Yes, or you can keep your CMMS and connect it. The work order module is free on top of the AI Crew subscription. We confirm what an integration covers system by system.',
+            'Yes, or you can keep your CMMS and connect it. Work orders is a paid module on top of the AI Crew subscription. We confirm what an integration covers system by system.',
           ],
           [
             'How fast does a district see results?',
@@ -573,7 +573,7 @@ const pages: ContentPage[] = [
           {
             tag: 'Add',
             title: 'Use Edviro’s modules',
-            text: 'Work orders, assets, inspections and mobile field workflows, added free on top of the AI Crew subscription.',
+            text: 'Work orders, assets, inspections and mobile field workflows. Asset logging is free with the AI Crew subscription, and work orders is a paid module.',
             link: ['Modules', '/modules'],
           },
         ],

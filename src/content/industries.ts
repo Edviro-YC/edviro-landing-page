@@ -156,7 +156,7 @@ const pages: ContentPage[] = [
           ],
           [
             'What systems does Edviro connect to?',
-            'The BMS, main meters and submeters, and WiFi occupancy data. It works alongside the CMMS you already have. If you don’t have one, the work-order module can be added free with the AI Crew subscription.',
+            'The BMS, main meters and submeters, and WiFi occupancy data. It works alongside the CMMS you already have. If you don’t have one, you can add Edviro’s work-order module.',
           ],
           [
             'How does Edviro reduce peak demand charges?',
@@ -267,7 +267,7 @@ const pages: ContentPage[] = [
         type: 'cards',
         title: 'Work orders, assets and field work',
         intro:
-          'Edviro works alongside the CMMS you have. If you don’t have one, the work-order and asset modules can be added free with the AI Crew subscription.',
+          'Edviro works alongside the CMMS you have. If you don’t have one, you can add ours: asset logging is free with the AI Crew subscription, and work orders is a paid module.',
         cards: [
           {
             title: 'Work orders',

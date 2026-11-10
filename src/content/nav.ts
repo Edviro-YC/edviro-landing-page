@@ -104,7 +104,6 @@ export const NAV: NavItem[] = [
         title: 'Get in touch',
         links: [
           ['Contact', '/contact'],
-          ['Demo & pricing', '/book-a-demo'],
           ['Privacy', '/privacy'],
         ],
       },
@@ -166,7 +165,6 @@ export const FOOTER: { title: string; links: LinkPair[] }[] = [
       ['About', '/about'],
       ['Careers', '/careers'],
       ['Contact', '/contact'],
-      ['Demo & pricing', '/book-a-demo'],
       ['Privacy', '/privacy'],
       ['Dashboard login', DASHBOARD_URL],
       ['LinkedIn', LINKEDIN_URL],

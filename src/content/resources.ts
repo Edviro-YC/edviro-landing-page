@@ -27,7 +27,7 @@ const pages: ContentPage[] = [
               ],
               [
                 'Does Edviro include work orders, or is it only an energy tool?',
-                'Yes, it includes work orders. The AI Crew is the subscription, and utility tracking, work orders, project management and asset logging are modules you can add free if you don’t already have them. The work-order module takes requests through the app and by email, suggests a category and priority, assigns by site, asset or trade, gives technicians instructions on their phone, holds photos and inspections, supports backlog review, and checks afterwards that the problem was resolved. Energy monitoring is where many teams start.',
+                'It does work orders too. The AI Crew is the subscription. Work orders is a paid module you can add to it, and utility tracking, project management, asset logging and facilities scheduling are modules you can add free if you don’t already have them. The work-order module takes requests through the app and by email, suggests a category and priority, assigns by site, asset or trade, gives technicians instructions on their phone, holds photos and inspections, supports backlog review, and checks afterwards that the problem was resolved. Energy monitoring is where many teams start.',
               ],
               [
                 'What is autonomous building energy management?',
@@ -52,7 +52,7 @@ const pages: ContentPage[] = [
             items: [
               [
                 'Do we have to replace our CMMS to use Edviro?',
-                'No. If you already have a CMMS, keep it: Edviro sends approved fixes into it and checks the outcome. It connects to SchoolDude, FMX, AssetWorks and other major CMMS platforms. If you don’t have a work-order or asset system, you can add our work-order and asset-logging modules free with the AI Crew subscription.',
+                'No. If you already have a CMMS, keep it: Edviro sends approved fixes into it and checks the outcome. It connects to SchoolDude, FMX, AssetWorks and other major CMMS platforms. If you don’t have a work-order or asset system, you can add ours: asset logging is free with the AI Crew subscription, and work orders is a paid module.',
               ],
               [
                 'Do I need to replace my existing equipment or controls?',

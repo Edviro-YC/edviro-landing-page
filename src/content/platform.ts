@@ -358,7 +358,7 @@ const pages: ContentPage[] = [
       title: 'Work orders that close when the data shows the fix worked',
       lede: 'Requests, alarms and problems Edviro detects go into one queue. Edviro drafts the work order and a person approves it. After the technician finishes, Edviro checks the building data to see whether the problem stopped. You can use Edviro as your work-order system or connect it to the one you have.',
       secondary: ['How it works', '#how'],
-      note: 'The work-order module is free with your AI Crew subscription.',
+      note: 'Work orders is a paid module on top of the AI Crew subscription.',
     },
     sections: [
       {
@@ -1064,39 +1064,49 @@ const pages: ContentPage[] = [
     path: '/modules',
     title: 'Modules | Edviro',
     description:
-      'The AI Crew is the Edviro subscription. Utility tracking, work orders, project management and asset logging can be added at no extra cost.',
+      'The AI Crew is the Edviro subscription. Utility tracking, project management, asset logging and facilities scheduling can be added at no extra cost. Work orders is a paid module.',
     hero: {
       crumbs: [PLATFORM],
       label: 'Modules',
-      title: 'Modules you can add free with the AI Crew',
-      lede: 'The AI Crew is the Edviro subscription. It watches your buildings, drafts fixes for a person to approve and checks the result, and it works alongside the tools you already run. If you’re missing a tool, you can add an Edviro module for it at no extra cost.',
+      title: 'Modules you can add to the AI Crew',
+      lede: 'The AI Crew is the Edviro subscription. It watches your buildings, drafts fixes for a person to approve and checks the result, and it works alongside the tools you already run. If you’re missing a tool, you can add an Edviro module for it. Four are free with the subscription, and work orders is a paid module.',
       secondary: ['How the AI Crew works', '/facilities-operations'],
     },
     sections: [
       {
         type: 'cards',
-        label: 'Free with your AI Crew subscription',
-        title: 'The four modules',
+        title: 'The modules',
+        intro: 'Four are free with the AI Crew subscription. Work orders is a paid module.',
         cards: [
           {
+            tag: 'Free with the AI Crew',
             title: 'Utility tracking',
             text: 'Utility bills, interval meters and Green Button data.',
             href: '/modules#utility-tracking',
           },
           {
-            title: 'Work orders',
-            text: 'Requests, dispatch and repair history.',
-            href: '/work-orders',
-          },
-          {
+            tag: 'Free with the AI Crew',
             title: 'Project management',
             text: 'Capital projects with their budgets and schedules.',
             href: '/modules#project-management',
           },
           {
+            tag: 'Free with the AI Crew',
             title: 'Asset logging',
             text: 'Your equipment, with its age and condition.',
             href: '/asset-management',
+          },
+          {
+            tag: 'Free with the AI Crew',
+            title: 'Facilities scheduling',
+            text: 'Requests and bookings for gyms, fields and rooms.',
+            href: '/facilities-scheduling',
+          },
+          {
+            tag: 'Paid module',
+            title: 'Work orders',
+            text: 'Requests, dispatch and repair history.',
+            href: '/work-orders',
           },
         ],
       },
@@ -1167,7 +1177,10 @@ const pages: ContentPage[] = [
         type: 'faq',
         title: 'Common questions',
         items: [
-          ['Do modules cost extra?', 'No. They’re included with your AI Crew subscription.'],
+          [
+            'Do modules cost extra?',
+            'Four of them don’t: utility tracking, project management, asset logging and facilities scheduling are included with your AI Crew subscription. Work orders is a paid module.',
+          ],
           [
             'Do we have to use the modules?',
             'No. The AI Crew works alongside the systems you already run. Add a module only where you’re missing a tool or want to consolidate.',
@@ -1175,6 +1188,100 @@ const pages: ContentPage[] = [
           [
             'Can we change our mind later?',
             'Yes. Edviro can be the system of record, or it can read from and write to the one you keep. You can switch later.',
+          ],
+        ],
+      },
+    ],
+  },
+  {
+    path: '/facilities-scheduling',
+    title: 'Facilities scheduling | Edviro',
+    description:
+      'Requests to use school and building spaces, approved by a person and kept on one calendar per site. A free module with the Edviro AI Crew subscription.',
+    hero: {
+      crumbs: [PLATFORM, ['Modules', '/modules']],
+      label: 'Facilities scheduling',
+      title: 'Scheduling for gyms, fields, auditoriums and rooms',
+      lede: 'Staff and community groups ask for a space and a time. Someone on your team approves it, and the booking goes on one calendar for the site. It’s a free module with the AI Crew subscription.',
+      secondary: ['All modules', '/modules'],
+    },
+    sections: [
+      {
+        type: 'answer',
+        question: 'What is facilities scheduling software?',
+        answer:
+          'Facilities scheduling software handles requests to use a building’s spaces, such as gyms, fields, auditoriums and classrooms. In Edviro, each request goes to a person for approval, and approved bookings sit on one calendar per site, so everyone can see what is in use and when.',
+      },
+      {
+        type: 'steps',
+        title: 'How it works',
+        steps: [
+          {
+            title: 'Request',
+            text: 'Staff or a community group asks for a space, a date and a time.',
+          },
+          { title: 'Check', text: 'Edviro checks the calendar for anything already booked there.' },
+          {
+            title: 'Approve',
+            text: 'A person on your team approves or declines the request.',
+            tag: 'Human',
+          },
+          { title: 'Calendar', text: 'The booking appears on the site’s calendar.' },
+        ],
+      },
+      {
+        type: 'cards',
+        title: 'What you get',
+        cards: [
+          {
+            title: 'One calendar per site',
+            text: 'Every booked gym, field, auditorium and room, in one place.',
+          },
+          {
+            title: 'One queue of requests',
+            text: 'Each request shows the space, the date and who asked.',
+          },
+          {
+            title: 'Approval by a person',
+            text: 'Nothing is booked until someone on your team says yes.',
+          },
+          {
+            title: 'Double bookings caught',
+            text: 'Two requests for the same space and time are flagged before either is approved.',
+          },
+        ],
+      },
+      {
+        type: 'cards',
+        title: 'How it works with the AI Crew',
+        cards: [
+          {
+            title: 'The crew knows what’s booked',
+            text: 'When a unit runs after hours, Edviro checks whether anything was on the calendar. If nothing was, it’s flagged.',
+            href: '/building-intelligence',
+          },
+          {
+            title: 'Keep your current scheduler',
+            text: 'If you already use a scheduling tool, keep it. This module is there for teams that don’t have one.',
+            href: '/modules',
+          },
+        ],
+      },
+      {
+        type: 'faq',
+        title: 'Common questions',
+        items: [
+          [
+            'Does it cost extra?',
+            'No. Facilities scheduling is a module you can add to your AI Crew subscription at no extra cost.',
+          ],
+          [
+            'Who approves a booking?',
+            'A person on your team. Edviro checks for conflicts and puts the request in front of them, and they decide.',
+          ],
+          [
+            'Do we have to use it?',
+            'No. The AI Crew works alongside the tools you already run. Add this module only if you don’t have a scheduler or want to move off the one you have.',
           ],
         ],
       },

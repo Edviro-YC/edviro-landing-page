@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { DEMO_CLICK_OPENAI_EVENT, DEMO_REDIRECT_PATH } from '@/seo/site'
 
-// Goes straight to the scheduler (via the /demo redirect) and reports the same
-// click the Demo & pricing page reports before it hands off.
+// Goes straight to the scheduler (via the /demo redirect) and reports the
+// click to OpenAI Ads; the confirmed booking is reported from /demo-booked.
 const reportDemoIntent = () => {
   window.oaiq?.('measure', DEMO_CLICK_OPENAI_EVENT, { type: 'customer_action' })
 }

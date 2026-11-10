@@ -10,6 +10,7 @@ import {
   DEMO_REDIRECT_PATH,
   IUSD_DEMO_PATH,
   IUSD_DEMO_URL,
+  LEGACY_BOOK_DEMO_PATH,
   LEGACY_FACILITIES_OPS_PATH,
   PRIVACY_PATH,
   SCHOOL_ENERGY_PATH,
@@ -20,9 +21,8 @@ import {
  * rather than committed under public/ so src/seo/site.ts stays the only place
  * the target URLs are written.
  *
- * /demo forwards to the scheduler instead of loading the interstitial page;
- * /book-a-demo is a real page and fires the Google Ads conversion. The `!`
- * forces the rule, since Netlify's shadowing would otherwise serve the
+ * /demo forwards to the scheduler instead of loading the interstitial page.
+ * The `!` forces the rule, since Netlify's shadowing would otherwise serve the
  * prerendered /demo/index.html instead of redirecting.
  *
  * /iusd-sustainability-demo forwards to the IUSD community dashboard demo
@@ -34,6 +34,10 @@ import {
  *
  * /privacy-policy is the dashboard's route name; the public canonical is
  * /privacy/ (the URL cited inside the policy itself).
+ *
+ * /book-a-demo was the Demo & pricing page, removed on 2026-11-10. It 301s to
+ * the homepage's demo section so old links and ad destinations still land on
+ * the site with the booking button in view.
  *
  * /solutions/school-facilities-operations was merged into /solutions/schools/
  * (2026-09-19); the 301 consolidates its links and any indexed copies there.
@@ -61,6 +65,8 @@ function netlifyRedirects(): Plugin {
           `/home/  /  301\n` +
           `/privacy-policy  ${PRIVACY_PATH}  301\n` +
           `/privacy-policy/  ${PRIVACY_PATH}  301\n` +
+          `${LEGACY_BOOK_DEMO_PATH}  /#demo  301\n` +
+          `${LEGACY_BOOK_DEMO_PATH}/  /#demo  301\n` +
           `${LEGACY_FACILITIES_OPS_PATH}  ${SCHOOL_ENERGY_PATH}  301\n` +
           `${LEGACY_FACILITIES_OPS_PATH}/  ${SCHOOL_ENERGY_PATH}  301\n`,
       })

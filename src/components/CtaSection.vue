@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
 import DemoButton from './DemoButton.vue'
-import { BOOK_DEMO_PATH, CONTACT_EMAIL } from '@/seo/site'
+import { CONTACT_EMAIL } from '@/seo/site'
 </script>
 
 <template>
@@ -14,9 +13,7 @@ import { BOOK_DEMO_PATH, CONTACT_EMAIL } from '@/seo/site'
         <p class="sub">Pick a 30-minute slot and we’ll walk through your sites with you.</p>
         <DemoButton>Book a demo <span aria-hidden="true">→</span></DemoButton>
         <p class="demo-note">
-          Or email <a :href="`mailto:${CONTACT_EMAIL}`">{{ CONTACT_EMAIL }}</a
-          >, or see
-          <RouterLink :to="BOOK_DEMO_PATH">what the demo covers and how pricing works</RouterLink>.
+          Or email <a :href="`mailto:${CONTACT_EMAIL}`">{{ CONTACT_EMAIL }}</a>
         </p>
       </div>
     </section>

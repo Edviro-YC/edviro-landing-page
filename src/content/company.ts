@@ -206,7 +206,7 @@ const pages: ContentPage[] = [
           },
           {
             title: 'Billing',
-            text: 'The AI Crew is a software subscription. Modules can be added on top of it at no extra cost.',
+            text: 'The AI Crew is a software subscription. Utility tracking, project management, asset logging and facilities scheduling can be added at no extra cost. Work orders is a paid module.',
           },
         ],
       },
