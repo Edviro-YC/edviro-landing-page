@@ -321,7 +321,7 @@ usePageSeo({
                 <span class="chip-action">Approve</span>
               </div>
             </div>
-            <h3>Reviewed work orders</h3>
+            <h3>Review work orders</h3>
             <p>Signals and requests become orders a human approves.</p>
           </div>
           <div class="nd-card">
