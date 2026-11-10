@@ -31,7 +31,15 @@ const skipToMain = () => {
     <a href="#main-content" class="skip-link" @click.prevent="skipToMain">Skip to content</a>
     <SiteNav />
     <div id="main-content">
-      <RouterView />
+      <!--
+        Keyed by path: the redesigned pages all render through ContentPage.vue,
+        and without a key Vue reuses that one instance between routes, so the
+        page content and its head tags would not change. Hash-only navigation
+        keeps the same key and does not remount.
+      -->
+      <RouterView v-slot="{ Component, route }">
+        <component :is="Component" :key="route.path" />
+      </RouterView>
     </div>
     <SiteFooter />
   </div>
