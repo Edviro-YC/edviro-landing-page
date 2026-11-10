@@ -3,15 +3,15 @@ import { RouterView } from 'vue-router'
 import { useHead } from '@unhead/vue'
 import SiteNav from './components/SiteNav.vue'
 import SiteFooter from './components/SiteFooter.vue'
-import publicSansLatin from '@/assets/fonts/public-sans-latin.woff2'
+import geistLatin from '@/assets/fonts/geist-latin.woff2'
 
 // Preload the primary latin font subset (hashed URL resolved by Vite) so the
 // above-the-fold type renders without a flash. Applied on every route.
-// Typography, colors, and the --accent token live in assets/main.css.
+// Tokens for the older pages live in assets/main.css; the redesign's in assets/site.css.
 useHead({
   htmlAttrs: { lang: 'en' },
   link: [
-    { rel: 'preload', as: 'font', type: 'font/woff2', href: publicSansLatin, crossorigin: 'anonymous' },
+    { rel: 'preload', as: 'font', type: 'font/woff2', href: geistLatin, crossorigin: 'anonymous' },
   ],
 })
 

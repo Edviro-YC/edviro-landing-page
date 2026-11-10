@@ -4,6 +4,7 @@ import App from './App.vue'
 import { routes } from './router'
 import { POSTHOG_HOST, POSTHOG_KEY } from './seo/site'
 import './assets/main.css'
+import './assets/site.css'
 
 export const createApp = ViteSSG(
   App,

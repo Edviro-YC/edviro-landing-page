@@ -73,6 +73,18 @@ Modern BMS integrations, legacy controls, utility portals (including PG&E Green 
 - [M&V for construction](https://edviroenergy.com/solutions/construction/): Independent baselining and verification for new builds.
 - [Data centers](https://edviroenergy.com/solutions/data-centers/): Cooling headroom verified against measured telemetry.
 - [Healthcare](https://edviroenergy.com/solutions/healthcare/): Documented, reviewed work across critical environments and support spaces — pressure and temperature monitoring, work orders with a named reviewer, asset records that stand in for survey binders, and verified energy savings.
+- [Building intelligence](https://edviroenergy.com/building-intelligence/): Fault detection that names the likely cause, with the evidence, for a person to review.
+- [Integrations](https://edviroenergy.com/integrations/): The building controls, meters, utility data, and work-order systems Edviro connects to.
+- [Modules](https://edviroenergy.com/modules/): Utility tracking, work orders, project management, and asset logging, which can be added to the AI Crew subscription at no extra cost.
+- [K-12 districts](https://edviroenergy.com/solutions/schools/k-12/): Edviro for school districts with many sites and a small facilities team.
+- [Universities and campuses](https://edviroenergy.com/solutions/schools/higher-ed/): Edviro for central plants, labs, housing, and large building portfolios.
+- [Data center cooling and capacity](https://edviroenergy.com/solutions/data-centers/cooling/): A calibrated model of cooling headroom per pod, and what-if tests before changes.
+- [Data center alarm diagnosis](https://edviroenergy.com/solutions/data-centers/alarm-diagnosis/): Related alarms grouped into the fault behind them, with a fix for an operator to approve.
+- [Customer results](https://edviroenergy.com/results/): What Edviro has measured so far; published results are from schools.
+- [M&V methodology](https://edviroenergy.com/results/methodology/): How a baseline is built, how a saving is measured, and when it is counted.
+- [Glossary](https://edviroenergy.com/glossary/): Short definitions of facilities, energy, and data center terms.
+- [Careers](https://edviroenergy.com/careers/): Open roles.
+- [Contact](https://edviroenergy.com/contact/): How to reach Edviro.
 - [Demo & pricing](https://edviroenergy.com/book-a-demo/): What the demo covers and how pricing works.
 - [FAQ](https://edviroenergy.com/faq/): Common questions about Edviro, CMMS replacement or integration, and M&V.
 - [About](https://edviroenergy.com/about/): The team and mission behind Edviro.
@@ -98,8 +110,8 @@ Modern BMS integrations, legacy controls, utility portals (including PG&E Green 
 
 All published results come from Edviro's education deployments.
 
-- Over $400K saved for education clients to date.
-- 34 school sites live and expanding.
+- $500K saved for education clients to date.
+- 134 sites live and expanding.
 - Featured education customers include Palo Alto Unified School District and Los Gatos-Saratoga Union High School District.
 - 24/7 monitoring and follow-up across every connected site.
 

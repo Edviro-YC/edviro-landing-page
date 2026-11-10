@@ -12,7 +12,7 @@ export const SITE_NAME = 'Edviro'
  */
 export const SITE_TAGLINE = 'AI-powered facilities operations'
 /** Secondary brand statement (footer). */
-export const BRAND_STATEMENT = 'AI for the people who run the buildings.'
+export const BRAND_STATEMENT = 'Your AI facilities crew.'
 /** Brand promise. */
 export const BRAND_PROMISE = 'Find the problem. Coordinate the fix. Verify the result.'
 
@@ -83,8 +83,14 @@ export const SOLUTION_CONSTRUCTION_PATH = '/solutions/construction/'
  *   First published 2026-06-30 (commit 369247c). Record report id + period
  *   here when re-confirmed.
  */
-export const EDU_VERIFIED_SAVINGS = '$400K'
-export const EDU_LIVE_SITES = 34
+/*
+ * 2026-11-10: raised from $400K / 34 to the figures Hursh gave for the
+ * redesign. Not yet re-confirmed against the savings ledger and the schools
+ * registry: do that before deploying. The redesigned pages in src/content
+ * repeat both figures as text, so change them there in the same commit.
+ */
+export const EDU_VERIFIED_SAVINGS = '$500K'
+export const EDU_LIVE_SITES = 134
 export const MV_HEADLINE_RESULT = '\u221221.4%'
 
 export const FAQ_PATH = '/faq/'
