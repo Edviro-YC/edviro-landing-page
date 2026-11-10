@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
-import { BOOK_DEMO_PATH } from '@/seo/site'
+import { DEMO_REDIRECT_PATH } from '@/seo/site'
 
 /**
  * Two-column page hero shared by the platform and industry pages: eyebrow,
@@ -24,7 +24,7 @@ defineProps<{
         <p class="phero-lede">{{ lede }}</p>
         <p v-if="note" class="phero-note">{{ note }}</p>
         <div class="phero-ctas">
-          <RouterLink :to="BOOK_DEMO_PATH" class="btn btn-primary">Book a demo</RouterLink>
+          <a :href="DEMO_REDIRECT_PATH" target="_blank" rel="noopener" class="btn btn-primary">Book a demo</a>
           <RouterLink v-if="secondary" :to="secondary.to" class="btn btn-outline">{{ secondary.label }}</RouterLink>
         </div>
       </div>
