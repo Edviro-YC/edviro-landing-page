@@ -2,12 +2,6 @@
 import { RouterLink } from 'vue-router'
 import DemoButton from './DemoButton.vue'
 import { BOOK_DEMO_PATH, CONTACT_EMAIL } from '@/seo/site'
-
-const points = [
-  'No new hardware',
-  'First findings from bills and meter data',
-  'A person approves every change',
-]
 </script>
 
 <template>
@@ -24,9 +18,6 @@ const points = [
           >, or see
           <RouterLink :to="BOOK_DEMO_PATH">what the demo covers and how pricing works</RouterLink>.
         </p>
-        <ul class="demo-points">
-          <li v-for="point in points" :key="point">{{ point }}</li>
-        </ul>
       </div>
     </section>
   </div>

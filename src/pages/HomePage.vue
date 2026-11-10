@@ -393,8 +393,8 @@ usePageSeo({
           <h2>No alarms, just fixes.</h2>
           <p class="sub">
             There is no alarms tab in Edviro. Your AI crew triages every alarm, text and meter
-            change around the clock, so what reaches your team is a diagnosed fix that’s ready to
-            approve.
+            change around the clock, even while you’re sleeping, so what reaches your team is a
+            diagnosed fix that’s ready to approve.
           </p>
         </div>
         <div class="loop">
@@ -407,15 +407,15 @@ usePageSeo({
           />
           <div class="step" style="left: 20%; top: 0">
             <div class="step-no">01</div>
-            <h3>Signal</h3>
+            <h3>Works 24/7</h3>
             <div class="step-ui">
-              <small>Custodian text · 7:42 AM</small>
-              <span class="bubble">Zone 3 is too cold again.</span>
+              <small>Edviro crew · 2:14 AM</small>
+              <span class="bubble">I checked 250 thermostats. One valve is stuck.</span>
             </div>
           </div>
           <div class="step" style="left: 50%; top: 0">
             <div class="step-no">02</div>
-            <h3>Diagnose</h3>
+            <h3>Diagnose issues</h3>
             <div class="step-ui">
               <b>Reheat valve stuck closed</b>
               <span>Discharge air at 55°F for six days, valve commanded open.</span>
@@ -423,7 +423,7 @@ usePageSeo({
           </div>
           <div class="step human" style="left: 80%; top: 0">
             <div class="step-no">03 <em>Human</em></div>
-            <h3>Review</h3>
+            <h3>You approve the fixes</h3>
             <div class="step-ui">
               <small>Facilities lead · 8:10 AM</small>
               <b>Fix drafted for VAV 3-12</b>
@@ -432,10 +432,10 @@ usePageSeo({
           </div>
           <div class="step" style="left: 65%; bottom: 0">
             <div class="step-no">04</div>
-            <h3>Dispatch</h3>
+            <h3>Push to your work orders</h3>
             <div class="step-ui">
-              <b>Technician on site · 9:30 AM</b>
-              <span>Unit history and repair steps attached.</span>
+              <b>Work order created · 8:12 AM</b>
+              <span>Pushed to your work order system, with history and steps.</span>
             </div>
           </div>
           <div class="step" style="left: 35%; bottom: 0">
@@ -443,7 +443,7 @@ usePageSeo({
             <h3>Verify</h3>
             <div class="step-ui">
               <b>Zone 3 back at 70°F</b>
-              <span class="held">Held for 14 days. Fix closed.</span>
+              <span class="held">Watched 14 days. Fix confirmed.</span>
             </div>
           </div>
         </div>
