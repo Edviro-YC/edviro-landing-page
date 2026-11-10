@@ -192,14 +192,29 @@ usePageSeo({
 
         <FixWindow v-else-if="section.type === 'screen'" :screen="section.screen" />
 
-        <div v-else-if="section.type === 'prose'" class="prose">
-          <template v-for="(block, blockIndex) in section.blocks" :key="blockIndex">
-            <p v-if="typeof block === 'string'">{{ block }}</p>
-            <h3 v-else-if="'h' in block">{{ block.h }}</h3>
-            <ul v-else>
-              <li v-for="item in block.list" :key="item">{{ item }}</li>
-            </ul>
-          </template>
+        <div
+          v-else-if="section.type === 'prose'"
+          :class="['prose-layout', { 'has-figure': section.image }]"
+        >
+          <div class="prose">
+            <template v-for="(block, blockIndex) in section.blocks" :key="blockIndex">
+              <p v-if="typeof block === 'string'">{{ block }}</p>
+              <h3 v-else-if="'h' in block">{{ block.h }}</h3>
+              <ul v-else>
+                <li v-for="item in block.list" :key="item">{{ item }}</li>
+              </ul>
+            </template>
+          </div>
+          <figure v-if="section.image">
+            <img
+              :src="section.image.src"
+              :alt="section.image.alt"
+              :width="section.image.width"
+              :height="section.image.height"
+              loading="lazy"
+            />
+            <figcaption v-if="section.image.caption">{{ section.image.caption }}</figcaption>
+          </figure>
         </div>
       </div>
     </section>

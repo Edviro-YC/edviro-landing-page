@@ -36,7 +36,12 @@ export type Section =
   | (SectionBase & { type: 'chips'; items: string[]; note?: string })
   | (SectionBase & { type: 'rows'; rows: [term: string, text: string][] })
   | (SectionBase & { type: 'screen'; screen: FixScreen })
-  | (SectionBase & { type: 'prose'; blocks: (string | { h: string } | { list: string[] })[] })
+  | (SectionBase & {
+      type: 'prose'
+      blocks: (string | { h: string } | { list: string[] })[]
+      /** Optional photo shown beside the text. */
+      image?: { src: string; alt: string; width: number; height: number; caption?: string }
+    })
   | (SectionBase & {
       type: 'faq'
       items?: [question: string, answer: string][]

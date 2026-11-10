@@ -1,3 +1,4 @@
+import foundersAtYc from '@/assets/img/founders-yc.jpg'
 import type { ContentPage } from './types'
 
 const YC_JOBS = 'https://www.ycombinator.com/companies/edviro/jobs'
@@ -27,6 +28,13 @@ const pages: ContentPage[] = [
       {
         type: 'prose',
         title: 'How it started',
+        image: {
+          src: foundersAtYc,
+          alt: 'Hursh Shah and Tanuj Siripurapu standing either side of a Y Combinator sign',
+          width: 1400,
+          height: 1171,
+          caption: 'Hursh (left) and Tanuj at Y Combinator.',
+        },
         blocks: [
           'Edviro began when Hursh was working with the facilities team at his own high school. The school had plenty of smart controls and a building management system, and it was still wasting a lot of energy. The data that would have shown where was scattered across meters, utility bills and control screens that nobody had time to read together.',
           'So he built the facilities manager a dashboard. It was useful enough that other schools in Northern California asked for it, and in 2025 Hursh and Tanuj turned it into a company. An early pilot across seven schools and 16 meters turned up hundreds of thousands of dollars in billing errors and wasted energy.',

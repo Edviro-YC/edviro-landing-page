@@ -1661,6 +1661,30 @@
   color: var(--green);
 }
 
+.nd .prose-layout.has-figure {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.nd .prose-layout figure {
+  position: sticky;
+  top: 32px;
+}
+
+.nd .prose-layout img {
+  width: 100%;
+  border-radius: var(--r);
+  border: 1px solid var(--line);
+}
+
+.nd .prose-layout figcaption {
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--mute);
+}
+
 .nd .prose {
   max-width: 44em;
   font-size: 17px;
@@ -1878,6 +1902,15 @@
 
   .nd .panels {
     grid-template-columns: 1fr !important;
+  }
+
+  .nd .prose-layout.has-figure {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .nd .prose-layout figure {
+    position: static;
   }
 
   .nd .rows > div {
