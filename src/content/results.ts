@@ -66,7 +66,7 @@ const pages: ContentPage[] = [
           {
             tag: 'Illustrative scenario',
             title: 'Data center alarm diagnosis',
-            text: 'This is a product scenario with made-up data. In it, 312 BMS alarms trace to 1 root cause, a chilled-water valve on CRAH-2, and the cooling model is accurate to ±0.4 °C. Data centers are newer for us: we began working with our first data center operators in 2026.',
+            text: 'This is a product scenario with made-up data. In it, 312 BMS alarms trace to 1 root cause, a chilled-water valve on CRAH-2, and the cooling model is accurate to ±0.4 °C.',
             href: '/solutions/data-centers/alarm-diagnosis',
           },
         ],
