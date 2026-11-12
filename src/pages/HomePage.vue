@@ -418,6 +418,13 @@ function tabFill(index: number) {
 }
 
 onMounted(() => {
+  // The opening animation plays once per tab: see the script in index.html.
+  try {
+    window.sessionStorage.setItem('edviro-intro', '1')
+  } catch {
+    // Storage can be blocked; the animation then plays on each load.
+  }
+
   pinQuery = window.matchMedia(
     '(min-width: 1041px) and (min-height: 720px) and (prefers-reduced-motion: no-preference)',
   )
@@ -428,6 +435,8 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
+  // Coming back to the homepage from another page does not replay it.
+  document.documentElement.classList.add('intro-seen')
   pinQuery?.removeEventListener('change', setPinned)
   window.removeEventListener('scroll', measurePlatform)
   window.removeEventListener('resize', measurePlatform)
@@ -436,9 +445,12 @@ onBeforeUnmount(() => {
 
 <template>
   <main class="nd">
-    <div class="hero">
+    <div class="hero intro">
       <div class="wrap">
-        <h1>Infrastructure that runs itself.<span>Put your facility on autopilot.</span></h1>
+        <h1>
+          <span class="hl">Infrastructure that runs itself.</span
+          ><span class="hl accent">Put your facility on autopilot.</span>
+        </h1>
         <p class="nd-lede">
           Edviro is facilities management software that catches building problems, drafts work
           orders for your team to approve, and verifies the fix, so you can reduce waste
@@ -481,6 +493,7 @@ onBeforeUnmount(() => {
                   v-for="(fix, index) in fixes"
                   :key="fix.title"
                   :class="['fix', { on: index === 0 }]"
+                  :style="{ '--i': index }"
                 >
                   <b>{{ fix.title }}</b>
                   <small>{{ fix.meta }}</small>
@@ -499,6 +512,7 @@ onBeforeUnmount(() => {
                   <line class="chart-base" x1="0" y1="24" x2="300" y2="24" />
                   <polyline
                     class="chart-line"
+                    pathLength="1"
                     points="0,26 30,24 60,27 80,40 100,62 130,66 160,64 190,67 220,65 250,66 300,65"
                   />
                   <text class="chart-label" x="300" y="16" text-anchor="end">Setpoint 70°F</text>

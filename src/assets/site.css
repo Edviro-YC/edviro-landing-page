@@ -302,8 +302,11 @@
   margin-left: -.086em;
 }
 
-.nd .hero h1 span {
+.nd .hero h1 .hl {
   display: block;
+}
+
+.nd .hero h1 .accent {
   color: var(--green);
   padding-left: .07em;
 }
@@ -3010,5 +3013,122 @@
     margin-top: 48px;
     padding: 24px 20px;
     border-radius: 18px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Homepage opening animation: the headline comes in, then the product screen
+   fills in row by row and diagnoses the first fix. It is CSS only, so it runs
+   from the first paint of the prerendered page, and it plays once per tab. Keyframes only set a `from`
+   and fill backwards, so once an animation ends nothing of it is left on the
+   element.
+--------------------------------------------------------------------------- */
+@keyframes nd-rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--rise, 24px));
+  }
+}
+
+@keyframes nd-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes nd-pop {
+  from {
+    opacity: 0;
+    transform: scale(.8);
+  }
+}
+
+@keyframes nd-select {
+  from {
+    background-color: transparent;
+    box-shadow: inset 2px 0 0 transparent;
+  }
+}
+
+@keyframes nd-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+.nd .intro .hl {
+  --rise: .4em;
+  animation: nd-rise .7s cubic-bezier(.2, .7, .2, 1) backwards;
+}
+
+.nd .intro .hl.accent {
+  animation-delay: .08s;
+}
+
+.nd .intro .nd-lede {
+  animation: nd-fade .7s .2s backwards;
+}
+
+.nd .intro .actions {
+  animation: nd-fade .7s .3s backwards;
+}
+
+.nd .intro .stage {
+  --rise: 36px;
+  animation: nd-rise .9s .35s cubic-bezier(.2, .7, .2, 1) backwards;
+}
+
+.nd .intro .side > *, .nd .intro .list-head {
+  animation: nd-fade .5s .75s backwards;
+}
+
+.nd .intro .fix {
+  --rise: 10px;
+  animation: nd-rise .5s calc(.85s + var(--i) * .09s) cubic-bezier(.2, .7, .2, 1) backwards;
+}
+
+.nd .intro .fix.on {
+  animation:
+    nd-rise .5s .85s cubic-bezier(.2, .7, .2, 1) backwards,
+    nd-select .4s 1.5s backwards;
+}
+
+.nd .intro .fix .pill {
+  animation: nd-pop .35s calc(1.05s + var(--i) * .09s) backwards;
+}
+
+.nd .intro .detail > * {
+  --rise: 8px;
+  animation: nd-rise .45s 1.6s cubic-bezier(.2, .7, .2, 1) backwards;
+}
+
+.nd .intro .detail > :nth-child(2) { animation-delay: 1.68s; }
+.nd .intro .detail > :nth-child(3) { animation-delay: 1.78s; }
+.nd .intro .detail > :nth-child(4) { animation-delay: 1.95s; }
+.nd .intro .detail > :nth-child(5) { animation-delay: 2.03s; }
+.nd .intro .detail > :nth-child(6) { animation-delay: 2.15s; }
+.nd .intro .detail > :nth-child(7) { animation-delay: 2.6s; }
+.nd .intro .detail > :nth-child(8) { animation-delay: 2.68s; }
+.nd .intro .detail > :nth-child(9) { animation-delay: 2.9s; }
+
+.nd .intro .detail .chart-line {
+  stroke-dasharray: 1;
+  animation: nd-draw .9s 2.2s ease-out backwards;
+}
+
+.nd .intro .detail .app-button:first-child {
+  animation: nd-pop .4s 3.05s backwards;
+}
+
+/* Already played in this tab (set in index.html and HomePage.vue) */
+.intro-seen .nd .intro,
+.intro-seen .nd .intro * {
+  animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nd .intro,
+  .nd .intro * {
+    animation: none !important;
   }
 }
