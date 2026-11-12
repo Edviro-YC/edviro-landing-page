@@ -109,7 +109,8 @@ export const DASHBOARD_URL = 'https://dash.edviroenergy.com'
 export const LINKEDIN_URL = 'https://www.linkedin.com/company/edviro/'
 export const X_URL = 'https://x.com/hursheybar2'
 export const X_HANDLE = '@hursheybar2'
-export const SOCIAL_URLS = [LINKEDIN_URL, X_URL]
+// Organization sameAs must identify Edviro itself, not a founder's account.
+export const SOCIAL_URLS = [LINKEDIN_URL, 'https://www.ycombinator.com/companies/edviro']
 
 /**
  * The former Demo & pricing page, removed on 2026-11-10. Only the generated
