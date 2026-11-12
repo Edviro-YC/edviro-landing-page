@@ -103,7 +103,7 @@ const pages: ContentPage[] = [
           ],
           [
             'Do you have results outside schools?',
-            'None published yet. We began working with our first data center operators in 2026, and we have piloted baselining and M&V with a construction company. The data center scenario on this page is an illustration.',
+            'None published yet. We have piloted baselining and M&V with a construction company. The data center scenario on this page is an illustration.',
           ],
           [
             'Are the numbers in product screenshots real results?',

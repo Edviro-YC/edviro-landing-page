@@ -84,7 +84,6 @@ const pages: ContentPage[] = [
         type: 'rows',
         label: 'Example',
         title: 'A rooftop unit left running overnight',
-        intro: 'An example with made-up numbers.',
         rows: [
           ['Detect', 'After-hours load on the main meter is up 38%.'],
           ['Diagnose', 'A schedule override has left RTU-3 in occupied mode for four nights.'],
@@ -138,7 +137,7 @@ const pages: ContentPage[] = [
           {
             tag: 'Data centers',
             title: 'Data centers',
-            text: 'This is newer for us: we began working with our first data center operators in 2026. In one example, 312 BMS alarms trace back to a single sticking valve on CRAH-2. Edviro also models cooling to ±0.4 °C, so you can check headroom before you add racks.',
+            text: 'In one example, 312 BMS alarms trace back to a single sticking valve on CRAH-2. Edviro also models cooling to ±0.4 °C, so you can check headroom before you add racks.',
             link: ['Edviro for data centers', '/solutions/data-centers'],
           },
         ],
@@ -168,7 +167,7 @@ const pages: ContentPage[] = [
         items: [
           [
             'Which industries does Edviro serve?',
-            'Edviro started in K–12 schools, and education is where we have the most deployment history. It also covers higher education, data centers, commercial real estate, healthcare and construction. Data centers are newer for us: we began working with our first operators in 2026.',
+            'Edviro started in K–12 schools, and education is where we have the most deployment history. It also covers higher education, data centers, commercial real estate, healthcare and construction.',
           ],
           [
             'Do we need to replace our CMMS?',
@@ -292,7 +291,7 @@ const pages: ContentPage[] = [
           {
             tag: 'Data centers',
             title: 'Data centers',
-            text: 'An example: 312 BMS alarms that all trace to one cause, a sticking chilled-water valve on CRAH-2. The cooling model predicts supply temperature to ±0.4 °C, so the fix can be checked against the model. Data centers are newer for us. We began working with our first operators in 2026.',
+            text: 'An example: 312 BMS alarms that all trace to one cause, a sticking chilled-water valve on CRAH-2. The cooling model predicts supply temperature to ±0.4 °C, so the fix can be checked against the model.',
             link: ['Edviro for data centers', '/solutions/data-centers'],
           },
         ],

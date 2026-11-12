@@ -39,7 +39,7 @@ const pages: ContentPage[] = [
               ],
               [
                 'Who is Edviro for?',
-                'Facilities directors, maintenance and operations leads and field technicians, plus the finance and leadership teams they report to. We work in K–12 and higher education, data centers, commercial real estate, healthcare and construction. Schools are where we started and where we have the most experience. Data centers are newer for us: we began working with our first data center operators in 2026.',
+                'Facilities directors, maintenance and operations leads and field technicians, plus the finance and leadership teams they report to. We work in K–12 and higher education, data centers, commercial real estate, healthcare and construction. Schools are where we started and where we have the most experience.',
               ],
               [
                 'What is the digital twin, and what is it for?',

@@ -651,7 +651,7 @@ const pages: ContentPage[] = [
       crumbs: [],
       label: 'Data centers',
       title: 'Edviro for data centers',
-      lede: 'Edviro connects read-only to your BMS, EPMS, PDU and sensor feeds and watches them around the clock. When alarms pile up, it groups them, works out the likely cause and gives your operators a short list of fixes to approve. Data centers are newer for us: we began working with our first data center operators in 2026.',
+      lede: 'Edviro connects read-only to your BMS, EPMS, PDU and sensor feeds and watches them around the clock. When alarms pile up, it groups them, works out the likely cause and gives your operators a short list of fixes to approve.',
       secondary: ['See the physics models', '#models'],
       note: 'Read-only. Nothing new installed. Your team approves every fix.',
     },
@@ -674,7 +674,7 @@ const pages: ContentPage[] = [
         type: 'screen',
         title: 'Example: 312 alarms and one stuck valve',
         intro:
-          'An example with made-up numbers. Your controls already report plenty, and the hard part is knowing which alarm matters. Here Pod 3 raises 312 alarms in 24 hours and the operator gets one fix to review.',
+          'Your controls already report plenty, and the hard part is knowing which alarm matters. Here Pod 3 raises 312 alarms in 24 hours and the operator gets one fix to review.',
         screen: {
           crumb: 'Pod 3',
           heading: 'Open fixes',
@@ -1059,8 +1059,7 @@ const pages: ContentPage[] = [
         type: 'rows',
         id: 'diagnosis',
         title: 'Example: a diagnosis for CRAH-2',
-        intro:
-          'An example with made-up numbers. Pod 3 raises 312 alarms in 24 hours, and one fix reaches the team.',
+        intro: 'Pod 3 raises 312 alarms in 24 hours, and one fix reaches the team.',
         rows: [
           ['Likely cause', 'CRAH-2 chilled-water valve stuck at 40%.'],
           ['Alarms tied', 'The diagnosis ties 41 alarms together.'],
