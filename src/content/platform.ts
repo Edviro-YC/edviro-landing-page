@@ -598,7 +598,6 @@ const pages: ContentPage[] = [
         type: 'rows',
         label: 'Example',
         title: 'A boiler that keeps failing',
-        intro: 'An example with made-up figures.',
         rows: [
           [
             'History',
@@ -866,7 +865,6 @@ const pages: ContentPage[] = [
         type: 'rows',
         label: 'Example',
         title: 'Two lines from a ranked plan',
-        intro: 'An example with made-up figures.',
         rows: [
           [
             'Boiler-2',

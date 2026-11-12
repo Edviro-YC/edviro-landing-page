@@ -110,7 +110,7 @@ const pages: ContentPage[] = [
               ],
               [
                 'What does Edviro do for new construction?',
-                'It sets an independent baseline during fit-out, flags variance against the design model while the contractor is still on site, and gives the owner an M&V report. This is newer for us: so far we’ve piloted baselining and M&V with a construction company.',
+                'It sets an independent baseline during fit-out, flags variance against the design model while the contractor is still on site, and gives the owner an M&V report. So far we’ve piloted baselining and M&V with a construction company.',
               ],
             ],
           },
