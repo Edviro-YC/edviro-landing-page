@@ -183,7 +183,7 @@ usePageSeo({
   <main class="nd">
     <div class="hero">
       <div class="wrap">
-        <h1>Infrastructure that runs itself.<span>Your AI facilities crew.</span></h1>
+        <h1>Infrastructure that runs itself.<span>Put your facility on autopilot.</span></h1>
         <p class="nd-lede">
           Edviro works alongside your team around the clock: catching alarms, waste and custodian
           requests, drafting the fix for a person to approve, dispatching the technician and
