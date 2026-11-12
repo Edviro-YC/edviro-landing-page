@@ -15,6 +15,7 @@ const layouts = [
     selectors: {
       '.hero h1': ['fontFamily', 'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing'],
       '#p-find .media': ['width', 'height', 'borderRadius'],
+      '.panel ul': ['width', 'padding', 'borderRadius', 'borderWidth'],
       '.ill-card': ['left', 'top', 'padding', 'borderRadius', 'fontFamily'],
       '.ill-alert': [
         'width',
@@ -254,6 +255,14 @@ try {
     await page.waitForFunction(() => document.querySelector('.sec-view').scrollLeft > 20)
     await page.locator('.sec-prev').click()
     await page.waitForFunction(() => document.querySelector('.sec-view').scrollLeft < 2)
+    assert.match(
+      await page
+        .locator('.sec-card .hot i')
+        .first()
+        .evaluate((el) => getComputedStyle(el, '::after').animationName),
+      /hotPulse/,
+      'Original building hotspot pulse remains active',
+    )
     await page.locator('.sec-card').first().hover()
     await page.waitForFunction(
       () => Number(getComputedStyle(document.querySelector('.sec-card .night')).opacity) > 0.99,

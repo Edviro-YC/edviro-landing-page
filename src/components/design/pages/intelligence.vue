@@ -116,11 +116,27 @@ const capabilities: {
       <div class="wrap">
         <p class="eyebrow">Building intelligence in numbers</p>
         <div class="cells">
-          <div class="cell" v-for="[value, label] in stats" :key="label">
+          <div class="cell" v-for="([value, label], statIndex) in stats" :key="label">
             <i class="c-ico" aria-hidden="true"
-              ><svg viewBox="0 0 24 24" fill="currentColor">
+              ><svg v-if="statIndex === 0" viewBox="0 0 24 24" fill="currentColor">
                 <path
-                  d="M3 3h7v2.5H5.5V10H3V3Zm11 0h7v7h-2.5V5.5H14V3ZM3 14h2.5v4.5H10V21H3v-7Zm15.5 0H21v7h-7v-2.5h4.5V14Z"
+                  d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm.9 15.2V19h-1.8v-1.8c-1.4-.2-2.5-.9-2.9-2l1.7-.7c.3.7.9 1.1 1.9 1.1 1 0 1.6-.4 1.6-1s-.5-.9-1.8-1.2c-1.7-.4-3-1-3-2.6 0-1.3.9-2.2 2.4-2.5V6.5h1.8v1.8c1.1.2 1.9.8 2.3 1.7l-1.6.8c-.3-.6-.8-.9-1.6-.9-.9 0-1.4.4-1.4.9s.5.8 1.8 1.1c1.8.4 3.1 1 3.1 2.7 0 1.4-1 2.3-2.5 2.6Z"
+                /></svg
+              ><svg v-else-if="statIndex === 1" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M4 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v4h5a1 1 0 0 1 1 1v11h-3v-3h-2v3H4Zm3-14v2h2V7H7Zm0 4v2h2v-2H7Zm0 4v2h2v-2H7Zm4-8v2h2V7h-2Zm0 4v2h2v-2h-2Zm0 4v2h2v-2h-2Zm6-3v2h2v-2h-2Z"
+                /></svg
+              ><svg v-else-if="statIndex === 2" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 5v4.6l3.4 2-1 1.7L11 12.6V7h2Z"
+                /></svg
+              ><svg v-else viewBox="0 0 24 24">
+                <rect width="24" height="24" rx="3" fill="#f26522" />
+                <path
+                  d="M7 6l5 8 5-8M12 14v5"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="1.8"
                 /></svg></i
             ><b>{{ value }}</b
             ><span>{{ label }}</span>

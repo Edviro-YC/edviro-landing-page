@@ -13,6 +13,7 @@ const stats = [
 
 const root = ref<HTMLElement | null>(null)
 useAwesomicMotion(root)
+import { contentPage } from '@/content'
 import type { ContentPage } from '@/content/types'
 import type { ArtworkKind } from '@/components/design/DesignerArtwork.vue'
 const { page } = defineProps<{ page: ContentPage }>()
@@ -76,6 +77,16 @@ const capabilities: {
     art: 'capital',
   },
 ]
+const capabilityPoints = capabilities.map(
+  (capability) =>
+    contentPage(capability.href)
+      ?.sections.flatMap((section) =>
+        section.type === 'cards' && section.title === 'What you get'
+          ? section.cards.map((card) => card.title)
+          : [],
+      )
+      .slice(0, 3) ?? [],
+)
 </script>
 <template>
   <main ref="root" class="aw-page aw-how-edviro-works">
@@ -114,11 +125,27 @@ const capabilities: {
       <div class="wrap">
         <p class="eyebrow">Trusted by operators · Backed by Y Combinator</p>
         <div class="cells">
-          <div class="cell" v-for="[value, label] in stats" :key="label">
+          <div class="cell" v-for="([value, label], statIndex) in stats" :key="label">
             <i class="c-ico" aria-hidden="true"
-              ><svg viewBox="0 0 24 24" fill="currentColor">
+              ><svg v-if="statIndex === 0" viewBox="0 0 24 24" fill="currentColor">
                 <path
                   d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm.9 15.2V19h-1.8v-1.8c-1.4-.2-2.5-.9-2.9-2l1.7-.7c.3.7.9 1.1 1.9 1.1 1 0 1.6-.4 1.6-1s-.5-.9-1.8-1.2c-1.7-.4-3-1-3-2.6 0-1.3.9-2.2 2.4-2.5V6.5h1.8v1.8c1.1.2 1.9.8 2.3 1.7l-1.6.8c-.3-.6-.8-.9-1.6-.9-.9 0-1.4.4-1.4.9s.5.8 1.8 1.1c1.8.4 3.1 1 3.1 2.7 0 1.4-1 2.3-2.5 2.6Z"
+                /></svg
+              ><svg v-else-if="statIndex === 1" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M4 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v4h5a1 1 0 0 1 1 1v11h-3v-3h-2v3H4Zm3-14v2h2V7H7Zm0 4v2h2v-2H7Zm0 4v2h2v-2H7Zm4-8v2h2V7h-2Zm0 4v2h2v-2h-2Zm0 4v2h2v-2h-2Zm6-3v2h2v-2h-2Z"
+                /></svg
+              ><svg v-else-if="statIndex === 2" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 5v4.6l3.4 2-1 1.7L11 12.6V7h2Z"
+                /></svg
+              ><svg v-else viewBox="0 0 24 24">
+                <rect width="24" height="24" rx="3" fill="#f26522" />
+                <path
+                  d="M7 6l5 8 5-8M12 14v5"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="1.8"
                 /></svg></i
             ><b>{{ value }}</b
             ><span>{{ label }}</span>
@@ -435,6 +462,9 @@ const capabilities: {
             <span class="kicker">{{ capabilities[0]?.title }}</span>
             <h3>{{ capabilities[0]?.text }}</h3>
             <p>{{ capabilities[0]?.detail }}</p>
+            <ul>
+              <li v-for="point in capabilityPoints[0]" :key="point">{{ point }}</li>
+            </ul>
             <SiteLink class="panel-link" :href="capabilities[0]?.href ?? '/facilities-operations'"
               >{{ capabilities[0]?.title }} →</SiteLink
             >
@@ -504,6 +534,9 @@ const capabilities: {
             <span class="kicker">{{ capabilities[1]?.title }}</span>
             <h3>{{ capabilities[1]?.text }}</h3>
             <p>{{ capabilities[1]?.detail }}</p>
+            <ul>
+              <li v-for="point in capabilityPoints[1]" :key="point">{{ point }}</li>
+            </ul>
             <SiteLink class="panel-link" :href="capabilities[1]?.href ?? '/facilities-operations'"
               >{{ capabilities[1]?.title }} →</SiteLink
             >
@@ -548,6 +581,9 @@ const capabilities: {
             <span class="kicker">{{ capabilities[2]?.title }}</span>
             <h3>{{ capabilities[2]?.text }}</h3>
             <p>{{ capabilities[2]?.detail }}</p>
+            <ul>
+              <li v-for="point in capabilityPoints[2]" :key="point">{{ point }}</li>
+            </ul>
             <SiteLink class="panel-link" :href="capabilities[2]?.href ?? '/facilities-operations'"
               >{{ capabilities[2]?.title }} →</SiteLink
             >
@@ -599,6 +635,9 @@ const capabilities: {
             <span class="kicker">{{ capabilities[3]?.title }}</span>
             <h3>{{ capabilities[3]?.text }}</h3>
             <p>{{ capabilities[3]?.detail }}</p>
+            <ul>
+              <li v-for="point in capabilityPoints[3]" :key="point">{{ point }}</li>
+            </ul>
             <SiteLink class="panel-link" :href="capabilities[3]?.href ?? '/facilities-operations'"
               >{{ capabilities[3]?.title }} →</SiteLink
             >
@@ -694,6 +733,10 @@ const capabilities: {
                   aria-hidden="true"
                   loading="lazy"
                 />
+                <span class="hot" style="left: 42%; top: 34%"><i></i><em>Campus ops</em></span
+                ><span class="hot rev" style="right: 14%; top: 70%"
+                  ><i></i><em>K–12 & higher ed</em></span
+                >
               </div>
             </SiteLink>
             <SiteLink class="sec-card" href="/solutions/healthcare">
@@ -716,6 +759,10 @@ const capabilities: {
                   aria-hidden="true"
                   loading="lazy"
                 />
+                <span class="hot rev" style="right: 42%; top: 44%"><i></i><em>HVAC</em></span
+                ><span class="hot rev" style="right: 16%; top: 74%"
+                  ><i></i><em>Reviewed fixes</em></span
+                >
               </div>
             </SiteLink>
             <SiteLink class="sec-card" href="/solutions/real-estate">
@@ -738,6 +785,10 @@ const capabilities: {
                   aria-hidden="true"
                   loading="lazy"
                 />
+                <span class="hot rev" style="right: 52%; top: 38%"><i></i><em>Occupancy</em></span
+                ><span class="hot rev" style="right: 14%; top: 68%"
+                  ><i></i><em>HVAC schedules</em></span
+                >
               </div>
             </SiteLink>
             <SiteLink class="sec-card" href="/contact">
@@ -760,6 +811,10 @@ const capabilities: {
                   aria-hidden="true"
                   loading="lazy"
                 />
+                <span class="hot" style="left: 40%; top: 46%"><i></i><em>Civic sites</em></span
+                ><span class="hot rev" style="right: 14%; top: 72%"
+                  ><i></i><em>Work orders</em></span
+                >
               </div>
             </SiteLink>
             <SiteLink class="sec-card" href="/solutions/data-centers">
@@ -782,6 +837,8 @@ const capabilities: {
                   aria-hidden="true"
                   loading="lazy"
                 />
+                <span class="hot rev" style="right: 40%; top: 46%"><i></i><em>Cooling</em></span
+                ><span class="hot rev" style="right: 14%; top: 74%"><i></i><em>Capacity</em></span>
               </div>
             </SiteLink>
             <SiteLink class="sec-card" href="/solutions/construction">
@@ -804,6 +861,8 @@ const capabilities: {
                   aria-hidden="true"
                   loading="lazy"
                 />
+                <span class="hot rev" style="right: 40%; top: 26%"><i></i><em>Baseline</em></span
+                ><span class="hot rev" style="right: 16%; top: 66%"><i></i><em>Handoff</em></span>
               </div>
             </SiteLink>
           </div>

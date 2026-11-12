@@ -12,6 +12,12 @@
       "height": "350px",
       "borderRadius": "20px"
     },
+    ".panel ul": {
+      "width": "350px",
+      "padding": "22px 0px",
+      "borderRadius": "14px",
+      "borderWidth": "1px"
+    },
     ".ill-card": {
       "left": "77px",
       "top": "70px",
@@ -165,6 +171,12 @@
       "width": "600px",
       "height": "600px",
       "borderRadius": "20px"
+    },
+    ".panel ul": {
+      "width": "500px",
+      "padding": "22px 0px",
+      "borderRadius": "14px",
+      "borderWidth": "1px"
     },
     ".ill-card": {
       "left": "132px",
