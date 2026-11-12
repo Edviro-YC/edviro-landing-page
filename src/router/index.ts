@@ -39,7 +39,7 @@ export const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/SchoolAssetManagementSoftware.vue'),
   },
   {
-    // Canonical public privacy policy (https://edviroenergy.com/privacy).
+    // Canonical public privacy policy (https://edviro.com/privacy).
     // The dashboard also hosts a copy at /privacy-policy; this page is the
     // URL the policy itself cites for updates.
     path: '/privacy',

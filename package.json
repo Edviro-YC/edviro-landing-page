@@ -7,9 +7,10 @@
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
-    "build-only": "vite-ssg build",
+    "build-only": "vite-ssg build && node scripts/generate-sitemap.mjs && node scripts/check-seo.mjs",
     "type-check": "vue-tsc --build",
-    "format": "prettier --write --experimental-cli src/"
+    "format": "prettier --write --experimental-cli src/",
+    "check:seo": "node scripts/check-seo.mjs"
   },
   "dependencies": {
     "posthog-js": "^1.407.3",

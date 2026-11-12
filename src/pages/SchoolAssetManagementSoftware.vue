@@ -72,7 +72,7 @@ const faqs: FaqItem[] = [
 usePageSeo({
   title: 'School Asset Management Software',
   description:
-    'Track school facility assets, equipment history, inspections, documents, and service records in Edviro, and connect repeated failures to preventive maintenance and capital planning.',
+    'Track school assets, inspections and equipment service history in Edviro. Connect maintenance records to preventive work and capital planning. Explore the platform.',
   path: ASSETS_PATH,
   jsonLd: [
     organizationLd(),

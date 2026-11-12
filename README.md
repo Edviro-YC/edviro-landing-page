@@ -1,6 +1,6 @@
 # edviro-landing-page
 
-The Edviro marketing site (Vue 3 + Vite, prerendered with vite-ssg, deployed on Netlify at `edviroenergy.com`).
+The Edviro marketing site (Vue 3 + Vite, prerendered with vite-ssg, deployed on Netlify at `edviro.com`).
 
 Positioning: Edviro is an **AI-powered facilities operations platform** (technical category: AI-native operations and maintenance platform). The shared surfaces — homepage, default metadata, nav, footer, schema, `public/llms.txt` — are industry-neutral and name the industries explicitly (data centers, education, commercial real estate, healthcare, construction). Education is where the proof comes from today, so it appears as labeled education proof below the neutral product story rather than as the category definition. Energy management is a major entry point, not the product boundary; the school energy/O&M/work-order/CMMS/asset pages keep their school-specific titles, canonicals, and structured data. Canonical copy lives in `src/seo/site.ts` and the "What is Edviro?" Notion page.
 
@@ -71,3 +71,13 @@ npm run dev
 ```sh
 npm run build
 ```
+
+## Search and domain migration
+
+`src/seo/site.ts` defines the canonical `https://edviro.com` origin. The production build prerenders all pages, then generates `dist/sitemap.xml` from their canonical URLs, excluding `noindex` pages. No fabricated modification dates are emitted. `public/robots.txt` advertises that sitemap.
+
+`vite.config.ts` emits forced, permanent host redirects for the old apex/www domains, legacy `home.edviroenergy.com` alias, production `edviro-landing-page.netlify.app` hostname, and new www/HTTP variants. Deploy-preview hostnames remain accessible. Keep the old host aliases and TLS certificates attached to this Netlify site for at least a year, preferably indefinitely. Blog, Answers, dashboard, and email hostnames are separate services and are not migrated by these rules.
+
+As observed in Netlify on November 11, 2026, `edviroenergy.com` is still primary; `edviro.com` and `www.edviro.com` are aliases. HTTPS already covers both domains. This PR prepares the canonical switch; adding an alias alone does not migrate search signals.
+
+Run `npm run build` before merging (it includes the SEO checks). Before release, obtain Search Console ownership of the old and new sites in the same account and inspect the new domain's security/manual-action reports. Coordinate deploying this PR with making `edviro.com` the Netlify primary domain; retain every existing alias and TLS coverage. Verify old-to-new redirects with real HTTP requests, including a deep path with a query string, no redirect back to the old domain, and the new site's self-canonicals. Submit `https://edviro.com/sitemap.xml`, inspect priority URLs, then complete Change of Address for the migrated old apex and relevant www/home variants. The tool does not automatically move subdomains; do not submit moves for Blog or Answers while they remain on their current hosts. Monitor indexing and traffic on both properties. A PR preview cannot verify production hostname routing.

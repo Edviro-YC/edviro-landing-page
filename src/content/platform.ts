@@ -192,9 +192,9 @@ const pages: ContentPage[] = [
   },
   {
     path: '/building-intelligence',
-    title: 'Building intelligence | Edviro',
+    title: 'Building Fault Detection and Diagnostics',
     description:
-      'Edviro learns a baseline for each site, flags anomalies as they start and names the likely cause, with the evidence.',
+      'Detect building faults using BMS, meter and utility data. Edviro learns each site, explains likely causes and helps your team prioritize the next fix.',
     hero: {
       crumbs: [PLATFORM],
       label: 'Building intelligence',
@@ -935,7 +935,7 @@ const pages: ContentPage[] = [
   },
   {
     path: '/integrations',
-    title: 'Integrations | Edviro',
+    title: 'Building Controls, Meter and CMMS Integrations',
     description:
       'Edviro connects to the building controls, meters, utility bills and work-order systems you already run. No hardware is installed.',
     hero: {
@@ -1062,9 +1062,9 @@ const pages: ContentPage[] = [
   },
   {
     path: '/modules',
-    title: 'Modules | Edviro',
+    title: 'Facilities Management Software Modules',
     description:
-      'The AI Crew is the Edviro subscription. Utility tracking, project management, asset logging and facilities scheduling can be added at no extra cost. Work orders is a paid module.',
+      'Explore Edviro modules for utility tracking, projects, assets, scheduling and work orders. See what is included with the AI Crew and what costs extra.',
     hero: {
       crumbs: [PLATFORM],
       label: 'Modules',
@@ -1195,7 +1195,7 @@ const pages: ContentPage[] = [
   },
   {
     path: '/facilities-scheduling',
-    title: 'Facilities scheduling | Edviro',
+    title: 'Facility Scheduling Software for Schools',
     description:
       'Requests to use school and building spaces, approved by a person and kept on one calendar per site. A free module with the Edviro AI Crew subscription.',
     hero: {

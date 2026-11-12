@@ -14,6 +14,7 @@ import {
   LEGACY_FACILITIES_OPS_PATH,
   PRIVACY_PATH,
   SCHOOL_ENERGY_PATH,
+  SITE_URL,
 } from './src/seo/site'
 
 /**
@@ -58,6 +59,21 @@ function netlifyRedirects(): Plugin {
         type: 'asset',
         fileName: '_redirects',
         source:
+          // Force permanent host redirects ahead of path rules, even when a
+          // prerendered file exists. Preserve paths and query parameters.
+          [
+            'http://edviroenergy.com',
+            'https://edviroenergy.com',
+            'http://www.edviroenergy.com',
+            'https://www.edviroenergy.com',
+            'http://home.edviroenergy.com',
+            'https://home.edviroenergy.com',
+            'http://edviro-landing-page.netlify.app',
+            'https://edviro-landing-page.netlify.app',
+            'http://www.edviro.com',
+            'https://www.edviro.com',
+            'http://edviro.com',
+          ].map((origin) => `${origin}/*  ${SITE_URL}/:splat  301!\n`).join('') +
           `${DEMO_REDIRECT_PATH}  ${BOOKING_URL}  302!\n` +
           `${IUSD_DEMO_PATH}  ${IUSD_DEMO_URL}  302\n` +
           `${IUSD_DEMO_PATH}/*  ${IUSD_DEMO_URL}/:splat  302\n` +

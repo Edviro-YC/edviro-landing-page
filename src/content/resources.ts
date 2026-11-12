@@ -167,8 +167,9 @@ const pages: ContentPage[] = [
   },
   {
     path: '/glossary',
-    title: 'Glossary | Edviro',
-    description: 'Short definitions of terms used by facilities, energy and data center teams.',
+    title: 'Facilities and Energy Management Glossary',
+    description:
+      'Understand facilities and energy management terms, from BMS and CMMS to demand charges, fault detection and M&V. Explore practical definitions from Edviro.',
     hero: {
       crumbs: [],
       label: 'Resources',

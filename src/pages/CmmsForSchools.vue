@@ -86,7 +86,7 @@ const faqs: FaqItem[] = [
 usePageSeo({
   title: 'CMMS for Schools: Replace or Integrate',
   description:
-    'Compare Edviro\'s native CMMS for schools with a traditional CMMS. Use Edviro for work orders and assets, or integrate your existing system, and connect maintenance to energy and capital planning.',
+    'Compare Edviro CMMS for schools: manage work orders and assets natively or connect your existing system. Link maintenance to energy and capital planning.',
   path: CMMS_PATH,
   jsonLd: [
     organizationLd(),

@@ -59,35 +59,35 @@ Modern BMS integrations, legacy controls, utility portals (including PG&E Green 
 
 ## Key pages
 
-- [Home](https://edviroenergy.com/): The full Edviro platform — energy monitoring, diagnostics, work orders, assets, and capital planning.
-- [Facilities operations platform](https://edviroenergy.com/facilities-operations/): Industry-neutral platform overview — the operating loop, the four capability records, diagnostics, and the systems Edviro connects to.
-- [Work orders](https://edviroenergy.com/work-orders/): Intake, triage, a named human approver before dispatch, mobile field updates, closure with cost, and verification in building data — for any facility type.
-- [Asset management](https://edviroenergy.com/asset-management/): Organization → site → building → system → asset registry, nameplate and documents, service history, scheduled inspections, and repair-or-replace outlook.
-- [Energy management software for schools](https://edviroenergy.com/solutions/schools/): The school page — continuous energy audit, anomaly detection, diagnostics, reviewed work orders, assets, inspections, preventive maintenance, mobile field workflows, verified savings, and capital planning for K-12 districts. (The former /solutions/school-facilities-operations/ page is merged here.)
-- [School work-order software](https://edviroenergy.com/school-work-order-software/): Intake, triage, priority, assignment, technician updates, closure, and verification.
-- [CMMS for schools](https://edviroenergy.com/cmms-for-schools/): Native CMMS functionality, replace-or-integrate, migration, and a comparison with a conventional CMMS.
-- [School asset management software](https://edviroenergy.com/school-asset-management-software/): Registry, hierarchy, documents, history, inspections, and lifecycle planning.
-- [Capital planning](https://edviroenergy.com/capital-planning/): Repair-or-replace analysis and intervention simulation against a living model of each building.
-- [Measurement and verification](https://edviroenergy.com/measurement-and-verification/): How Edviro proves savings and verifies completed work against a learned baseline.
-- [Energy management for real estate](https://edviroenergy.com/solutions/real-estate/): Occupancy-aware control for commercial buildings.
-- [M&V for construction](https://edviroenergy.com/solutions/construction/): Independent baselining and verification for new builds.
-- [Data centers](https://edviroenergy.com/solutions/data-centers/): Cooling headroom verified against measured telemetry.
-- [Healthcare](https://edviroenergy.com/solutions/healthcare/): Documented, reviewed work across critical environments and support spaces — pressure and temperature monitoring, work orders with a named reviewer, asset records that stand in for survey binders, and verified energy savings.
-- [Building intelligence](https://edviroenergy.com/building-intelligence/): Fault detection that names the likely cause, with the evidence, for a person to review.
-- [Integrations](https://edviroenergy.com/integrations/): The building controls, meters, utility data, and work-order systems Edviro connects to.
-- [Modules](https://edviroenergy.com/modules/): Utility tracking, project management, asset logging, and facilities scheduling can be added to the AI Crew subscription at no extra cost. Work orders is a paid module.
-- [Facilities scheduling](https://edviroenergy.com/facilities-scheduling/): Requests to use gyms, fields, auditoriums, and rooms, approved by a person and kept on one calendar per site. A free module.
-- [K-12 districts](https://edviroenergy.com/solutions/schools/k-12/): Edviro for school districts with many sites and a small facilities team.
-- [Universities and campuses](https://edviroenergy.com/solutions/schools/higher-ed/): Edviro for central plants, labs, housing, and large building portfolios.
-- [Data center cooling and capacity](https://edviroenergy.com/solutions/data-centers/cooling/): A calibrated model of cooling headroom per pod, and what-if tests before changes.
-- [Data center alarm diagnosis](https://edviroenergy.com/solutions/data-centers/alarm-diagnosis/): Related alarms grouped into the fault behind them, with a fix for an operator to approve.
-- [Customer results](https://edviroenergy.com/results/): What Edviro has measured so far; published results are from schools.
-- [M&V methodology](https://edviroenergy.com/results/methodology/): How a baseline is built, how a saving is measured, and when it is counted.
-- [Glossary](https://edviroenergy.com/glossary/): Short definitions of facilities, energy, and data center terms.
-- [Careers](https://edviroenergy.com/careers/): Open roles.
-- [Contact](https://edviroenergy.com/contact/): How to reach Edviro.
-- [FAQ](https://edviroenergy.com/faq/): Common questions about Edviro, CMMS replacement or integration, and M&V.
-- [About](https://edviroenergy.com/about/): The team and mission behind Edviro.
+- [Home](https://edviro.com/): The full Edviro platform — energy monitoring, diagnostics, work orders, assets, and capital planning.
+- [Facilities operations platform](https://edviro.com/facilities-operations/): Industry-neutral platform overview — the operating loop, the four capability records, diagnostics, and the systems Edviro connects to.
+- [Work orders](https://edviro.com/work-orders/): Intake, triage, a named human approver before dispatch, mobile field updates, closure with cost, and verification in building data — for any facility type.
+- [Asset management](https://edviro.com/asset-management/): Organization → site → building → system → asset registry, nameplate and documents, service history, scheduled inspections, and repair-or-replace outlook.
+- [Energy management software for schools](https://edviro.com/solutions/schools/): The school page — continuous energy audit, anomaly detection, diagnostics, reviewed work orders, assets, inspections, preventive maintenance, mobile field workflows, verified savings, and capital planning for K-12 districts. (The former /solutions/school-facilities-operations/ page is merged here.)
+- [School work-order software](https://edviro.com/school-work-order-software/): Intake, triage, priority, assignment, technician updates, closure, and verification.
+- [CMMS for schools](https://edviro.com/cmms-for-schools/): Native CMMS functionality, replace-or-integrate, migration, and a comparison with a conventional CMMS.
+- [School asset management software](https://edviro.com/school-asset-management-software/): Registry, hierarchy, documents, history, inspections, and lifecycle planning.
+- [Capital planning](https://edviro.com/capital-planning/): Repair-or-replace analysis and intervention simulation against a living model of each building.
+- [Measurement and verification](https://edviro.com/measurement-and-verification/): How Edviro proves savings and verifies completed work against a learned baseline.
+- [Energy management for real estate](https://edviro.com/solutions/real-estate/): Occupancy-aware control for commercial buildings.
+- [M&V for construction](https://edviro.com/solutions/construction/): Independent baselining and verification for new builds.
+- [Data centers](https://edviro.com/solutions/data-centers/): Cooling headroom verified against measured telemetry.
+- [Healthcare](https://edviro.com/solutions/healthcare/): Documented, reviewed work across critical environments and support spaces — pressure and temperature monitoring, work orders with a named reviewer, asset records that stand in for survey binders, and verified energy savings.
+- [Building intelligence](https://edviro.com/building-intelligence/): Fault detection that names the likely cause, with the evidence, for a person to review.
+- [Integrations](https://edviro.com/integrations/): The building controls, meters, utility data, and work-order systems Edviro connects to.
+- [Modules](https://edviro.com/modules/): Utility tracking, project management, asset logging, and facilities scheduling can be added to the AI Crew subscription at no extra cost. Work orders is a paid module.
+- [Facilities scheduling](https://edviro.com/facilities-scheduling/): Requests to use gyms, fields, auditoriums, and rooms, approved by a person and kept on one calendar per site. A free module.
+- [K-12 districts](https://edviro.com/solutions/schools/k-12/): Edviro for school districts with many sites and a small facilities team.
+- [Universities and campuses](https://edviro.com/solutions/schools/higher-ed/): Edviro for central plants, labs, housing, and large building portfolios.
+- [Data center cooling and capacity](https://edviro.com/solutions/data-centers/cooling/): A calibrated model of cooling headroom per pod, and what-if tests before changes.
+- [Data center alarm diagnosis](https://edviro.com/solutions/data-centers/alarm-diagnosis/): Related alarms grouped into the fault behind them, with a fix for an operator to approve.
+- [Customer results](https://edviro.com/results/): What Edviro has measured so far; published results are from schools.
+- [M&V methodology](https://edviro.com/results/methodology/): How a baseline is built, how a saving is measured, and when it is counted.
+- [Glossary](https://edviro.com/glossary/): Short definitions of facilities, energy, and data center terms.
+- [Careers](https://edviro.com/careers/): Open roles.
+- [Contact](https://edviro.com/contact/): How to reach Edviro.
+- [FAQ](https://edviro.com/faq/): Common questions about Edviro, CMMS replacement or integration, and M&V.
+- [About](https://edviro.com/about/): The team and mission behind Edviro.
 
 ## Blog (deep guidance)
 
@@ -118,7 +118,7 @@ All published results come from Edviro's education deployments.
 ## Contact
 
 - Email: founders@edviroenergy.com
-- Book a demo: https://edviroenergy.com/demo/
-- Privacy policy: https://edviroenergy.com/privacy/
+- Book a demo: https://edviro.com/demo/
+- Privacy policy: https://edviro.com/privacy/
 - LinkedIn: https://www.linkedin.com/company/edviro/
 - X: https://x.com/hursheybar2
