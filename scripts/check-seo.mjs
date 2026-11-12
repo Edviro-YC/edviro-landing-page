@@ -77,8 +77,9 @@ for (const url of queue) for (const next of byUrl.get(url).destinations) {
   queue.push(next)
 }
 for (const row of indexed) assert.ok(depth.get(row.url) <= 3, `${row.url}: more than three clicks from home`)
-for (const old of ['http://edviroenergy.com', 'https://edviroenergy.com', 'http://www.edviroenergy.com', 'https://www.edviroenergy.com', 'http://www.edviro.com', 'https://www.edviro.com', 'http://edviro.com']) {
+for (const old of ['http://edviroenergy.com', 'https://edviroenergy.com', 'http://www.edviroenergy.com', 'https://www.edviroenergy.com', 'http://home.edviroenergy.com', 'https://home.edviroenergy.com', 'http://edviro-landing-page.netlify.app', 'https://edviro-landing-page.netlify.app', 'http://www.edviro.com', 'https://www.edviro.com', 'http://edviro.com']) {
   assert.ok(redirects.includes(`${old}/*  ${origin}/:splat  301!`), `Missing forced host redirect: ${old}`)
 }
 assert.ok(!redirects.includes(`https://edviro.com/*`), 'No canonical-host redirect loop')
+assert.ok(!redirects.includes('https://*'), 'Host redirects must not capture deploy previews or unrelated subdomains')
 console.log(`SEO checks passed: ${rows.length} HTML pages, ${indexed.length} sitemap URLs, metadata, JSON-LD, links, crawl depth, and migration rules.`)
