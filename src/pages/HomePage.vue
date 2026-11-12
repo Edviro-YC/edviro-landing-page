@@ -4,6 +4,13 @@ import CtaSection from '@/components/CtaSection.vue'
 import DemoButton from '@/components/DemoButton.vue'
 import SiteLink from '@/components/SiteLink.vue'
 import icon from '@/assets/img/edviro-icon.svg'
+import bgForest from '@/assets/img/brand/bg-forest.jpg'
+import bgLight from '@/assets/img/brand/bg-light.jpg'
+import bgPanel from '@/assets/img/brand/bg-panel.jpg'
+import howDiagnose from '@/assets/img/how/how-diagnose.jpg'
+import howDispatch from '@/assets/img/how/how-dispatch.jpg'
+import howSignal from '@/assets/img/how/how-signal.jpg'
+import howVerify from '@/assets/img/how/how-verify.jpg'
 import campusesDay from '@/assets/img/buildings/campuses-day.jpg'
 import campusesNight from '@/assets/img/buildings/campuses-night.jpg'
 import dataCentersDay from '@/assets/img/buildings/data-centers-day.jpg'
@@ -87,17 +94,12 @@ const stats = [
   [SQFT_UNDER_MANAGEMENT, 'Sq ft under management'],
 ]
 
-const capitalPlan = [
-  ['Chiller CH-1', '26%', '2027'],
-  ['Boiler B-2', '52%', '2029'],
-  ['Rooftop R-4', '78%', '2031'],
-]
-
-// The four platform pillars. On wide screens the section pins and scrolling
-// moves through them; everywhere else they stack.
+// The four platform pillars, one card each. On wide screens the cards stick
+// and stack as you scroll; everywhere else they sit one under another.
 const pillars = [
   {
     key: 'waste',
+    bg: bgLight,
     tab: 'Find waste',
     label: 'Building intelligence',
     title: 'See where energy is lost, and why.',
@@ -110,6 +112,7 @@ const pillars = [
   },
   {
     key: 'orders',
+    bg: bgLight,
     tab: 'Review work orders',
     label: 'Work orders',
     title: 'Turn signals into orders a person approves.',
@@ -122,6 +125,7 @@ const pillars = [
   },
   {
     key: 'verify',
+    bg: bgPanel,
     tab: 'Verify every fix',
     label: 'Measurement and verification',
     title: 'Prove each fix in your building data.',
@@ -134,6 +138,7 @@ const pillars = [
   },
   {
     key: 'capital',
+    bg: bgPanel,
     tab: 'Plan capital',
     label: 'Capital planning',
     title: 'Turn asset health into a capital plan.',
@@ -225,13 +230,29 @@ const outcomes = [
   ['Capital plans', 'Repair history shows what to replace, and when.'],
 ]
 
-// Arrow positions on the loop track, clockwise from the top left.
-const loopArrows = [
-  { dir: 'right', style: { left: '35%', top: '102px' } },
-  { dir: 'right', style: { left: '65%', top: '102px' } },
-  { dir: 'down', style: { left: '100%', top: '50%' } },
-  { dir: 'left', style: { left: '50%', top: '402px' } },
-  { dir: 'up', style: { left: '0', top: '50%' } },
+// The crew at work: the five steps under the co-worker heading. The small
+// product view drawn on each card is in the template.
+const crewSteps = [
+  {
+    title: 'Works 24/7',
+    text: 'I checked 250 thermostats. One valve is stuck.',
+    art: howSignal,
+    human: false,
+  },
+  {
+    title: 'Diagnose issues',
+    text: 'Discharge air at 55°F for six days, valve commanded open.',
+    art: howDiagnose,
+    human: false,
+  },
+  { title: 'You approve the fixes', text: 'Fix drafted for VAV 3-12.', art: bgForest, human: true },
+  {
+    title: 'Push to your work orders',
+    text: 'Pushed to your work order system, with history and steps.',
+    art: howDispatch,
+    human: false,
+  },
+  { title: 'Verify', text: 'Watched 14 days. Fix confirmed.', art: howVerify, human: false },
 ]
 
 const customers = [
@@ -378,41 +399,49 @@ function countUpStats() {
   requestAnimationFrame(tick)
 }
 
-// Platform section: pinned on wide, tall screens, where scrolling moves
-// through the four pillars.
-const platformTrack = ref<HTMLElement | null>(null)
-const pinned = ref(false)
+// Platform cards: on wide screens they stick and stack (see .pcard in
+// site.css). This marks the tab for the card in view and sets --p on each card
+// to how far the next one has covered it.
+const platformStack = ref<HTMLElement | null>(null)
 const activePillar = ref(0)
-const pillarProgress = ref(0)
-let pinQuery: MediaQueryList | undefined
+const STACK_STEP = 14
 
-function measurePlatform() {
-  const track = platformTrack.value
-  if (!track || !pinned.value) return
-  const rect = track.getBoundingClientRect()
-  const span = rect.height - window.innerHeight
-  const position = Math.min(0.999, Math.max(0, -rect.top / span)) * pillars.length
-  activePillar.value = Math.floor(position)
-  pillarProgress.value = position % 1
+function stackCards() {
+  const stack = platformStack.value
+  const cards = stack ? (Array.from(stack.children) as HTMLElement[]) : []
+  const gap = stack ? parseFloat(getComputedStyle(stack).rowGap) || 0 : 0
+  return { stack, cards, gap }
 }
 
-function setPinned() {
-  pinned.value = Boolean(pinQuery?.matches)
-  if (!pinned.value) activePillar.value = 0
-  void nextTick(measurePlatform)
+function measurePlatform() {
+  const { cards, gap } = stackCards()
+  const tops = cards.map((card) => card.getBoundingClientRect().top)
+  let active = 0
+  cards.forEach((card, index) => {
+    const top = tops[index] ?? 0
+    if (top < window.innerHeight * 0.5) active = index
+    // A full card apart when untouched, one step apart once covered.
+    const next = tops[index + 1]
+    const apart = card.offsetHeight + gap
+    const covered =
+      next === undefined ? 0 : 1 - (next - top - STACK_STEP) / (apart - STACK_STEP)
+    card.style.setProperty('--p', (Math.min(1, Math.max(0, covered)) ** 2).toFixed(3))
+  })
+  activePillar.value = active
 }
 
 function goToPillar(index: number) {
-  const track = platformTrack.value
-  if (!track || !pinned.value) return
-  const span = track.offsetHeight - window.innerHeight
-  const top = track.getBoundingClientRect().top + window.scrollY
-  window.scrollTo({ top: top + ((index + 0.5) / pillars.length) * span, behavior: 'smooth' })
-}
-
-function tabFill(index: number) {
-  if (index < activePillar.value) return 1
-  return index === activePillar.value ? pillarProgress.value : 0
+  const { stack, cards, gap } = stackCards()
+  const card = cards[index]
+  if (!stack || !card) return
+  const stick = parseFloat(getComputedStyle(card).top)
+  if (Number.isNaN(stick)) {
+    card.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    return
+  }
+  const before = cards.slice(0, index).reduce((sum, item) => sum + item.offsetHeight + gap, 0)
+  const top = stack.getBoundingClientRect().top + window.scrollY + before
+  window.scrollTo({ top: top - stick, behavior: 'smooth' })
 }
 
 onMounted(() => {
@@ -423,19 +452,14 @@ onMounted(() => {
     // Storage can be blocked; the animation then plays on each load.
   }
 
-  pinQuery = window.matchMedia(
-    '(min-width: 1041px) and (min-height: 720px) and (prefers-reduced-motion: no-preference)',
-  )
-  pinQuery.addEventListener('change', setPinned)
   window.addEventListener('scroll', measurePlatform, { passive: true })
   window.addEventListener('resize', measurePlatform)
-  setPinned()
+  void nextTick(measurePlatform)
 })
 
 onBeforeUnmount(() => {
   // Coming back to the homepage from another page does not replay it.
   document.documentElement.classList.add('intro-seen')
-  pinQuery?.removeEventListener('change', setPinned)
   window.removeEventListener('scroll', measurePlatform)
   window.removeEventListener('resize', measurePlatform)
 })
@@ -557,128 +581,277 @@ onBeforeUnmount(() => {
       </div>
     </div>
 
-    <section id="platform" :class="['dark', 'platform', { pinned }]">
-      <div ref="platformTrack" class="plat-track">
-        <div class="plat-pin">
-          <div class="wrap">
-            <div class="label">The platform</div>
+    <section id="how">
+      <div class="wrap">
+        <div class="split-head">
+          <div>
+            <div class="label">Your AI facilities crew</div>
             <h2>Every building operation <span>needs a co-worker.</span></h2>
-            <div class="plat-tabs">
-              <button
-                v-for="(pillar, index) in pillars"
-                :key="pillar.key"
-                type="button"
-                :class="{ on: index === activePillar }"
-                :aria-pressed="index === activePillar"
-                @click="goToPillar(index)"
-              >
-                {{ pillar.tab }}<i :style="{ transform: `scaleX(${tabFill(index)})` }" />
-              </button>
-            </div>
-            <div class="plat-stage">
-              <div
-                v-for="(pillar, index) in pillars"
-                :key="pillar.key"
-                :class="['pillar', { on: index === activePillar }]"
-              >
-                <div class="pillar-copy">
-                  <div class="pillar-label">{{ pillar.label }}</div>
-                  <h3>{{ pillar.title }}</h3>
-                  <p>{{ pillar.text }}</p>
-                  <ul>
-                    <li v-for="point in pillar.points" :key="point">{{ point }}</li>
-                  </ul>
+          </div>
+          <p>
+            Your AI crew triages every alarm, text and meter change around the clock, even while
+            you’re sleeping, so what reaches your team is a diagnosed fix that’s ready to approve.
+          </p>
+        </div>
+        <div class="tl">
+          <div class="tl-line" aria-hidden="true"><i v-reveal /></div>
+          <div
+            v-for="(step, index) in crewSteps"
+            :key="step.title"
+            v-reveal="index * 160"
+            :class="['tl-step', { human: step.human }]"
+          >
+            <span class="tl-dot" />
+            <span v-if="step.human" class="tl-tag">Human</span>
+            <div class="tl-card">
+              <!-- Illustrative miniature of the product at this step -->
+              <div class="mini" aria-hidden="true" :style="{ backgroundImage: `url(${step.art})` }">
+                <div class="mini-c">
+                  <template v-if="index === 0">
+                    <span class="mini-pill r">Alarm</span>
+                    <div class="mini-t">“Zone 3 is too cold again.”</div>
+                    <div class="mini-u">Custodian text · 7:42 AM</div>
+                    <div class="mini-row">Discharge air<span>55°F</span></div>
+                    <div class="mini-pop r"><b />Meter change</div>
+                  </template>
+                  <template v-else-if="index === 1">
+                    <span class="mini-pill">Likely cause</span>
+                    <div class="mini-t">Reheat valve stuck closed</div>
+                    <svg viewBox="0 0 100 26" preserveAspectRatio="none">
+                      <path d="M0 6 L25 7 L45 6 L60 18 L80 20 L100 20" />
+                    </svg>
+                    <div class="mini-pop"><b />Evidence attached</div>
+                  </template>
+                  <template v-else-if="index === 2">
+                    <span class="mini-pill y">Needs review</span>
+                    <div class="mini-t">Fix drafted for VAV 3-12</div>
+                    <div class="mini-u">Facilities lead · 8:10 AM</div>
+                    <div class="mini-btns"><span class="ok">Approve fix</span><span>Edit</span></div>
+                  </template>
+                  <template v-else-if="index === 3">
+                    <span class="mini-pill">Work order created</span>
+                    <div class="mini-t">VAV 3-12 reheat valve</div>
+                    <div class="mini-row">Work order system<span>Pushed</span></div>
+                    <div class="mini-row">History and steps<span>Attached</span></div>
+                  </template>
+                  <template v-else>
+                    <span class="mini-pill g">Verified</span>
+                    <div class="mini-big">70°F <small>holding</small></div>
+                    <svg viewBox="0 0 100 26" preserveAspectRatio="none">
+                      <path d="M0 21 L30 14 L55 7 L75 6 L100 6" />
+                    </svg>
+                    <div class="mini-pop"><b />Fix confirmed</div>
+                  </template>
                 </div>
+              </div>
+              <span class="tl-n">0{{ index + 1 }}</span>
+              <h3>{{ step.title }}</h3>
+              <p>{{ step.text }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-                <!-- Illustrative product panels -->
-                <div v-if="pillar.key === 'waste'" class="pv" aria-hidden="true">
-                  <div class="pv-card pv-main">
-                    <div class="pv-tags"><span>Gas usage</span><span>Site A</span></div>
-                    <div class="pv-big">76.4 <small>therms in one day</small></div>
-                    <p class="pv-note">The learned baseline expected 16.7 therms.</p>
-                    <svg viewBox="0 0 320 96">
-                      <polygon
-                        class="chart-waste"
-                        points="186,70 204,48 222,16 240,22 258,50 270,68 240,70 210,71"
+    <section id="platform" class="dark platform">
+      <div class="wrap">
+        <div class="split-head">
+          <div>
+            <div class="label">The platform</div>
+            <h2>No alarms, <span>just fixes.</span></h2>
+          </div>
+          <p>There is no alarms tab in Edviro. This is what your team gets in its place.</p>
+        </div>
+        <div class="plat-body">
+          <div class="plat-tabs">
+            <button
+              v-for="(pillar, index) in pillars"
+              :key="pillar.key"
+              type="button"
+              :class="{ on: index === activePillar }"
+              :aria-pressed="index === activePillar"
+              @click="goToPillar(index)"
+            >
+              {{ pillar.tab }}
+            </button>
+          </div>
+          <!-- On wide screens each card sticks near the top and the next one
+               slides up over it (see .pcard in site.css). -->
+          <div ref="platformStack" class="stack">
+            <article
+              v-for="(pillar, index) in pillars"
+              :key="pillar.key"
+              class="pcard"
+              :style="{ '--n': index }"
+            >
+              <div class="pillar-copy">
+                <div class="pillar-label">{{ pillar.label }}</div>
+                <h3>{{ pillar.title }}</h3>
+                <p>{{ pillar.text }}</p>
+                <ul>
+                  <li v-for="point in pillar.points" :key="point">{{ point }}</li>
+                </ul>
+              </div>
+
+              <!-- Illustrative product panels -->
+              <figure
+                class="pmedia"
+                aria-hidden="true"
+                :style="{ backgroundImage: `url(${pillar.bg})` }"
+              >
+                <div v-if="pillar.key === 'waste'" class="ill">
+                  <div class="ill-card">
+                    <div class="ill-tags">
+                      <span class="t-b">Energy usage</span><span class="t-g">Last month</span>
+                    </div>
+                    <div class="ill-big">552,605 <small>kWh</small></div>
+                    <div class="ill-sub">Gas 14,873 therms · baseline against actual</div>
+                    <svg viewBox="0 0 400 150" class="ill-chart">
+                      <g stroke="#e4e9e5" stroke-width="1">
+                        <path d="M0 20H400M0 60H400M0 100H400M0 140H400" />
+                      </g>
+                      <path
+                        d="M0 28C30 18 50 14 70 30S110 50 135 62S175 105 215 112S265 138 300 130S340 95 360 92S385 125 400 142"
+                        fill="none"
+                        stroke="#e8833a"
+                        stroke-width="2.5"
                       />
-                      <polyline
-                        class="chart-base"
-                        points="0,72 40,70 80,73 120,71 160,72 200,70 240,71 280,72 320,70"
+                      <path
+                        d="M0 78C40 82 70 90 100 70S140 56 170 74S230 72 270 70S310 52 340 56S385 70 400 140"
+                        fill="none"
+                        stroke="#4a7be0"
+                        stroke-width="2.5"
                       />
-                      <polyline
-                        class="chart-line"
-                        points="0,74 40,69 80,73 120,70 160,73 186,70 204,48 222,16 240,22 258,50 270,68 300,71 320,69"
+                      <path
+                        d="M0 78C40 82 70 90 100 70S140 56 170 74S230 72 270 70S310 52 340 56S385 70 400 140V150H0Z"
+                        fill="#4a7be0"
+                        opacity=".06"
                       />
-                      <circle class="chart-point" cx="222" cy="16" r="4" />
                     </svg>
                   </div>
-                  <div class="pv-card pv-float">
-                    <small>Likely cause</small>
-                    <b>Hot-water valve stuck open</b>
-                    <span class="pv-delta">+357% against baseline</span>
+                  <div class="ill-alert">
+                    <div class="ill-tags">
+                      <span class="t-b">Daily</span><span class="t-r">High</span>
+                    </div>
+                    <div class="ill-name">Site A</div>
+                    <div class="ill-date">Jun 8, 2026</div>
+                    <dl>
+                      <dt>Actual</dt>
+                      <dd>76.4 thm</dd>
+                      <dt>Expected</dt>
+                      <dd>16.7 thm</dd>
+                      <dt>Deviation</dt>
+                      <dd class="bad">+357.5%</dd>
+                    </dl>
+                  </div>
+                  <div class="ill-pop">
+                    <i>Likely cause</i><b>Hot-water valve stuck open</b
+                    ><span>Detected against the baseline</span>
                   </div>
                 </div>
 
-                <div v-else-if="pillar.key === 'orders'" class="pv" aria-hidden="true">
-                  <div class="pv-card pv-main">
-                    <div class="pv-head"><b>Work orders</b><span>Drafted by Edviro</span></div>
-                    <div class="pv-row">
-                      <div><b>AHU-2 · Schedule fix</b><small>Site A · Air handler</small></div>
-                      <span class="pill">Draft</span>
+                <div v-else-if="pillar.key === 'orders'" class="ill lo">
+                  <div class="ill-card">
+                    <div class="ill-tags">
+                      <span class="t-b">Work orders</span><span class="t-g">3 in review</span>
                     </div>
-                    <div class="pv-row">
-                      <div><b>CH-1 · Short-cycling</b><small>Site C · Chiller</small></div>
-                      <span class="pill">Draft</span>
-                    </div>
-                  </div>
-                  <div class="pv-card pv-float">
-                    <small>Needs review · Facilities lead</small>
-                    <b>Fix drafted for VAV 3-12</b>
-                    <div class="app-buttons">
-                      <span class="app-button">Approve fix</span>
-                      <span class="app-button ghost">Edit</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div v-else-if="pillar.key === 'verify'" class="pv" aria-hidden="true">
-                  <div class="pv-card pv-main">
-                    <div class="pv-tags"><span class="ok">Verified</span><span>Site A · Zone 3</span></div>
-                    <div class="pv-big">70°F <small>back at setpoint</small></div>
-                    <p class="pv-note">Watched 14 days. Fix confirmed.</p>
-                    <div class="pv-bars">
-                      <div><span>Before</span><i style="width: 88%" /></div>
-                      <div class="after"><span>After</span><i style="width: 58%" /></div>
-                    </div>
-                  </div>
-                  <div class="pv-card pv-float">
-                    <small>Tied to the work order</small>
-                    <b>VAV 3-12 · Reheat valve</b>
-                    <span>Reopens if the fix doesn’t hold</span>
-                  </div>
-                </div>
-
-                <div v-else class="pv" aria-hidden="true">
-                  <div class="pv-card pv-main">
-                    <div class="pv-head"><b>Asset health</b><span>Life used</span></div>
-                    <div class="cap-plan">
-                      <div v-for="[asset, used, year] in capitalPlan" :key="asset">
-                        <span>{{ asset }}</span
-                        ><i :style="{ '--w': used }" /><em>{{ year }}</em>
+                    <div class="ill-big">Drafted <small>by Edviro</small></div>
+                    <div class="ill-sub">Site, room and asset context attached</div>
+                    <div class="ill-rows">
+                      <div class="ill-row"><b>AHU-2 · Schedule fix</b><em class="t-y">Draft</em></div>
+                      <div class="ill-row">
+                        <b>CH-1 · Short-cycling</b><em class="t-y">Draft</em>
                       </div>
                     </div>
                   </div>
-                  <div class="pv-card pv-float">
-                    <small>Replace</small>
-                    <b>Chiller CH-1 · Site C</b>
-                    <span>Planned for 2027</span>
+                  <div class="ill-alert">
+                    <div class="ill-tags"><span class="t-y">Needs review</span></div>
+                    <div class="ill-name">Fix drafted for VAV 3-12</div>
+                    <div class="ill-date">Site A · Zone 3</div>
+                    <div class="ill-btns"><span class="ok">Approve fix</span><span>Edit</span></div>
+                  </div>
+                  <div class="ill-pop">
+                    <i>Human review</i><b>Reviewed by the facilities lead</b
+                    ><span>Nothing is dispatched until approved</span>
                   </div>
                 </div>
-              </div>
-            </div>
-            <SiteLink class="more" href="/facilities-operations">Explore the platform →</SiteLink>
+
+                <div v-else-if="pillar.key === 'verify'" class="ill lo">
+                  <div class="ill-card">
+                    <div class="ill-tags">
+                      <span class="t-b">Savings</span><span class="t-g">Verified</span>
+                    </div>
+                    <div class="ill-big">−18% <small>against baseline</small></div>
+                    <div class="ill-sub">Measured against the building’s own baseline</div>
+                    <div class="ill-bars">
+                      <div><i style="height: 92%" /><small>Before</small></div>
+                      <div><i class="g" style="height: 58%" /><small>After</small></div>
+                      <div><i style="height: 88%" /><small>Before</small></div>
+                      <div><i class="g" style="height: 50%" /><small>After</small></div>
+                    </div>
+                  </div>
+                  <div class="ill-alert">
+                    <div class="ill-tags">
+                      <span class="t-g">Chiller CH-1</span><span class="t-b">Verified</span>
+                    </div>
+                    <dl>
+                      <dt>Before</dt>
+                      <dd>41,200 kWh</dd>
+                      <dt>After</dt>
+                      <dd>33,800 kWh</dd>
+                      <dt>Change</dt>
+                      <dd class="good">−18%</dd>
+                    </dl>
+                  </div>
+                  <div class="ill-pop">
+                    <i>Tied to the order</i><b>CH-1 · Short-cycling</b
+                    ><span>Reopens if the fix doesn’t hold</span>
+                  </div>
+                </div>
+
+                <div v-else class="ill lo">
+                  <div class="ill-card">
+                    <div class="ill-tags">
+                      <span class="t-b">Assets</span><span class="t-g">7 need attention</span>
+                    </div>
+                    <div class="ill-big">Asset health</div>
+                    <div class="ill-sub">Condition and cost history across sites</div>
+                    <div class="ill-rows">
+                      <div class="ill-row meter">
+                        <b>Boiler B-2</b>
+                        <div class="ill-meter"><i class="r" style="width: 28%" /></div>
+                        <span>28</span>
+                      </div>
+                      <div class="ill-row meter">
+                        <b>Chiller CH-1</b>
+                        <div class="ill-meter"><i class="y" style="width: 61%" /></div>
+                        <span>61</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="ill-alert">
+                    <div class="ill-tags"><span class="t-r">Replace</span></div>
+                    <div class="ill-name">Boiler B-2 · Site B</div>
+                    <div class="ill-date">Repair cost 62% of a new unit</div>
+                    <dl>
+                      <dt>2027</dt>
+                      <dd>$84K</dd>
+                      <dt>2028</dt>
+                      <dd>$120K</dd>
+                      <dt>Saves</dt>
+                      <dd class="good">$31K a year</dd>
+                    </dl>
+                  </div>
+                  <div class="ill-pop">
+                    <i>Capital plan</i><b>3-year plan</b
+                    ><span>Repair or replace, with the numbers</span>
+                  </div>
+                </div>
+              </figure>
+            </article>
           </div>
         </div>
+        <SiteLink class="more" href="/facilities-operations">Explore the platform →</SiteLink>
       </div>
     </section>
 
@@ -721,7 +894,7 @@ onBeforeUnmount(() => {
       </div>
     </section>
 
-    <section id="problem" class="alt">
+    <section id="problem" class="dark">
       <div class="wrap">
         <div class="label">The problem</div>
         <p v-reveal class="statement">
@@ -735,70 +908,6 @@ onBeforeUnmount(() => {
           <div v-for="[title, detail] in outcomes" :key="title">
             <h3>{{ title }}</h3>
             <p>{{ detail }}</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="how">
-      <div class="wrap">
-        <div class="center">
-          <div class="label">How Edviro works</div>
-          <h2>No alarms, <span>just fixes.</span></h2>
-          <p class="sub">
-            There is no alarms tab in Edviro. Your AI crew triages every alarm, text and meter
-            change around the clock, even while you’re sleeping, so what reaches your team is a
-            diagnosed fix that’s ready to approve.
-          </p>
-        </div>
-        <div class="loop">
-          <div class="track" />
-          <i
-            v-for="(arrow, index) in loopArrows"
-            :key="index"
-            :class="['arrow', arrow.dir]"
-            :style="arrow.style"
-          />
-          <div v-reveal class="step" style="left: 20%; top: 0">
-            <div class="step-no">01</div>
-            <h3>Works 24/7</h3>
-            <div class="step-ui">
-              <small>Edviro crew · 2:14 AM</small>
-              <span class="bubble">I checked 250 thermostats. One valve is stuck.</span>
-            </div>
-          </div>
-          <div v-reveal="140" class="step" style="left: 50%; top: 0">
-            <div class="step-no">02</div>
-            <h3>Diagnose issues</h3>
-            <div class="step-ui">
-              <b>Reheat valve stuck closed</b>
-              <span>Discharge air at 55°F for six days, valve commanded open.</span>
-            </div>
-          </div>
-          <div v-reveal="280" class="step human" style="left: 80%; top: 0">
-            <div class="step-no">03 <em>Human</em></div>
-            <h3>You approve the fixes</h3>
-            <div class="step-ui">
-              <small>Facilities lead · 8:10 AM</small>
-              <b>Fix drafted for VAV 3-12</b>
-              <span class="approve">Approve fix</span>
-            </div>
-          </div>
-          <div v-reveal="420" class="step" style="left: 65%; bottom: 0">
-            <div class="step-no">04</div>
-            <h3>Push to your work orders</h3>
-            <div class="step-ui">
-              <b>Work order created · 8:12 AM</b>
-              <span>Pushed to your work order system, with history and steps.</span>
-            </div>
-          </div>
-          <div v-reveal="560" class="step" style="left: 35%; bottom: 0">
-            <div class="step-no">05</div>
-            <h3>Verify</h3>
-            <div class="step-ui">
-              <b>Zone 3 back at 70°F</b>
-              <span class="held">Watched 14 days. Fix confirmed.</span>
-            </div>
           </div>
         </div>
       </div>
