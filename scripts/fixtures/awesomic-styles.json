@@ -1,0 +1,310 @@
+{
+  "390:/": {
+    ".hero h1": {
+      "fontFamily": "Inter, system-ui, sans-serif",
+      "fontSize": "40px",
+      "fontWeight": "500",
+      "lineHeight": "41.6px",
+      "letterSpacing": "-1.6px"
+    },
+    "#p-find .media": {
+      "width": "350px",
+      "height": "350px",
+      "borderRadius": "20px"
+    },
+    ".ill-card": {
+      "left": "77px",
+      "top": "70px",
+      "padding": "17.5px 19.25px",
+      "borderRadius": "17.5px",
+      "fontFamily": "Inter, system-ui, sans-serif"
+    },
+    ".ill-alert": {
+      "width": "175px",
+      "padding": "12.6px",
+      "borderRadius": "12.6px",
+      "animationName": "ilIn, ilFloat",
+      "animationDuration": "0.8s, 7s",
+      "animationDelay": "0.45s, 1.4s"
+    },
+    ".pb-stage.nodes": {
+      "width": "300px",
+      "height": "340px",
+      "borderRadius": "14px"
+    },
+    ".wires .w": {
+      "animationName": "wLine",
+      "animationDuration": "6s",
+      "strokeDasharray": "1px"
+    },
+    ".loop .sm": {
+      "width": "290px",
+      "height": "275.5px",
+      "borderRadius": "12px"
+    },
+    ".loop .sm .pop": {
+      "animationName": "hwFloat",
+      "animationDuration": "6s",
+      "animationDelay": "1.2s"
+    },
+    ".loop .sm svg": {
+      "animationName": "hwDraw",
+      "animationDuration": "1.6s",
+      "animationDelay": "1.35s"
+    },
+    ".dv-card": {
+      "padding": "18px",
+      "borderRadius": "18px"
+    },
+    ".dv .st.on .ac": {
+      "animationName": "dvWipe",
+      "animationDuration": "1.3s"
+    },
+    ".rview": {
+      "width": "350px",
+      "borderRadius": "20px"
+    },
+    ".sec-card": {
+      "width": "350px",
+      "padding": "20px",
+      "borderRadius": "20px"
+    }
+  },
+  "390:/facilities-operations/": {
+    ".hero h1": {
+      "fontFamily": "Inter, system-ui, sans-serif",
+      "fontSize": "40px",
+      "fontWeight": "500",
+      "lineHeight": "41.6px"
+    },
+    ".wku-r": {
+      "width": "350px",
+      "padding": "40px 24px 80px",
+      "borderRadius": "20px"
+    },
+    ".wku-card": {
+      "padding": "22px",
+      "borderRadius": "20px"
+    },
+    ".hl-art": {
+      "width": "287px",
+      "aspectRatio": "1 / 1"
+    },
+    ".hl .tr": {
+      "padding": "28px",
+      "borderRadius": "18px"
+    },
+    ".hl .hn-pl .pl1": {
+      "animationName": "plIn",
+      "animationDuration": "1.1s",
+      "animationDelay": "2.6s"
+    }
+  },
+  "390:/building-intelligence/": {
+    ".hero h1": {
+      "fontFamily": "Inter, system-ui, sans-serif",
+      "fontSize": "40px",
+      "fontWeight": "500",
+      "lineHeight": "41.6px"
+    },
+    "#product .app": {
+      "width": "310px",
+      "gridTemplateColumns": "310px",
+      "borderRadius": "16px"
+    },
+    ".app-c": {
+      "padding": "14px",
+      "borderRadius": "12px"
+    },
+    ".ib-mk .wku-r": {
+      "width": "350px",
+      "padding": "40px 24px 80px",
+      "borderRadius": "20px"
+    }
+  },
+  "390:/integrations/": {
+    ".hero h1": {
+      "fontFamily": "Inter, system-ui, sans-serif",
+      "fontSize": "40px",
+      "fontWeight": "500",
+      "lineHeight": "41.6px"
+    },
+    ".lg-track": {
+      "display": "flex",
+      "gap": "72px",
+      "animationName": "lgScroll",
+      "animationDuration": "40s",
+      "animationIterationCount": "infinite"
+    },
+    ".lg-track img": {
+      "height": "30px",
+      "maxWidth": "150px",
+      "objectFit": "contain"
+    },
+    "#controls .chips": {
+      "display": "grid",
+      "gridTemplateColumns": "167px 167px",
+      "gap": "16px"
+    },
+    "#controls .chips li": {
+      "padding": "28px",
+      "borderRadius": "20px",
+      "minHeight": "96px",
+      "fontSize": "19px"
+    }
+  },
+  "1440:/": {
+    ".hero h1": {
+      "fontFamily": "Inter, system-ui, sans-serif",
+      "fontSize": "60px",
+      "fontWeight": "500",
+      "lineHeight": "62.4px",
+      "letterSpacing": "-2.4px"
+    },
+    "#p-find .media": {
+      "width": "600px",
+      "height": "600px",
+      "borderRadius": "20px"
+    },
+    ".ill-card": {
+      "left": "132px",
+      "top": "120px",
+      "padding": "30px 33px",
+      "borderRadius": "30px",
+      "fontFamily": "Inter, system-ui, sans-serif"
+    },
+    ".ill-alert": {
+      "width": "300px",
+      "padding": "21.6px",
+      "borderRadius": "21.6px",
+      "animationName": "ilIn, ilFloat",
+      "animationDuration": "0.8s, 7s",
+      "animationDelay": "0.45s, 1.4s"
+    },
+    ".pb-stage.nodes": {
+      "width": "510px",
+      "height": "340px",
+      "borderRadius": "14px"
+    },
+    ".wires .w": {
+      "animationName": "wLine",
+      "animationDuration": "6s",
+      "strokeDasharray": "1px"
+    },
+    ".loop .sm": {
+      "width": "203.188px",
+      "height": "193.016px",
+      "borderRadius": "12px"
+    },
+    ".loop .sm .pop": {
+      "animationName": "hwFloat",
+      "animationDuration": "6s",
+      "animationDelay": "1.2s"
+    },
+    ".loop .sm svg": {
+      "animationName": "hwDraw",
+      "animationDuration": "1.6s",
+      "animationDelay": "1.35s"
+    },
+    ".dv-card": {
+      "padding": "26px 26px 20px",
+      "borderRadius": "18px"
+    },
+    ".dv .st.on .ac": {
+      "animationName": "dvWipe",
+      "animationDuration": "1.3s"
+    },
+    ".rview": {
+      "width": "1200px",
+      "borderRadius": "20px"
+    },
+    ".sec-card": {
+      "width": "288px",
+      "padding": "20px",
+      "borderRadius": "20px"
+    }
+  },
+  "1440:/facilities-operations/": {
+    ".hero h1": {
+      "fontFamily": "Inter, system-ui, sans-serif",
+      "fontSize": "60px",
+      "fontWeight": "500",
+      "lineHeight": "62.4px"
+    },
+    ".wku-r": {
+      "width": "835.75px",
+      "padding": "40px 24px 80px",
+      "borderRadius": "20px"
+    },
+    ".wku-card": {
+      "padding": "22px",
+      "borderRadius": "20px"
+    },
+    ".hl-art": {
+      "width": "477.562px",
+      "aspectRatio": "1 / 1"
+    },
+    ".hl .tr": {
+      "padding": "28px",
+      "borderRadius": "18px"
+    },
+    ".hl .hn-pl .pl1": {
+      "animationName": "plIn",
+      "animationDuration": "1.1s",
+      "animationDelay": "2.6s"
+    }
+  },
+  "1440:/building-intelligence/": {
+    ".hero h1": {
+      "fontFamily": "Inter, system-ui, sans-serif",
+      "fontSize": "60px",
+      "fontWeight": "500",
+      "lineHeight": "62.4px"
+    },
+    "#product .app": {
+      "width": "1088px",
+      "gridTemplateColumns": "200px 888px",
+      "borderRadius": "16px"
+    },
+    ".app-c": {
+      "padding": "14px",
+      "borderRadius": "12px"
+    },
+    ".ib-mk .wku-r": {
+      "width": "835.75px",
+      "padding": "40px 24px 80px",
+      "borderRadius": "20px"
+    }
+  },
+  "1440:/integrations/": {
+    ".hero h1": {
+      "fontFamily": "Inter, system-ui, sans-serif",
+      "fontSize": "60px",
+      "fontWeight": "500",
+      "lineHeight": "62.4px"
+    },
+    ".lg-track": {
+      "display": "flex",
+      "gap": "72px",
+      "animationName": "lgScroll",
+      "animationDuration": "40s",
+      "animationIterationCount": "infinite"
+    },
+    ".lg-track img": {
+      "height": "30px",
+      "maxWidth": "150px",
+      "objectFit": "contain"
+    },
+    "#controls .chips": {
+      "display": "grid",
+      "gridTemplateColumns": "288px 288px 288px 288px",
+      "gap": "16px"
+    },
+    "#controls .chips li": {
+      "padding": "28px",
+      "borderRadius": "20px",
+      "minHeight": "96px",
+      "fontSize": "19px"
+    }
+  }
+}

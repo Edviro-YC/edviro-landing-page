@@ -1,10 +1,19 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { computed } from 'vue'
+import { RouterView, useRoute } from 'vue-router'
+import AwesomicShell from '@/components/design/AwesomicShell.vue'
 import { useHead } from '@unhead/vue'
 import SiteNav from './components/SiteNav.vue'
 import SiteFooter from './components/SiteFooter.vue'
 import poppinsRegular from '@/assets/fonts/poppins-400-latin.woff2'
 import interLatin from '@/assets/fonts/inter-latin.woff2'
+
+const route = useRoute()
+const sourceDesign = computed(() =>
+  ['/', '/facilities-operations', '/building-intelligence', '/integrations'].includes(
+    route.path.replace(/\/$/, '') || '/',
+  ),
+)
 
 // Preload the designer’s body and heading faces (hashed by Vite) so the
 // above-the-fold type renders without a flash. Applied on every route.
@@ -37,19 +46,21 @@ const skipToMain = () => {
 <template>
   <div style="min-height: 100vh; overflow-x: clip">
     <a href="#main-content" class="skip-link" @click.prevent="skipToMain">Skip to content</a>
-    <SiteNav />
-    <div id="main-content">
-      <!--
+    <SiteNav v-if="!sourceDesign" />
+    <component :is="sourceDesign ? AwesomicShell : 'div'">
+      <div id="main-content">
+        <!--
         Keyed by path: the redesigned pages all render through ContentPage.vue,
         and without a key Vue reuses that one instance between routes, so the
         page content and its head tags would not change. Hash-only navigation
         keeps the same key and does not remount.
       -->
-      <RouterView v-slot="{ Component, route }">
-        <component :is="Component" :key="route.path" />
-      </RouterView>
-    </div>
-    <SiteFooter />
+        <RouterView v-slot="{ Component, route }">
+          <component :is="Component" :key="route.path" />
+        </RouterView>
+      </div>
+    </component>
+    <SiteFooter v-if="!sourceDesign" />
   </div>
 </template>
 

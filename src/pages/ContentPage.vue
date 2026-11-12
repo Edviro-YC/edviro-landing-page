@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, defineAsyncComponent } from 'vue'
 import DesignerArtwork, { type ArtworkKind } from '@/components/design/DesignerArtwork.vue'
 import { useScrollReveal } from '@/composables/useScrollReveal'
 import CtaSection from '@/components/CtaSection.vue'
@@ -21,6 +21,16 @@ const props = defineProps<{ path: string }>()
 // Routes are generated from the content list, so the lookup always succeeds.
 const page = contentPage(props.path) as ContentPage
 const crumbs = page.hero.crumbs ?? []
+const sourceLayouts = {
+  '/facilities-operations': defineAsyncComponent(
+    () => import('@/components/design/pages/how-edviro-works.vue'),
+  ),
+  '/building-intelligence': defineAsyncComponent(
+    () => import('@/components/design/pages/intelligence.vue'),
+  ),
+  '/integrations': defineAsyncComponent(() => import('@/components/design/pages/integrations.vue')),
+}
+const sourceLayout = sourceLayouts[page.path as keyof typeof sourceLayouts]
 const root = ref<HTMLElement | null>(null)
 useScrollReveal(root)
 
@@ -70,7 +80,8 @@ usePageSeo({
 </script>
 
 <template>
-  <main ref="root" class="nd">
+  <component v-if="sourceLayout" :is="sourceLayout" :page="page" />
+  <main v-else ref="root" class="nd">
     <div class="page-hero">
       <div class="wrap" :class="{ 'has-art': heroArtwork || showLoopArtwork }">
         <div>
