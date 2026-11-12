@@ -3,15 +3,23 @@ import { RouterView } from 'vue-router'
 import { useHead } from '@unhead/vue'
 import SiteNav from './components/SiteNav.vue'
 import SiteFooter from './components/SiteFooter.vue'
-import geistLatin from '@/assets/fonts/geist-latin.woff2'
+import poppinsRegular from '@/assets/fonts/poppins-400-latin.woff2'
+import interLatin from '@/assets/fonts/inter-latin.woff2'
 
-// Preload the primary latin font subset (hashed URL resolved by Vite) so the
+// Preload the designer’s body and heading faces (hashed by Vite) so the
 // above-the-fold type renders without a flash. Applied on every route.
-// Tokens for the older pages live in assets/main.css; the redesign's in assets/site.css.
+// Base styles live in main.css/site.css; the designer adaptation is in awesomic.css.
 useHead({
   htmlAttrs: { lang: 'en' },
   link: [
-    { rel: 'preload', as: 'font', type: 'font/woff2', href: geistLatin, crossorigin: 'anonymous' },
+    {
+      rel: 'preload',
+      as: 'font',
+      type: 'font/woff2',
+      href: poppinsRegular,
+      crossorigin: 'anonymous',
+    },
+    { rel: 'preload', as: 'font', type: 'font/woff2', href: interLatin, crossorigin: 'anonymous' },
   ],
 })
 
@@ -27,7 +35,7 @@ const skipToMain = () => {
 </script>
 
 <template>
-  <div style="min-height: 100vh; overflow-x: hidden;">
+  <div style="min-height: 100vh; overflow-x: clip">
     <a href="#main-content" class="skip-link" @click.prevent="skipToMain">Skip to content</a>
     <SiteNav />
     <div id="main-content">

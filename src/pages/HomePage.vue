@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import { onBeforeUnmount, onMounted, ref } from 'vue'
+import DesignerArtwork, { type ArtworkKind } from '@/components/design/DesignerArtwork.vue'
+import { useScrollReveal } from '@/composables/useScrollReveal'
+import pausdLogo from '@/assets/img/pausd-logo.svg'
+import lgsuhsdLogo from '@/assets/img/lgsuhsd-logo.png'
 import CtaSection from '@/components/CtaSection.vue'
 import DemoButton from '@/components/DemoButton.vue'
 import SiteLink from '@/components/SiteLink.vue'
@@ -74,12 +79,6 @@ const stats = [
   ['24/7', 'Monitoring'],
 ]
 
-const capitalPlan = [
-  ['Chiller CH-1', '26%', '2027'],
-  ['Boiler B-2', '52%', '2029'],
-  ['Rooftop R-4', '78%', '2031'],
-]
-
 const buildings = [
   ['Campuses', 'K–12 and higher ed', '/solutions/schools'],
   ['Data centers', 'Capacity, cooling and alarms', '/solutions/data-centers'],
@@ -96,15 +95,6 @@ const signals = [
   ['Results', 'Fixes are verified in building data.'],
 ]
 
-// Arrow positions on the loop track, clockwise from the top left.
-const loopArrows = [
-  { dir: 'right', style: { left: '35%', top: '102px' } },
-  { dir: 'right', style: { left: '65%', top: '102px' } },
-  { dir: 'down', style: { left: '100%', top: '50%' } },
-  { dir: 'left', style: { left: '50%', top: '402px' } },
-  { dir: 'up', style: { left: '0', top: '50%' } },
-]
-
 const customers = [
   ['PAUSD', 'Palo Alto Unified School District', 'K–12 district'],
   ['LGSUHSD', 'Los Gatos-Saratoga Union High School District', 'K–12 district'],
@@ -116,7 +106,13 @@ const customers = [
  * swap in the vendors' official brand files before this ships. Distech has no
  * logo file yet, so it renders as text.
  */
-const vendors: { name: string; src?: string; width?: number; height?: number; className?: string }[] = [
+const vendors: {
+  name: string
+  src?: string
+  width?: number
+  height?: number
+  className?: string
+}[] = [
   { name: 'Siemens', src: siemens, width: 210, height: 50 },
   { name: 'Johnson Controls', src: johnsonControls, width: 250, height: 115, className: 'tall' },
   { name: 'Honeywell', src: honeywell, width: 678, height: 120 },
@@ -177,24 +173,147 @@ usePageSeo({
   path: '/',
   jsonLd: [organizationLd(), websiteLd(), softwareApplicationLd(), faqLd(faqs)],
 })
+
+const root = ref<HTMLElement | null>(null)
+useScrollReveal(root)
+const carousel = ref<HTMLElement | null>(null)
+const canPrevious = ref(false)
+const canNext = ref(true)
+const activeCapability = ref('diagnostics')
+const updateCapability = () => {
+  for (const item of capabilities) {
+    const anchor = document.getElementById(item.id)
+    if (anchor && anchor.getBoundingClientRect().top < window.innerHeight * 0.5) {
+      activeCapability.value = item.id
+    }
+  }
+}
+const updateCarousel = () => {
+  const el = carousel.value
+  if (!el) return
+  canPrevious.value = el.scrollLeft > 2
+  canNext.value = el.scrollLeft < el.scrollWidth - el.clientWidth - 2
+}
+const scrollBuildings = (direction: number) => {
+  const el = carousel.value
+  if (!el) return
+  const card = el.querySelector<HTMLElement>('.building-card')
+  el.scrollBy({
+    left: direction * ((card?.offsetWidth ?? el.clientWidth) + 20),
+    behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+  })
+}
+let resize: ResizeObserver | undefined
+onMounted(() => {
+  updateCarousel()
+  updateCapability()
+  window.addEventListener('scroll', updateCapability, { passive: true })
+  resize = new ResizeObserver(updateCarousel)
+  if (carousel.value) resize.observe(carousel.value)
+})
+onBeforeUnmount(() => {
+  resize?.disconnect()
+  window.removeEventListener('scroll', updateCapability)
+})
+
+const sectorImages = [
+  'campuses',
+  'data-halls',
+  'hospitals',
+  'office-towers',
+  'public-buildings',
+  'job-sites',
+]
+const customerLogos = [pausdLogo, lgsuhsdLogo]
+const capabilities: {
+  id: string
+  title: string
+  text: string
+  detail: string
+  href: string
+  art: ArtworkKind
+}[] = [
+  {
+    id: 'diagnostics',
+    title: 'Find waste',
+    text: 'Baselines, anomalies and likely causes, with evidence.',
+    detail:
+      'Edviro learns each building’s normal load, schedules and equipment behavior from its own data, then flags changes from that pattern as they appear.',
+    href: '/building-intelligence',
+    art: 'diagnostic',
+  },
+  {
+    id: 'work-orders',
+    title: 'Review work orders',
+    text: 'Signals and requests become orders a human approves.',
+    detail:
+      'A named person on your team. Edviro drafts the work and gathers the evidence, and a human approves it before anyone is dispatched.',
+    href: '/work-orders',
+    art: 'work-orders',
+  },
+  {
+    id: 'mv',
+    title: 'Verify every fix',
+    text: 'M&V against measured building data.',
+    detail:
+      'Each site gets a learned baseline. After a fix, measured data is compared against it using a documented M&V method.',
+    href: '/measurement-and-verification',
+    art: 'verification',
+  },
+  {
+    id: 'planning',
+    title: 'Plan capital',
+    text: 'Asset health turned into a defensible capital plan.',
+    detail:
+      'Verified results and repeat failures help repair-or-replace decisions and capital plans.',
+    href: '/capital-planning',
+    art: 'capital',
+  },
+]
+const loop: { title: string; text: string; art: ArtworkKind; tag?: string }[] = [
+  { title: 'Works 24/7', text: 'I checked 250 thermostats. One valve is stuck.', art: 'signal' },
+  {
+    title: 'Diagnose issues',
+    text: 'Discharge air at 55°F for six days, valve commanded open.',
+    art: 'diagnose',
+  },
+  { title: 'You approve the fixes', text: 'Fix drafted for VAV 3-12', art: 'review', tag: 'Human' },
+  {
+    title: 'Push to your work orders',
+    text: 'Pushed to your work order system, with history and steps.',
+    art: 'dispatch',
+  },
+  { title: 'Verify', text: 'Watched 14 days. Fix confirmed.', art: 'verify' },
+]
 </script>
 
 <template>
-  <main class="nd">
+  <main ref="root" class="nd aw-home">
     <div class="hero">
       <div class="wrap">
-        <h1>Infrastructure that runs itself.<span>Put your facility on autopilot.</span></h1>
-        <p class="nd-lede">
-          Edviro is facilities management software that catches building problems, drafts work
-          orders for your team to approve, and verifies the fix, so you can reduce waste
-          and keep facilities running.
-        </p>
-        <div class="actions">
-          <DemoButton />
-          <a class="nd-btn ghost" href="#how">See how it works</a>
+        <div class="hero-copy">
+          <div>
+            <div class="label">AI-powered facilities operations</div>
+            <h1>Infrastructure that runs itself.<span>Put your facility on autopilot.</span></h1>
+          </div>
+          <p class="nd-lede">
+            Edviro is facilities management software that catches building problems, drafts work
+            orders for your team to approve, and verifies the fix, so you can reduce waste and keep
+            facilities running.
+          </p>
         </div>
-
-        <!-- Illustrative product screen -->
+        <div class="hero-bottom">
+          <div class="actions">
+            <DemoButton /><a class="nd-btn ghost" href="#how">See how it works</a>
+          </div>
+          <a
+            class="yc-badge"
+            href="https://www.ycombinator.com/companies/edviro"
+            target="_blank"
+            rel="noopener"
+            ><b aria-hidden="true">Y</b>Backed by Y Combinator</a
+          >
+        </div>
         <div class="stage">
           <div class="app" role="img" aria-label="Edviro fixes screen (example)">
             <div class="app-bar">
@@ -267,120 +386,140 @@ usePageSeo({
       </div>
     </div>
 
-    <div class="stats">
+    <div class="stats" aria-label="Education results">
       <div class="wrap">
+        <div class="label">Proven in education</div>
         <div class="stat-row">
           <div v-for="[value, label] in stats" :key="label" class="stat">
             <b>{{ value }}</b
             ><span>{{ label }}</span>
           </div>
-          <div class="stat">
-            <svg class="yc-mark" viewBox="0 0 46 46" role="img" aria-label="Y Combinator">
-              <rect width="46" height="46" rx="4" fill="#F26522" />
-              <path
-                d="M13 11l10 14.5L33 11M23 25.5V36"
-                fill="none"
-                stroke="#fff"
-                stroke-width="3.4"
-              />
-            </svg>
-            <span>Backed by Y Combinator</span>
-          </div>
         </div>
       </div>
     </div>
 
-    <section id="platform" class="alt">
+    <section id="platform" class="aw-dark aw-platform">
       <div class="wrap">
-        <div class="label">The platform</div>
-        <h2>Every building operation needs a co-worker.</h2>
-        <div class="card-grid">
-          <div class="nd-card">
-            <div class="viz">
-              <svg viewBox="0 0 220 100" aria-hidden="true">
-                <polygon
-                  class="chart-waste"
-                  points="60,63 80,44 100,30 120,36 140,50 150,60 120,62 90,61"
-                />
-                <polyline
-                  class="chart-base"
-                  points="0,62 30,60 60,63 90,61 120,62 150,60 180,63 220,61"
-                />
-                <polyline
-                  class="chart-line"
-                  points="0,64 30,59 60,63 80,44 100,30 120,36 140,50 150,60 180,62 220,60"
-                />
-                <circle class="chart-point" cx="100" cy="30" r="4" />
-              </svg>
-            </div>
-            <h3>Find waste</h3>
-            <p>Baselines, anomalies and likely causes, with evidence.</p>
+        <div class="section-heading" data-reveal>
+          <div>
+            <div class="label">The platform</div>
+            <h2>Every building operation needs a co-worker.</h2>
           </div>
-          <div class="nd-card">
-            <div class="viz">
-              <div class="nd-chip">
-                <div><b>AHU-2 running overnight</b><small>Drafted by Edviro</small></div>
-                <span class="chip-action">Approve</span>
-              </div>
-            </div>
-            <h3>Review work orders</h3>
-            <p>Signals and requests become orders a human approves.</p>
-          </div>
-          <div class="nd-card">
-            <div class="viz">
-              <div class="bars">
-                <div class="bar"><i style="height: 84px" />Before</div>
-                <div class="bar after"><i style="height: 54px" />After</div>
-              </div>
-            </div>
-            <h3>Verify every fix</h3>
-            <p>M&amp;V against measured building data.</p>
-          </div>
-          <div class="nd-card">
-            <div class="viz">
-              <div class="cap-plan">
-                <div v-for="[asset, used, year] in capitalPlan" :key="asset">
-                  <span>{{ asset }}</span
-                  ><i :style="{ '--w': used }" /><em>{{ year }}</em>
-                </div>
-              </div>
-            </div>
-            <h3>Plan capital</h3>
-            <p>Asset health turned into a defensible capital plan.</p>
-          </div>
+          <p class="sub">
+            Facilities teams do not need more dashboards or alarms. They need systems that keep
+            improving and take action.
+          </p>
         </div>
+        <nav class="capability-nav" aria-label="Platform capabilities">
+          <a
+            v-for="item in capabilities"
+            :key="item.id"
+            :href="'#' + item.id"
+            :aria-current="activeCapability === item.id ? 'location' : undefined"
+            >{{ item.title }}</a
+          >
+        </nav>
+        <template v-for="item in capabilities" :key="item.id">
+          <!-- Anchors stay in normal flow, so links can return to an earlier sticky panel. -->
+          <div :id="item.id" class="capability-anchor" aria-hidden="true"></div>
+          <article :data-capability="item.id" class="capability">
+            <div class="capability-copy" data-reveal>
+              <div class="label">{{ item.title }}</div>
+              <h3>{{ item.text }}</h3>
+              <p>{{ item.detail }}</p>
+              <SiteLink class="more" :href="item.href"
+                >{{ item.title }} <span aria-hidden="true">→</span></SiteLink
+              >
+            </div>
+            <DesignerArtwork :kind="item.art" />
+          </article>
+        </template>
         <SiteLink class="more" href="/facilities-operations">Explore the platform →</SiteLink>
       </div>
     </section>
 
-    <section id="buildings">
+    <section id="buildings" class="aw-buildings">
       <div class="wrap">
-        <div class="label">Built for every building</div>
-        <h2>One loop, for any building.</h2>
-        <div class="cells">
-          <SiteLink v-for="[name, detail, href] in buildings" :key="name" :href="href ?? '#demo'">
-            <div>
-              <b>{{ name }}</b
-              ><span>{{ detail }}</span>
+        <div class="section-heading" data-reveal>
+          <div>
+            <div class="label">Built for every building</div>
+            <h2>One loop, for any building.</h2>
+          </div>
+        </div>
+        <div
+          ref="carousel"
+          class="building-carousel"
+          role="region"
+          aria-label="Building types"
+          tabindex="0"
+          @scroll.passive="updateCarousel"
+        >
+          <SiteLink
+            v-for="([name, detail, href], index) in buildings"
+            :key="name"
+            class="building-card"
+            :href="href ?? '#demo'"
+          >
+            <div class="building-copy">
+              <div>
+                <h3>{{ name }}</h3>
+                <p>{{ detail }}</p>
+              </div>
+              <span aria-hidden="true">↗</span>
             </div>
-            <i>→</i>
+            <div class="building-image">
+              <img
+                :src="'/design/images/sectors/' + sectorImages[index] + '-day.jpg'"
+                :alt="name"
+                width="512"
+                height="512"
+                loading="lazy"
+              /><img
+                class="night"
+                :src="'/design/images/sectors/' + sectorImages[index] + '-night.jpg'"
+                alt=""
+                width="512"
+                height="512"
+                loading="lazy"
+              />
+            </div>
           </SiteLink>
+        </div>
+        <div class="carousel-actions">
+          <button
+            type="button"
+            aria-label="Previous building types"
+            :disabled="!canPrevious"
+            @click="scrollBuildings(-1)"
+          >
+            ←</button
+          ><button
+            type="button"
+            aria-label="Next building types"
+            :disabled="!canNext"
+            @click="scrollBuildings(1)"
+          >
+            →
+          </button>
         </div>
       </div>
     </section>
 
-    <section id="problem" class="alt">
+    <section id="problem" class="aw-dark">
       <div class="wrap">
-        <div class="label">The problem</div>
-        <p class="statement">
-          Facilities teams do not need more dashboards or alarms.
-          <span>
-            They need systems that keep improving and <b>take action</b>, turning signals and
-            requests into reviewed work orders, verified fixes and capital plans.
-          </span>
-        </p>
-        <div class="trio">
-          <div v-for="[title, detail] in signals" :key="title">
+        <div class="section-heading" data-reveal>
+          <div>
+            <div class="label">The problem</div>
+            <h2>Facilities teams do not need more dashboards or alarms.</h2>
+          </div>
+          <p class="sub">
+            They need systems that keep improving and take action, turning signals and requests into
+            reviewed work orders, verified fixes and capital plans.
+          </p>
+        </div>
+        <div class="problem-grid">
+          <div v-for="[title, detail] in signals" :key="title" class="problem-card" data-reveal>
+            <span class="signal-dot" aria-hidden="true" />
             <h3>{{ title }}</h3>
             <p>{{ detail }}</p>
           </div>
@@ -388,108 +527,84 @@ usePageSeo({
       </div>
     </section>
 
-    <section id="how">
+    <section id="how" class="aw-how">
       <div class="wrap">
-        <div class="center">
-          <div class="label">How Edviro works</div>
-          <h2>No alarms, just fixes.</h2>
+        <div class="section-heading" data-reveal>
+          <div>
+            <div class="label">How Edviro works</div>
+            <h2>No alarms, just fixes.</h2>
+          </div>
           <p class="sub">
             There is no alarms tab in Edviro. Your AI crew triages every alarm, text and meter
             change around the clock, even while you’re sleeping, so what reaches your team is a
             diagnosed fix that’s ready to approve.
           </p>
         </div>
-        <div class="loop">
-          <div class="track" />
-          <i
-            v-for="(arrow, index) in loopArrows"
-            :key="index"
-            :class="['arrow', arrow.dir]"
-            :style="arrow.style"
-          />
-          <div class="step" style="left: 20%; top: 0">
-            <div class="step-no">01</div>
-            <h3>Works 24/7</h3>
-            <div class="step-ui">
-              <small>Edviro crew · 2:14 AM</small>
-              <span class="bubble">I checked 250 thermostats. One valve is stuck.</span>
+        <ol class="illustrated-loop" aria-label="How Edviro works">
+          <li
+            v-for="(step, index) in loop"
+            :key="step.title"
+            :class="{ human: step.tag }"
+            data-reveal
+          >
+            <DesignerArtwork :kind="step.art" />
+            <div class="step-index">
+              {{ String(index + 1).padStart(2, '0') }}<span v-if="step.tag">{{ step.tag }}</span>
             </div>
+            <h3>{{ step.title }}</h3>
+            <p>{{ step.text }}</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="results" class="aw-dark aw-results">
+      <div class="wrap">
+        <div class="section-heading" data-reveal>
+          <div>
+            <div class="label">Results</div>
+            <h2>Featured customers and verified outcomes.</h2>
           </div>
-          <div class="step" style="left: 50%; top: 0">
-            <div class="step-no">02</div>
-            <h3>Diagnose issues</h3>
-            <div class="step-ui">
-              <b>Reheat valve stuck closed</b>
-              <span>Discharge air at 55°F for six days, valve commanded open.</span>
-            </div>
-          </div>
-          <div class="step human" style="left: 80%; top: 0">
-            <div class="step-no">03 <em>Human</em></div>
-            <h3>You approve the fixes</h3>
-            <div class="step-ui">
-              <small>Facilities lead · 8:10 AM</small>
-              <b>Fix drafted for VAV 3-12</b>
-              <span class="approve">Approve fix</span>
-            </div>
-          </div>
-          <div class="step" style="left: 65%; bottom: 0">
-            <div class="step-no">04</div>
-            <h3>Push to your work orders</h3>
-            <div class="step-ui">
-              <b>Work order created · 8:12 AM</b>
-              <span>Pushed to your work order system, with history and steps.</span>
-            </div>
-          </div>
-          <div class="step" style="left: 35%; bottom: 0">
-            <div class="step-no">05</div>
-            <h3>Verify</h3>
-            <div class="step-ui">
-              <b>Zone 3 back at 70°F</b>
-              <span class="held">Watched 14 days. Fix confirmed.</span>
-            </div>
-          </div>
+          <SiteLink class="more" href="/results">See the results →</SiteLink>
+        </div>
+        <div class="customer-grid">
+          <SiteLink
+            v-for="([short, name, type], index) in customers"
+            :key="short"
+            href="/results"
+            class="customer-card"
+            data-reveal
+            ><img :src="customerLogos[index]" :alt="name" width="190" height="80" loading="lazy" />
+            <h3>{{ name }}</h3>
+            <p>{{ type }}</p>
+            <span class="more">See the results →</span></SiteLink
+          >
         </div>
       </div>
     </section>
 
-    <section id="results">
+    <section id="integrations" class="aw-integrations">
       <div class="wrap">
-        <div class="label">Results</div>
-        <h2>Featured customers and verified outcomes.</h2>
-        <div class="tabs">
-          <span class="on">Education</span>
-          <span>Data centers</span>
-          <span>Commercial</span>
-          <span>More</span>
-        </div>
-        <div class="customers">
-          <SiteLink v-for="[short, name, type] in customers" :key="short" href="/results">
-            <b>{{ short }}</b>
-            <span>{{ name }}</span>
-            <em>{{ type }} <u>See the results →</u></em>
-          </SiteLink>
-        </div>
-      </div>
-    </section>
-
-    <section id="integrations" class="alt">
-      <div class="wrap">
-        <div class="label">Integrations</div>
-        <h2>Works with what you already have.</h2>
-        <div class="logos">
-          <span v-for="vendor in vendors" :key="vendor.name">
-            <img
-              v-if="vendor.src"
-              :class="vendor.className"
-              :src="vendor.src"
-              :alt="vendor.name"
-              :width="vendor.width"
-              :height="vendor.height"
-              loading="lazy"
-              decoding="async"
-            />
-            <template v-else>{{ vendor.name }}</template>
-          </span>
+        <div class="integration-box" data-reveal>
+          <div class="label">Integrations</div>
+          <h2>Works with what you already have.</h2>
+          <div class="logos">
+            <span v-for="vendor in vendors" :key="vendor.name"
+              ><img
+                v-if="vendor.src"
+                :class="vendor.className"
+                :src="vendor.src"
+                :alt="vendor.name"
+                :width="vendor.width"
+                :height="vendor.height"
+                loading="lazy"
+                decoding="async"
+              /><template v-else>{{ vendor.name }}</template></span
+            >
+          </div>
+          <SiteLink class="nd-btn" href="/integrations"
+            >See what Edviro connects to <span aria-hidden="true">→</span></SiteLink
+          >
         </div>
         <div id="modules" class="modules">
           <div>
@@ -502,15 +617,11 @@ usePageSeo({
             <SiteLink class="more" href="/modules">See all modules →</SiteLink>
           </div>
           <div class="module-grid">
-            <SiteLink
-              v-for="[name, detail, href] in modules"
-              :key="name"
-              :href="href ?? '/modules'"
-            >
-              <b>{{ name }}</b
+            <SiteLink v-for="[name, detail, href] in modules" :key="name" :href="href ?? '/modules'"
+              ><b>{{ name }}</b
               ><span>{{ detail }}</span
-              ><i>→</i>
-            </SiteLink>
+              ><i>→</i></SiteLink
+            >
           </div>
         </div>
       </div>
@@ -531,7 +642,6 @@ usePageSeo({
         </div>
       </div>
     </section>
-
     <CtaSection />
   </main>
 </template>

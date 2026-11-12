@@ -5,6 +5,7 @@ import { routes } from './router'
 import { POSTHOG_HOST, POSTHOG_KEY } from './seo/site'
 import './assets/main.css'
 import './assets/site.css'
+import './assets/awesomic.css'
 
 export const createApp = ViteSSG(
   App,

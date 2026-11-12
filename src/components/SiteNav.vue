@@ -21,7 +21,7 @@ watch(
 </script>
 
 <template>
-  <div class="nd">
+  <div class="nd site-header">
     <header>
       <div class="wrap">
         <RouterLink class="logo" to="/"

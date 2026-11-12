@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+import DesignerArtwork, { type ArtworkKind } from '@/components/design/DesignerArtwork.vue'
+import { useScrollReveal } from '@/composables/useScrollReveal'
 import CtaSection from '@/components/CtaSection.vue'
 import DemoButton from '@/components/DemoButton.vue'
 import FixWindow from '@/components/FixWindow.vue'
@@ -19,6 +21,20 @@ const props = defineProps<{ path: string }>()
 // Routes are generated from the content list, so the lookup always succeeds.
 const page = contentPage(props.path) as ContentPage
 const crumbs = page.hero.crumbs ?? []
+const root = ref<HTMLElement | null>(null)
+useScrollReveal(root)
+
+// Illustrations complement the existing content; all copy remains in src/content.
+const artworkByPath: Record<string, ArtworkKind> = {
+  '/building-intelligence': 'diagnostic',
+  '/work-orders': 'work-orders',
+  '/asset-management': 'capital',
+  '/capital-planning': 'capital',
+  '/measurement-and-verification': 'verification',
+}
+const heroArtwork = artworkByPath[page.path]
+const showLoopArtwork = page.path === '/facilities-operations' || page.path === '/integrations'
+const loopArtwork: ArtworkKind[] = ['signal', 'diagnose', 'review', 'dispatch', 'verify']
 
 // Skip the small label when the headline already says the same thing.
 const showLabel = computed(
@@ -54,31 +70,41 @@ usePageSeo({
 </script>
 
 <template>
-  <main class="nd">
+  <main ref="root" class="nd">
     <div class="page-hero">
-      <div class="wrap">
-        <div v-if="crumbs.length" class="crumbs">
-          <span v-for="[label, href] in crumbs" :key="href"
-            ><SiteLink :href="href">{{ label }}</SiteLink> /
-          </span>
-          {{ page.hero.label }}
+      <div class="wrap" :class="{ 'has-art': heroArtwork || showLoopArtwork }">
+        <div>
+          <div v-if="crumbs.length" class="crumbs">
+            <span v-for="[label, href] in crumbs" :key="href"
+              ><SiteLink :href="href">{{ label }}</SiteLink> /
+            </span>
+            {{ page.hero.label }}
+          </div>
+          <div v-else-if="showLabel" class="label">{{ page.hero.label }}</div>
+          <h1>{{ page.hero.title }}</h1>
+          <p class="nd-lede">{{ page.hero.lede }}</p>
+          <div class="actions">
+            <SiteLink v-if="page.hero.primary" class="nd-btn" :href="page.hero.primary[1]">{{
+              page.hero.primary[0]
+            }}</SiteLink>
+            <DemoButton v-else />
+            <SiteLink
+              v-if="page.hero.secondary"
+              class="nd-btn ghost"
+              :href="page.hero.secondary[1]"
+              >{{ page.hero.secondary[0] }}</SiteLink
+            >
+          </div>
+          <p v-if="page.hero.note" class="note">{{ page.hero.note }}</p>
         </div>
-        <div v-else-if="showLabel" class="label">{{ page.hero.label }}</div>
-        <h1>{{ page.hero.title }}</h1>
-        <p class="nd-lede">{{ page.hero.lede }}</p>
-        <div class="actions">
-          <SiteLink v-if="page.hero.primary" class="nd-btn" :href="page.hero.primary[1]">{{
-            page.hero.primary[0]
-          }}</SiteLink>
-          <DemoButton v-else />
-          <SiteLink
-            v-if="page.hero.secondary"
-            class="nd-btn ghost"
-            :href="page.hero.secondary[1]"
-            >{{ page.hero.secondary[0] }}</SiteLink
-          >
+        <DesignerArtwork v-if="heroArtwork" :kind="heroArtwork" />
+        <div v-else-if="showLoopArtwork" class="hero-loop-art">
+          <DesignerArtwork
+            v-for="kind in ['diagnose', 'review', 'verify'] as const"
+            :key="kind"
+            :kind="kind"
+          />
         </div>
-        <p v-if="page.hero.note" class="note">{{ page.hero.note }}</p>
       </div>
     </div>
 
@@ -137,7 +163,13 @@ usePageSeo({
             v-for="(step, stepIndex) in section.steps"
             :key="step.title"
             :class="{ human: step.tag }"
+            data-reveal
           >
+            <DesignerArtwork
+              v-if="showLoopArtwork && section.steps.length === 5"
+              class="step-art"
+              :kind="loopArtwork[stepIndex]!"
+            />
             <div class="step-no">
               {{ String(stepIndex + 1).padStart(2, '0') }}<em v-if="step.tag">{{ step.tag }}</em>
             </div>
