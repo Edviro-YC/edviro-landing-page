@@ -170,7 +170,7 @@ const faqs = [
 // Shared metadata is industry-neutral; school-specific titles live on the
 // school routes (see src/seo/site.ts). Keep index.html's no-JS title in sync.
 usePageSeo({
-  title: 'Edviro | AI-Powered Facilities Operations Platform',
+  title: 'Put your facilities on autopilot | Edviro',
   titleTemplate: null,
   description:
     'Edviro turns building signals and staff requests into reviewed work orders, verified fixes, and capital plans for education, healthcare, data centers, and real estate.',
