@@ -143,7 +143,7 @@ const pages: ContentPage[] = [
           {
             title: 'Blog',
             text: 'Posts on work orders, energy, M&V and capital planning.',
-            href: 'https://blog.edviroenergy.com',
+            href: 'https://edviro.com/blog/',
           },
         ],
       },
@@ -328,7 +328,7 @@ const pages: ContentPage[] = [
           {
             title: 'Blog',
             text: 'Posts on work orders, energy, M&V and capital planning.',
-            href: 'https://blog.edviroenergy.com',
+            href: 'https://edviro.com/blog/',
           },
           {
             title: 'How Edviro works',

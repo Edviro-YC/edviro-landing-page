@@ -64,6 +64,11 @@ for (const row of rows) {
     if (target.origin !== origin) continue
     const path = target.pathname.replace(/\/$/, '') || '/'
     if (redirectedPaths.has(path)) continue
+    // Astro owns the /blog namespace, served through Netlify's origin rewrite.
+    if (path.startsWith('/blog/')) {
+      assert.ok(redirects.includes('/blog/*  https://edviro-blog.netlify.app/blog/:splat  200'))
+      continue
+    }
     const dest = `${origin}${path === '/' ? '/' : `${path}/`}`
     assert.ok(byUrl.has(dest), `${row.file}: missing internal page ${href}`)
     row.destinations.push(dest)
@@ -83,3 +88,7 @@ for (const old of ['http://edviroenergy.com', 'https://edviroenergy.com', 'http:
 assert.ok(!redirects.includes(`https://edviro.com/*`), 'No canonical-host redirect loop')
 assert.ok(!redirects.includes('https://*'), 'Host redirects must not capture deploy previews or unrelated subdomains')
 console.log(`SEO checks passed: ${rows.length} HTML pages, ${indexed.length} sitemap URLs, metadata, JSON-LD, links, crawl depth, and migration rules.`)
+
+assert.ok(redirects.includes('/blog/*  https://edviro-blog.netlify.app/blog/:splat  200'))
+assert.ok((await readFile('dist/robots.txt', 'utf8')).includes('Sitemap: https://edviro.com/blog/sitemap-index.xml'))
+assert.ok(home.html.includes('name="share-your-story"'), 'Netlify must detect the proxied blog form on the receiving site')

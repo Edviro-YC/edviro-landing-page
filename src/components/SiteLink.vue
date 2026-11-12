@@ -8,8 +8,8 @@ import { RouterLink } from 'vue-router'
  */
 const props = defineProps<{ href: string }>()
 
-const isRoute = computed(() => props.href.startsWith('/'))
-const isExternal = computed(() => props.href.startsWith('http'))
+const isRoute = computed(() => props.href.startsWith('/') && !/^\/blog(?:\/|$|[?#])/.test(props.href))
+const isExternal = computed(() => props.href.startsWith('http') && new URL(props.href).origin !== 'https://edviro.com')
 
 // Pages are prerendered as directories (see ssgOptions in vite.config.ts), so
 // internal links use the trailing-slash form that serves without a redirect.

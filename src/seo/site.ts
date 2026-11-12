@@ -25,7 +25,7 @@ export const DEFAULT_OG_IMAGE_ALT = 'Edviro — Put your facilities on autopilot
 export const LOGO_PATH = '/logo-icon.png'
 
 export const CONTACT_EMAIL = 'founders@edviroenergy.com'
-export const BLOG_URL = 'https://blog.edviroenergy.com'
+export const BLOG_URL = 'https://edviro.com/blog/'
 
 /**
  * Canonical solution destinations. Nav, footer, llms.txt, the sitemap and the
