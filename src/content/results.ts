@@ -3,9 +3,9 @@ import type { ContentPage } from './types'
 const pages: ContentPage[] = [
   {
     path: '/results',
-    title: 'Customer results | Edviro',
+    title: 'School Facility Energy Savings Results',
     description:
-      'Edviro has saved customers $500K and runs at 134 sites. A live high-school site cut energy use 21.4% against its weather-adjusted baseline. Published results so far are from schools.',
+      'Explore measured school facility energy savings from Edviro, how results are verified and the conditions behind them. Read the measurement methodology.',
     hero: {
       crumbs: [],
       label: 'Customer results',
@@ -131,9 +131,9 @@ const pages: ContentPage[] = [
   },
   {
     path: '/results/methodology',
-    title: 'M&V methodology | Edviro',
+    title: 'How We Verify Building Energy Savings',
     description:
-      'How Edviro measures savings: a baseline model for each building, actual use tracked against it from the day a fix lands, and a re-check through 90 days before a saving stays counted.',
+      'See how Edviro verifies building energy savings using site baselines, measured use and follow-up checks. Understand what counts and how results are reviewed.',
     hero: {
       crumbs: [['Results', '/results']],
       label: 'M&V methodology',

@@ -21,7 +21,7 @@ export interface PageSeoOptions {
   /** OpenGraph type, defaults to `website`. */
   type?: string
   /**
-   * Title template. Defaults to `%s · Edviro`. Pass `null` to use the title
+   * Title template. Defaults to `%s | Edviro`. Pass `null` to use the title
    * verbatim (useful for the home page brand title).
    */
   titleTemplate?: string | null
@@ -42,7 +42,9 @@ export function usePageSeo(opts: PageSeoOptions): void {
   const image = absoluteUrl(opts.image ?? DEFAULT_OG_IMAGE)
   const type = opts.type ?? 'website'
   const titleTemplate =
-    opts.titleTemplate === undefined ? `%s · ${SITE_NAME}` : opts.titleTemplate
+    opts.titleTemplate === undefined ? `%s | ${SITE_NAME}` : opts.titleTemplate
+
+  const socialTitle = titleTemplate ? titleTemplate.replace('%s', opts.title) : opts.title
 
   useHead({
     title: opts.title,
@@ -56,7 +58,7 @@ export function usePageSeo(opts: PageSeoOptions): void {
 
       { property: 'og:type', content: type },
       { property: 'og:site_name', content: SITE_NAME },
-      { property: 'og:title', content: opts.title },
+      { property: 'og:title', content: socialTitle },
       { property: 'og:description', content: description },
       { property: 'og:url', content: url },
       { property: 'og:image', content: image },
@@ -67,9 +69,10 @@ export function usePageSeo(opts: PageSeoOptions): void {
 
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:site', content: X_HANDLE },
-      { name: 'twitter:title', content: opts.title },
+      { name: 'twitter:title', content: socialTitle },
       { name: 'twitter:description', content: description },
       { name: 'twitter:image', content: image },
+      { name: 'twitter:image:alt', content: `${SITE_NAME} — ${SITE_TAGLINE}` },
     ],
     script: (opts.jsonLd ?? []).map((obj) => ({
       type: 'application/ld+json',

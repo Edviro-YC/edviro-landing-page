@@ -3,7 +3,7 @@
  * and JSON-LD structured data. Keep the production host in sync with the
  * deployed domain so canonical and social URLs resolve correctly.
  */
-export const SITE_URL = 'https://edviroenergy.com'
+export const SITE_URL = 'https://edviro.com'
 export const SITE_NAME = 'Edviro'
 /**
  * Shared category definition. Industry-neutral on purpose: it is the eyebrow,

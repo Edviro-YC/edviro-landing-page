@@ -7,7 +7,7 @@ import SectionHead from '@/components/SectionHead.vue'
 import SiteLink from '@/components/SiteLink.vue'
 import { contentPage } from '@/content'
 import type { ContentPage } from '@/content/types'
-import { breadcrumbLd, faqLd, type FaqItem } from '@/seo/jsonld'
+import { breadcrumbLd, faqLd, webpageLd, type FaqItem } from '@/seo/jsonld'
 import { usePageSeo } from '@/seo/usePageSeo'
 
 /**
@@ -42,6 +42,7 @@ usePageSeo({
   description: page.description,
   path: `${page.path}/`,
   jsonLd: [
+    webpageLd({ name: page.title, description: page.description, path: page.path }),
     breadcrumbLd([
       { name: 'Home', path: '/' },
       ...crumbs.map(([name, path]) => ({ name, path })),

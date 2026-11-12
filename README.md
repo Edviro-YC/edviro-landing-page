@@ -1,6 +1,6 @@
 # edviro-landing-page
 
-The Edviro marketing site (Vue 3 + Vite, prerendered with vite-ssg, deployed on Netlify at `edviroenergy.com`).
+The Edviro marketing site (Vue 3 + Vite, prerendered with vite-ssg, deployed on Netlify at `edviro.com`).
 
 Positioning: Edviro is an **AI-powered facilities operations platform** (technical category: AI-native operations and maintenance platform). The shared surfaces — homepage, default metadata, nav, footer, schema, `public/llms.txt` — are industry-neutral and name the industries explicitly (data centers, education, commercial real estate, healthcare, construction). Education is where the proof comes from today, so it appears as labeled education proof below the neutral product story rather than as the category definition. Energy management is a major entry point, not the product boundary; the school energy/O&M/work-order/CMMS/asset pages keep their school-specific titles, canonicals, and structured data. Canonical copy lives in `src/seo/site.ts` and the "What is Edviro?" Notion page.
 
@@ -71,3 +71,11 @@ npm run dev
 ```sh
 npm run build
 ```
+
+## Search and domain migration
+
+`src/seo/site.ts` defines the canonical `https://edviro.com` origin. The production build prerenders all pages, then generates `dist/sitemap.xml` from their canonical URLs, excluding `noindex` pages. No fabricated modification dates are emitted. `public/robots.txt` advertises that sitemap.
+
+`vite.config.ts` emits forced, permanent host redirects for the old apex/www domains and the new www/HTTP variants. Keep the old host aliases and TLS certificates attached to this Netlify site for at least a year, preferably indefinitely. Blog, Answers, dashboard, and email hostnames are separate services and are not migrated by these rules.
+
+Run `npm run build && npm run check:seo` before merging. After deploying, verify old-to-new redirects with real HTTP requests, confirm the new Search Console property, submit its sitemap, and complete Change of Address on the old property. A PR preview cannot verify production domain settings.

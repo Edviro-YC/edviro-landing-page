@@ -24,7 +24,7 @@ const tab = ref<PolicyTab>('dashboard')
 usePageSeo({
   title: 'Privacy Policy',
   description:
-    'How Edviro collects, uses, shares, and protects information in the mobile app, website, and dashboard, including Green Button connections for Xcel Energy and PG&E.',
+    'Read how Edviro collects, uses, shares and protects information across its website, mobile app, dashboard and utility data connections.',
   path: PRIVACY_PATH,
   jsonLd: [organizationLd(), breadcrumbLd(breadcrumbs)],
 })

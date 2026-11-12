@@ -77,7 +77,7 @@ const faqs: FaqItem[] = [
 usePageSeo({
   title: 'School Work Order Software',
   description:
-    'Edviro\'s school work order software handles request intake, AI-assisted triage and priority, assignment, mobile technician updates, closure, and verification that the fix worked—natively or with your existing CMMS.',
+    'Manage school work orders from request to verified fix. Edviro supports triage, assignment and mobile updates, with native tools or your existing CMMS.',
   path: WORK_ORDERS_PATH,
   jsonLd: [
     organizationLd(),

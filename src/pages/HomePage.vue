@@ -116,19 +116,19 @@ const customers = [
  * swap in the vendors' official brand files before this ships. Distech has no
  * logo file yet, so it renders as text.
  */
-const vendors: { name: string; src?: string; className?: string }[] = [
-  { name: 'Siemens', src: siemens },
-  { name: 'Johnson Controls', src: johnsonControls, className: 'tall' },
-  { name: 'Honeywell', src: honeywell },
-  { name: 'Schneider Electric', src: schneiderElectric, className: 'tall' },
-  { name: 'Trane', src: trane, className: 'tall' },
-  { name: 'Carrier', src: carrier, className: 'tall gray' },
-  { name: 'Automated Logic', src: automatedLogic, className: 'tall' },
-  { name: 'Tridium', src: tridium },
+const vendors: { name: string; src?: string; width?: number; height?: number; className?: string }[] = [
+  { name: 'Siemens', src: siemens, width: 210, height: 50 },
+  { name: 'Johnson Controls', src: johnsonControls, width: 250, height: 115, className: 'tall' },
+  { name: 'Honeywell', src: honeywell, width: 678, height: 120 },
+  { name: 'Schneider Electric', src: schneiderElectric, width: 189, height: 57, className: 'tall' },
+  { name: 'Trane', src: trane, width: 588, height: 196, className: 'tall' },
+  { name: 'Carrier', src: carrier, width: 300, height: 121, className: 'tall gray' },
+  { name: 'Automated Logic', src: automatedLogic, width: 600, height: 197, className: 'tall' },
+  { name: 'Tridium', src: tridium, width: 352, height: 63 },
   { name: 'Distech Controls' },
-  { name: 'Delta Controls', src: deltaControls, className: 'tall' },
-  { name: 'Alerton', src: alerton, className: 'crop-top' },
-  { name: 'KMC Controls', src: kmcControls, className: 'tall' },
+  { name: 'Delta Controls', src: deltaControls, width: 600, height: 289, className: 'tall' },
+  { name: 'Alerton', src: alerton, width: 800, height: 180, className: 'crop-top' },
+  { name: 'KMC Controls', src: kmcControls, width: 618, height: 255, className: 'tall' },
 ]
 
 // The modules that are free with the AI Crew subscription. Work orders is a
@@ -173,7 +173,7 @@ usePageSeo({
   title: 'Put your facilities on autopilot | Edviro',
   titleTemplate: null,
   description:
-    'Edviro turns building signals and staff requests into reviewed work orders, verified fixes, and capital plans for education, healthcare, data centers, and real estate.',
+    'Facilities management software that catches problems, drafts work orders for approval, and verifies the fix. Put your facilities on autopilot with Edviro.',
   path: '/',
   jsonLd: [organizationLd(), websiteLd(), softwareApplicationLd(), faqLd(faqs)],
 })
@@ -185,9 +185,9 @@ usePageSeo({
       <div class="wrap">
         <h1>Infrastructure that runs itself.<span>Put your facility on autopilot.</span></h1>
         <p class="nd-lede">
-          Edviro works alongside your team around the clock: catching alarms, waste and custodian
-          requests, drafting the fix for a person to approve, dispatching the technician and
-          verifying the result.
+          Edviro is facilities management software that catches building problems, drafts work
+          orders for your team to approve, and verifies the fix, so you can reduce waste
+          and keep facilities running.
         </p>
         <div class="actions">
           <DemoButton />
@@ -478,7 +478,16 @@ usePageSeo({
         <h2>Works with what you already have.</h2>
         <div class="logos">
           <span v-for="vendor in vendors" :key="vendor.name">
-            <img v-if="vendor.src" :class="vendor.className" :src="vendor.src" :alt="vendor.name" />
+            <img
+              v-if="vendor.src"
+              :class="vendor.className"
+              :src="vendor.src"
+              :alt="vendor.name"
+              :width="vendor.width"
+              :height="vendor.height"
+              loading="lazy"
+              decoding="async"
+            />
             <template v-else>{{ vendor.name }}</template>
           </span>
         </div>

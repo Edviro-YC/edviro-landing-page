@@ -1,4 +1,4 @@
-# Edviro — https://edviroenergy.com
+# Edviro — https://edviro.com
 # Search crawlers: full access.
 User-agent: *
 Allow: /
@@ -44,4 +44,4 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://edviroenergy.com/sitemap.xml
+Sitemap: https://edviro.com/sitemap.xml

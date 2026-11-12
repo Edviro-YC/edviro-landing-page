@@ -222,9 +222,9 @@ const pages: ContentPage[] = [
   },
   {
     path: '/solutions/schools/k-12',
-    title: 'K–12 districts | Edviro',
+    title: 'K-12 Facilities Operations Software',
     description:
-      'Edviro reads a K–12 district’s meters, BMS and utility bills, ranks problems across every school by cost and comfort, drafts the fix for a person to approve and checks the result.',
+      'Prioritize K-12 facility problems using meters, BMS data and utility bills. Edviro drafts fixes for approval and verifies results across your school district.',
     hero: {
       crumbs: [['Education', '/solutions/schools']],
       label: 'K–12 districts',
@@ -444,9 +444,9 @@ const pages: ContentPage[] = [
   },
   {
     path: '/solutions/schools/higher-ed',
-    title: 'Higher education | Edviro',
+    title: 'University Facilities Management Software',
     description:
-      'Edviro reads the BMS, central plant and meter data a university campus already runs, traces problems to a likely cause, drafts the fix for a person to approve and measures the result.',
+      'Connect campus BMS, central plant and meter data with Edviro. Diagnose facility problems, review proposed fixes and measure results across university buildings.',
     hero: {
       crumbs: [['Education', '/solutions/schools']],
       label: 'Higher education',
@@ -807,9 +807,9 @@ const pages: ContentPage[] = [
   },
   {
     path: '/solutions/data-centers/cooling',
-    title: 'Cooling and capacity for data centers | Edviro',
+    title: 'Data Center Cooling and Capacity Modeling',
     description:
-      'Edviro fits a physics model to your own telemetry so data center teams can see each pod’s cooling headroom and try changes on the model before anything happens on the floor.',
+      'Model data center cooling headroom with existing telemetry. Explore capacity changes with Edviro before making changes on the floor.',
     hero: {
       crumbs: [['Data centers', '/solutions/data-centers']],
       label: 'Cooling and capacity',

@@ -29,7 +29,7 @@ export function organizationLd(): JsonLd {
     slogan: BRAND_PROMISE,
     email: CONTACT_EMAIL,
     sameAs: SOCIAL_URLS,
-    foundingDate: '2024',
+    foundingDate: '2025',
     knowsAbout: [
       'Facilities operations and maintenance',
       'Work order management',
@@ -43,8 +43,8 @@ export function organizationLd(): JsonLd {
       'Commercial real estate operations',
     ],
     founder: [
-      { '@type': 'Person', name: 'Hursh', jobTitle: 'Founder & CEO' },
-      { '@type': 'Person', name: 'Tanuj', jobTitle: 'Co-founder & CTO' },
+      { '@type': 'Person', name: 'Hursh Shah', jobTitle: 'Founder & CEO' },
+      { '@type': 'Person', name: 'Tanuj Siripurapu', jobTitle: 'Co-founder & CTO' },
     ],
     contactPoint: {
       '@type': 'ContactPoint',
@@ -158,5 +158,21 @@ export function serviceLd(opts: {
     url: canonicalUrl(opts.path),
     provider: { '@id': ORG_ID },
     ...(opts.areaServed ? { areaServed: opts.areaServed } : {}),
+  }
+}
+
+/** Page identity tied to the same WebSite and publisher as the homepage. */
+export function webpageLd(opts: { name: string; description: string; path: string }): JsonLd {
+  const url = canonicalUrl(opts.path)
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: opts.name,
+    description: opts.description,
+    inLanguage: 'en-US',
+    isPartOf: { '@id': WEBSITE_ID },
+    publisher: { '@id': ORG_ID },
   }
 }
