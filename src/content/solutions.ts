@@ -646,14 +646,14 @@ const pages: ContentPage[] = [
     path: '/solutions/data-centers',
     title: 'Data centers | Edviro',
     description:
-      'Edviro reads data center telemetry with read-only access, ties related alarms to one likely cause and gives operators a short list of fixes to approve.',
+      'Edviro models an existing data center from its own telemetry, shows how much more load each pod can safely carry and tests every change before your team makes it.',
     hero: {
       crumbs: [],
       label: 'Data centers',
-      title: 'Edviro for data centers',
-      lede: 'Edviro connects read-only to your BMS, EPMS, PDU and sensor feeds and watches them around the clock. When alarms pile up, it groups them, works out the likely cause and gives your operators a short list of fixes to approve.',
+      title: 'More capacity from the data center you already run',
+      lede: 'Edviro fits a physics model to your BMS, EPMS, PDU and sensor data. It shows how much more load each pod can carry inside your own temperature and power limits, and lists the changes that would free that capacity up. Your team makes every change.',
       secondary: ['See the physics models', '#models'],
-      note: 'Read-only. Nothing new installed. Your team approves every fix.',
+      note: 'Read-only. Nothing new installed. Your team approves every change.',
     },
     sections: [
       {
@@ -668,21 +668,54 @@ const pages: ContentPage[] = [
         type: 'answer',
         question: 'What does Edviro do for data centers?',
         answer:
-          'Edviro is an AI facilities crew for data center operations. It reads existing BMS, EPMS, PDU and sensor telemetry with read-only access, ties related alarms to one likely cause, and gives operators a short list of fixes to review. It also fits a physics model to the site, so the team can check cooling headroom or a unit failure on the model before changing anything on the floor.',
+          'Edviro is an AI facilities crew for data center operations. It reads existing BMS, EPMS, PDU and sensor telemetry with read-only access and fits a physics model to the site. The model shows how much cooling and power headroom each pod has, which of the two runs out first, and what a setpoint change, a unit failure or an upgrade would do. The team can then run closer to what the building can carry without adding downtime risk. Edviro also ties related alarms to one likely cause and drafts the fix for an operator to approve.',
+      },
+      {
+        type: 'cards',
+        title: 'Where the capacity usually is',
+        intro: 'An existing site often has capacity it isn’t using, for reasons like these.',
+        cards: [
+          {
+            title: 'Safety margin nobody has measured',
+            text: 'Operations teams are judged on uptime, so they keep a wide buffer. Edviro compares that buffer with how the site has actually run and shows how much of it is needed.',
+          },
+          {
+            title: 'Power lost to overhead',
+            text: 'Every kilowatt the cooling plant uses is one that can’t go to IT load. Lowering PUE leaves more of your utility allocation for the servers.',
+          },
+          {
+            title: 'The limit you reach first',
+            text: 'A pod can be short on cooling while it has power to spare, or the other way round. Edviro shows which limit comes first and where the hot spots are.',
+          },
+          {
+            title: 'Faults using up headroom',
+            text: 'A stuck valve or a leaking row uses cooling the pod needs. Edviro finds the fault and drafts the fix.',
+          },
+        ],
       },
       {
         type: 'screen',
-        title: 'Example: 312 alarms and one stuck valve',
+        title: 'Example: a capacity plan for one pod',
         intro:
-          'Your controls already report plenty, and the hard part is knowing which alarm matters. Here Pod 3 raises 312 alarms in 24 hours and the operator gets one fix to review.',
+          'Each line is a change your team can approve, with what it does for the pod. Nothing is sent to the BMS.',
         screen: {
-          crumb: 'Pod 3',
-          heading: 'Open fixes',
-          count: '312 alarms in 24 hours, 1 fix to review',
+          crumb: 'Site A · Pod 3',
+          heading: 'Capacity plan',
+          count: '3 changes to review',
           rows: [
             {
-              title: 'CRAH-2 chilled-water valve stuck at 40%',
-              meta: 'Pod 3 · likely cause · ties 41 alarms · evidence attached',
+              title: 'Raise supply air by 1 °C',
+              meta: 'Pod 3 · every inlet stays under the limit on the model · less cooling energy',
+              status: 'review',
+            },
+            {
+              title: 'Fix the CRAH-2 chilled-water valve, stuck at 40%',
+              meta: 'Pod 3 · likely cause of 41 alarms · restores cooling headroom',
+              status: 'review',
+            },
+            {
+              title: 'Fit blanking panels in row C',
+              meta: 'Pod 3 · removes the afternoon hot spot that limits the row',
               status: 'review',
             },
           ],
@@ -691,43 +724,25 @@ const pages: ContentPage[] = [
       {
         type: 'cards',
         id: 'models',
-        title: 'Physics models of your site',
+        title: 'Questions you can put to the model',
         intro:
-          'Edviro fits a physics model to your own telemetry and recalibrates it as load and layout change. These are the kinds of questions you can put to it before touching the floor.',
+          'Edviro fits a physics model to your own telemetry and recalibrates it as load and layout change. It is far cheaper to run than a CFD study, so you can ask it things like these before touching the floor.',
         cards: [
           {
             title: 'How many more racks can Pod 3 take?',
             text: 'Cooling headroom for the pod, from a model that is checked against measured inlet temperatures.',
           },
           {
-            title: 'If CRAH-2 goes down, which rows go over?',
-            text: 'A failure scenario shows which rows cross the inlet limit, and how fast.',
-          },
-          {
             title: 'Can we raise supply air a degree?',
             text: 'The model checks for hot spots before the setpoint changes.',
           },
           {
-            title: 'Why does row C run hot?',
-            text: 'The afternoon inlet climb, traced back to a likely cause.',
-          },
-        ],
-      },
-      {
-        type: 'panels',
-        title: 'Alarm diagnosis and cooling capacity',
-        panels: [
-          {
-            tag: 'Alarm diagnosis',
-            title: 'No alarms, just fixes',
-            text: 'Edviro ties related alarms together and names the likely cause, with the evidence attached. Operators get a short list of what to fix, and nothing goes out until someone approves it.',
-            link: ['Alarm diagnosis', '/solutions/data-centers/alarm-diagnosis'],
+            title: 'If CRAH-2 goes down, which rows go over?',
+            text: 'A failure scenario shows which rows cross the inlet limit, and how fast.',
           },
           {
-            tag: 'Cooling and capacity',
-            title: 'Cooling headroom, pod by pod',
-            text: 'The model shows how much load each pod can take before inlets cross the design limit. It’s checked against the temperatures your sensors measure.',
-            link: ['Cooling and capacity', '/solutions/data-centers/cooling'],
+            title: 'What would an upgrade unlock?',
+            text: 'Model an added cooling unit or more power before you buy it, and see how much load it would let you add.',
           },
         ],
       },
@@ -736,15 +751,67 @@ const pages: ContentPage[] = [
         title: 'How it works',
         steps: [
           {
-            title: 'Signal',
-            text: 'Edviro reads your BMS, EPMS and sensor feeds around the clock.',
+            title: 'Connect',
+            text: 'Edviro reads your BMS, EPMS, PDU and sensor feeds. Access is read-only.',
           },
-          { title: 'Diagnose', text: 'It groups the alarms and works out what’s actually wrong.' },
-          { title: 'Review', text: 'Someone on your team approves the fix.', tag: 'Human' },
-          { title: 'Dispatch', text: 'Your team and vendors do the work on the floor.' },
+          {
+            title: 'Model',
+            text: 'It fits a physics model to the site and shows modeled against measured temperatures, so you can check it.',
+          },
+          {
+            title: 'Plan',
+            text: 'You get a 7-day and a 30-day plan of the changes that free up capacity or lower PUE.',
+          },
+          {
+            title: 'Review',
+            text: 'Your team decides which changes to make, and makes them.',
+            tag: 'Human',
+          },
           {
             title: 'Verify',
-            text: 'Edviro checks the telemetry to confirm the fix held, and the model is updated with the result.',
+            text: 'Edviro checks the telemetry to confirm the change did what the model said, and updates the model.',
+          },
+        ],
+      },
+      {
+        type: 'cards',
+        title: 'Uptime comes first',
+        intro:
+          'A change only goes on the plan if the model shows the site staying inside your own limits.',
+        cards: [
+          {
+            title: 'Checked against your sensors',
+            text: 'Modeled inlet temperatures are shown next to measured ones for every pod. In the Pod 3 example the gap is ±0.4 °C.',
+          },
+          {
+            title: 'Tested with a unit down',
+            text: 'You can run any change against a unit failure and see the margin that is left.',
+          },
+          {
+            title: 'Read-only access',
+            text: 'Edviro reads your telemetry. Nothing new gets installed, and it has no control of the plant.',
+          },
+          {
+            title: 'Changes stay with you',
+            text: 'Any change to the floor or the plant is made by your team and your vendors.',
+          },
+        ],
+      },
+      {
+        type: 'panels',
+        title: 'Capacity, cooling and alarm diagnosis',
+        panels: [
+          {
+            tag: 'Capacity and cooling',
+            title: 'Headroom, pod by pod',
+            text: 'The model shows how much load each pod can take before inlets cross the design limit, and what a setpoint change or a new row would do. It’s checked against the temperatures your sensors measure.',
+            link: ['Capacity and cooling', '/solutions/data-centers/cooling'],
+          },
+          {
+            tag: 'Alarm diagnosis',
+            title: 'No alarms, just fixes',
+            text: 'Day to day, Edviro ties related alarms together and names the likely cause, with the evidence attached. Operators get a short list of what to fix, and nothing goes out until someone approves it.',
+            link: ['Alarm diagnosis', '/solutions/data-centers/alarm-diagnosis'],
           },
         ],
       },
@@ -760,38 +827,24 @@ const pages: ContentPage[] = [
         note: 'Edviro connects to major DCIM, BMS, EPMS and PDU systems through open protocols or APIs.',
       },
       {
-        type: 'cards',
-        title: 'What Edviro can and can’t change',
-        cards: [
-          {
-            title: 'Read-only access',
-            text: 'Edviro reads your telemetry. Nothing new gets installed.',
-          },
-          {
-            title: 'No control of the plant',
-            text: 'Edviro reads, diagnoses and simulates. It has no control of the cooling plant.',
-          },
-          {
-            title: 'Changes stay with you',
-            text: 'Any change to the floor or the plant is made by your team and your vendors.',
-          },
-        ],
-      },
-      {
         type: 'faq',
         title: 'Common questions',
         items: [
+          [
+            'Does running closer to capacity raise the risk of downtime?',
+            'The plan only includes changes the model shows staying inside your own inlet and power limits, and you can test each one with a unit down. You see modeled against measured numbers for your site, and your team decides what to change.',
+          ],
+          [
+            'Is this for existing sites or new builds?',
+            'Mostly existing sites, where the question is how much more load the building can carry. You can also test a design on the model before you build, and we’ll go through that on the demo call.',
+          ],
           [
             'What data does Edviro need?',
             'Whatever your controls already export: BMS points and alarms, EPMS and PDU power, cooling plant data and environmental sensors. Nothing new gets installed and access is read-only.',
           ],
           [
             'We already have a DCIM and a BMS. Why add this?',
-            'Those systems collect the data and raise the alarms. Edviro sits on top of them, works out which alarms matter, and writes up fixes your team can approve and act on.',
-          ],
-          [
-            'What are the physics models for?',
-            'Asking “what if” before you try it on the live floor: cooling headroom, a unit failing, a setpoint change, or a new row of high-density racks.',
+            'Those systems collect the data and raise the alarms. Edviro sits on top of them, models what the site can carry, and writes up changes and fixes your team can approve and act on.',
           ],
           [
             'Does Edviro control the cooling plant?',
@@ -800,6 +853,10 @@ const pages: ContentPage[] = [
           [
             'How accurate is the model?',
             'It depends on the site and its sensors, so Edviro shows modeled against measured inlet temperatures for every site. In the Pod 3 example the gap is ±0.4 °C.',
+          ],
+          [
+            'Does Edviro still handle alarms?',
+            'Yes. It reads every alarm, groups the related ones, names the likely cause and drafts one fix for an operator to approve.',
           ],
         ],
       },
@@ -812,9 +869,9 @@ const pages: ContentPage[] = [
       'Model data center cooling headroom with existing telemetry. Explore capacity changes with Edviro before making changes on the floor.',
     hero: {
       crumbs: [['Data centers', '/solutions/data-centers']],
-      label: 'Cooling and capacity',
-      title: 'Cooling and capacity for data centers',
-      lede: 'Edviro fits a physics model to your own telemetry, keeps it calibrated, and shows how much cooling headroom each pod has. You can try a new row, a unit failure or a setpoint change on the model before anything changes on the floor.',
+      label: 'Capacity and cooling',
+      title: 'Capacity and cooling for data centers',
+      lede: 'Edviro fits a physics model to your own telemetry, keeps it calibrated, and shows how much more load each pod can carry before it runs out of cooling. You can try a new row, a unit failure or a setpoint change on the model before anything changes on the floor.',
       secondary: ['See the what-if scenarios', '#what-if'],
       note: 'Read-only. Nothing new installed. Your team decides every change.',
     },
@@ -834,8 +891,8 @@ const pages: ContentPage[] = [
             text: 'Capacity was worked out on paper, years ago, for a different layout.',
           },
           {
-            title: 'Over-provisioning',
-            text: 'Cooling is held in reserve because nobody can show it’s safe to use.',
+            title: 'Wide safety margins',
+            text: 'Teams are judged on uptime, so cooling is held in reserve that nobody can show is safe to use.',
           },
           {
             title: 'Hot spots after the fact',
@@ -897,7 +954,10 @@ const pages: ContentPage[] = [
             text: 'Cooling energy is tracked against the baseline after each change.',
             href: '/results/methodology',
           },
-          { title: 'Capacity', text: 'Headroom for each pod, recalculated from measured data.' },
+          {
+            title: 'PUE',
+            text: 'Power the cooling plant doesn’t use stays available for IT load, inside the same utility allocation.',
+          },
         ],
       },
       {
@@ -1073,6 +1133,7 @@ const pages: ContentPage[] = [
       {
         type: 'cards',
         title: 'Faults behind alarm floods',
+        intro: 'Several of these also use up cooling headroom, so fixing them gives capacity back.',
         cards: [
           {
             title: 'Sticking valves',
@@ -1154,8 +1215,8 @@ const pages: ContentPage[] = [
             href: '/solutions/data-centers',
           },
           {
-            title: 'Cooling and capacity',
-            text: 'Cooling headroom and what-if scenarios.',
+            title: 'Capacity and cooling',
+            text: 'How much more load each pod can carry, and what-if scenarios.',
             href: '/solutions/data-centers/cooling',
           },
           {

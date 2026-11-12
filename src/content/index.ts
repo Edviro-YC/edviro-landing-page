@@ -45,7 +45,7 @@ const ESTABLISHED_SEO: Record<string, { title: string; description: string }> = 
   '/solutions/data-centers': {
     title: '24/7 Monitoring and Optimization for Data Centers',
     description:
-      'Turn data center telemetry into diagnosed alarms and cooling models. See how Edviro helps operators prioritize fixes and test capacity changes before acting.',
+      'Find unused capacity in an existing data center. Edviro models cooling and power headroom from your telemetry so operators can test changes before acting.',
   },
   '/solutions/real-estate': {
     title: 'Energy management for commercial real estate',

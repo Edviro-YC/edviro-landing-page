@@ -53,7 +53,7 @@ export const NAV: NavItem[] = [
         title: 'Data centers',
         links: [
           ['Data centers overview', '/solutions/data-centers'],
-          ['Cooling & capacity', '/solutions/data-centers/cooling'],
+          ['Capacity & cooling', '/solutions/data-centers/cooling'],
           ['Alarm diagnosis', '/solutions/data-centers/alarm-diagnosis'],
         ],
       },

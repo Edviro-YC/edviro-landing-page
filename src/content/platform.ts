@@ -137,7 +137,7 @@ const pages: ContentPage[] = [
           {
             tag: 'Data centers',
             title: 'Data centers',
-            text: 'In one example, 312 BMS alarms trace back to a single sticking valve on CRAH-2. Edviro also models cooling to ±0.4 °C, so you can check headroom before you add racks.',
+            text: 'Edviro models cooling to ±0.4 °C in our Pod 3 example, so you can see how much more load a pod can carry before you add racks. In the same example, 312 BMS alarms trace back to a single sticking valve on CRAH-2.',
             link: ['Edviro for data centers', '/solutions/data-centers'],
           },
         ],
@@ -339,7 +339,7 @@ const pages: ContentPage[] = [
           ],
           [
             'Does it work for data centers?',
-            'Yes. In data centers Edviro traces alarm floods to their root cause and models cooling. In our example, 312 alarms trace to a single CRAH valve.',
+            'Yes. In data centers Edviro models cooling and capacity, so you can see how much more load a room can carry, and it traces alarm floods to their root cause. In our example, 312 alarms trace to a single CRAH valve.',
           ],
         ],
       },

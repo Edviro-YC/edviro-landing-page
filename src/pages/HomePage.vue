@@ -82,7 +82,7 @@ const capitalPlan = [
 
 const buildings = [
   ['Campuses', 'K–12 and higher ed', '/solutions/schools'],
-  ['Data centers', 'Cooling, capacity and alarms', '/solutions/data-centers'],
+  ['Data centers', 'Capacity, cooling and alarms', '/solutions/data-centers'],
   ['Hospitals', 'Healthcare', '/solutions/healthcare'],
   ['Office towers', 'Commercial real estate', '/solutions/real-estate'],
   // No page for public buildings yet, so this one goes to the demo section.

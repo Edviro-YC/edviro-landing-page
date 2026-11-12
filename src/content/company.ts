@@ -39,7 +39,7 @@ const pages: ContentPage[] = [
           'Edviro began when Hursh was working with the facilities team at his own high school. The school had plenty of smart controls and a building management system, and it was still wasting a lot of energy. The data that would have shown where was scattered across meters, utility bills and control screens that nobody had time to read together.',
           'So he built the facilities manager a dashboard. It was useful enough that other schools in Northern California asked for it, and in 2025 Hursh and Tanuj turned it into a company. An early pilot across seven schools and 16 meters turned up hundreds of thousands of dollars in billing errors and wasted energy.',
           'The dashboard also taught us something. Facilities teams already have more screens and alarms than they have hours. What they are short on is someone to read the data, work out the cause and get the fix scheduled. That is the job Edviro does now: it watches the building, drafts the fix, waits for a person to approve it, and then checks the meter to see whether it worked.',
-          'We joined Y Combinator in the summer of 2026. The same year we began working with our first data center operators, where the problems are different but the work is the same: too many alarms, and a small team deciding what to do about them.',
+          'We joined Y Combinator in the summer of 2026. The same year we began working with our first data center operators. There the question is how much more load an existing facility can safely carry, and the work is the same: read the data, find the cause and get the fix made.',
         ],
       },
       {

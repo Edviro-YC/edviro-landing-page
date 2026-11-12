@@ -71,7 +71,7 @@ Modern BMS integrations, legacy controls, utility portals (including PG&E Green 
 - [Measurement and verification](https://edviro.com/measurement-and-verification/): How Edviro proves savings and verifies completed work against a learned baseline.
 - [Energy management for real estate](https://edviro.com/solutions/real-estate/): Occupancy-aware control for commercial buildings.
 - [M&V for construction](https://edviro.com/solutions/construction/): Independent baselining and verification for new builds.
-- [Data centers](https://edviro.com/solutions/data-centers/): Cooling headroom verified against measured telemetry.
+- [Data centers](https://edviro.com/solutions/data-centers/): Finding unused capacity in an existing facility, with cooling headroom verified against measured telemetry.
 - [Healthcare](https://edviro.com/solutions/healthcare/): Documented, reviewed work across critical environments and support spaces — pressure and temperature monitoring, work orders with a named reviewer, asset records that stand in for survey binders, and verified energy savings.
 - [Building intelligence](https://edviro.com/building-intelligence/): Fault detection that names the likely cause, with the evidence, for a person to review.
 - [Integrations](https://edviro.com/integrations/): The building controls, meters, utility data, and work-order systems Edviro connects to.
@@ -79,9 +79,9 @@ Modern BMS integrations, legacy controls, utility portals (including PG&E Green 
 - [Facilities scheduling](https://edviro.com/facilities-scheduling/): Requests to use gyms, fields, auditoriums, and rooms, approved by a person and kept on one calendar per site. A free module.
 - [K-12 districts](https://edviro.com/solutions/schools/k-12/): Edviro for school districts with many sites and a small facilities team.
 - [Universities and campuses](https://edviro.com/solutions/schools/higher-ed/): Edviro for central plants, labs, housing, and large building portfolios.
-- [Data center cooling and capacity](https://edviro.com/solutions/data-centers/cooling/): A calibrated model of cooling headroom per pod, and what-if tests before changes.
+- [Data center capacity and cooling](https://edviro.com/solutions/data-centers/cooling/): A calibrated model of cooling headroom per pod, and what-if tests before changes.
 - [Data center alarm diagnosis](https://edviro.com/solutions/data-centers/alarm-diagnosis/): Related alarms grouped into the fault behind them, with a fix for an operator to approve.
-- [Customer results](https://edviro.com/results/): What Edviro has measured so far; published results are from schools.
+- [Customer results](https://edviro.com/results/): What Edviro has measured so far.
 - [M&V methodology](https://edviro.com/results/methodology/): How a baseline is built, how a saving is measured, and when it is counted.
 - [Glossary](https://edviro.com/glossary/): Short definitions of facilities, energy, and data center terms.
 - [Careers](https://edviro.com/careers/): Open roles.
