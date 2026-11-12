@@ -204,6 +204,60 @@ try {
       'Header CTA label remains visible',
     )
     await shot('verified-home-hero')
+    for (const width of [1101, 1280, 1440, 1920]) {
+      await page.setViewportSize({ width, height: 1000 })
+      for (const name of ['Platform', 'Solutions', 'Results', 'Resources', 'Company']) {
+        const trigger = page.locator(`[data-menu="${name}"]`)
+        const menu = page.locator(`[id="menu-${name}"]`)
+        await trigger.hover()
+        await page.waitForFunction(
+          (name) =>
+            document.querySelector(`[data-menu="${name}"]`)?.getAttribute('aria-expanded') ===
+            'true',
+          name,
+        )
+        await menu.getByRole('link').first().hover()
+        assert.equal(
+          await trigger.getAttribute('aria-expanded'),
+          'true',
+          'Dropdown stays open while entering its links',
+        )
+        const bounds = await menu.boundingBox()
+        assert.ok(
+          bounds.x >= 0 && bounds.x + bounds.width <= width,
+          `${width}px ${name}: dropdown fits the viewport`,
+        )
+        assert.equal(await menu.locator('img,.dd-feat').count(), 0, 'Compact text-only dropdown')
+        await trigger.focus()
+        await page.keyboard.press('Escape')
+        assert.equal(await trigger.getAttribute('aria-expanded'), 'false')
+        await page.waitForFunction(
+          (name) =>
+            getComputedStyle(document.getElementById(`menu-${name}`)).visibility === 'hidden',
+          name,
+        )
+      }
+    }
+    await page.setViewportSize({ width: 1440, height: 1000 })
+    const platformTrigger = page.locator('[data-menu="Platform"]')
+    await platformTrigger.focus()
+    await page.keyboard.press('Enter')
+    assert.equal(await platformTrigger.getAttribute('aria-expanded'), 'true')
+    await page.keyboard.press('Tab')
+    assert.equal(
+      await page
+        .locator('#menu-Platform a')
+        .first()
+        .evaluate((el) => el === document.activeElement),
+      true,
+      'Keyboard users can enter the dropdown',
+    )
+    await page.keyboard.press('Escape')
+    await page.locator('h1').click()
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }))
+    await platformTrigger.hover()
+    await shot('verified-navigation-dropdown')
+    await page.mouse.move(0, 0)
     const faq = page.locator('.fq').nth(1)
     await faq.getByRole('button').click()
     assert.equal(await faq.getByRole('button').getAttribute('aria-expanded'), 'true')

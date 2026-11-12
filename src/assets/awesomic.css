@@ -147,9 +147,13 @@
   gap: 4px;
 }
 .nd .menu-panel {
-  background: #fbf8f2;
-  border-radius: 20px;
-  padding: 28px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 22px 26px;
+}
+.nd .nav-item:nth-last-child(-n + 2) .menu {
+  left: auto;
+  right: 0;
 }
 .nd .menu-panel a {
   padding-block: 8px;

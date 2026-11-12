@@ -64,19 +64,17 @@
   .signin{display:none}.yc{margin:8px auto 0}
 }
 
-.links{align-items:center;gap:6px}.links .dd{position:static}.nav .wrap{position:relative}
-.links .dd-t,.links .dd-l{font-size:15px;font-weight:500;line-height:1;font-family:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:10px 12px;border-radius:999px;display:inline-flex;align-items:center;gap:6px;transition:background .15s}
-.dd-t i{width:7px;height:7px;border-right:1.4px solid currentColor;border-bottom:1.4px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .2s;opacity:.7}
-.dd:hover .dd-t,.dd.open .dd-t,.dd-l:hover{background:rgba(14,58,47,.06)}.dd:hover .dd-t i,.dd.open .dd-t i{transform:translateY(1px) rotate(-135deg)}
-.dd-p{position:absolute;left:50%;top:100%;transform:translate(-50%,6px);padding-top:4px;opacity:0;visibility:hidden;transition:opacity .18s,transform .18s,visibility .18s;color:#0E3A2F}
-.dd:hover .dd-p,.dd.open .dd-p,.dd:focus-within .dd-p{opacity:1;visibility:visible;transform:translate(-50%,0)}
-.dd-s{display:grid;gap:8px;background:#FBF8F2;border:1px solid #E7E5DD;border-radius:16px;padding:12px;box-shadow:0 24px 48px -16px rgba(14,58,47,.18),0 2px 6px rgba(14,58,47,.05)}.dd-s>:nth-last-child(1){grid-column:auto}
-.dd-s section{padding:12px 8px}.links .dd-s h2{font-size:12px;line-height:1;font-weight:500;letter-spacing:.02em!important;text-transform:none;color:#55665F;margin:0 0 10px 8px;letter-spacing:.02em}
-.dd-s ul{list-style:none;margin:0;padding:0}.dd-s li a{display:flex;gap:12px;align-items:flex-start;padding:8px;border-radius:10px;transition:background .15s}
-.dd-s li a:hover{background:#F3F1EA}.dd-ic{flex:none;width:32px;height:32px;border-radius:8px;border:1px solid #E7E5DD;background:#fff;display:grid;place-items:center}
-.dd-ic svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.dd-tx{display:flex;flex-direction:column;gap:3px;padding-top:1px}.dd-tx b{font-size:14px;font-weight:500;line-height:1.25}.dd-tx small{font-size:13px;line-height:1.35;color:#5F6F68}
-.dd-s>.dd-foot{grid-column:1/4;display:flex;gap:28px;border-top:1px solid #E7E5DD;padding:6px 8px 0}.dd-s>.dd-foot .dd-more{margin:0}.dd-more{display:inline-flex;gap:6px;font-size:13px;font-weight:500;color:#3F534C;margin:8px 0 0 8px;padding:4px 0}.dd-more:hover{color:#0E3A2F}.dd-more span{transition:transform .15s}.dd-more:hover span{transform:translateX(3px)}
-.dd-feat{display:flex;flex-direction:column}.dd-card{display:flex;flex-direction:column;gap:12px;padding:8px;border-radius:12px;background:#F3F1EA;transition:background .15s}.dd-card:hover{background:#EEECE4}
-.dd-art{display:block;aspect-ratio:16/10;border-radius:8px;background:center/cover no-repeat;transition:transform .3s}.dd-card:hover .dd-art{transform:scale(1.02)}
-.links .dd-p a span{opacity:1;font-size:inherit;margin-left:0}.links .dd-p .dd-more span,.links .dd-card b span{margin-left:4px}.dd-card .dd-tx{padding:0 4px 6px}.dd-card b span{margin-left:4px;opacity:.6}
+.links{align-items:center;gap:6px}
+.links .dd{position:relative}
+.links .dd-t{font:400 15px/1.4 var(--pop);color:inherit;background:none;border:0;cursor:pointer;padding:8px 12px;border-radius:8px;display:inline-flex;align-items:center;gap:8px;transition:background .15s}
+.dd-t i{width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-2px) rotate(45deg);opacity:.5}
+.dd.open .dd-t,.dd-t:hover{background:rgba(14,58,47,.06)}
+.dd-p{position:absolute;left:-12px;top:100%;padding-top:8px;opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .18s,transform .18s;color:#0E3A2F}
+.dd.open .dd-p{opacity:1;visibility:visible;transform:translateY(0)}
+.dd:nth-last-child(-n+2) .dd-p{left:auto;right:0}
+.dd-s{display:grid;grid-auto-flow:column;gap:40px;background:#fff;border:1px solid #E7E5DD;border-radius:14px;padding:22px 26px;box-shadow:0 24px 48px -24px rgba(0,0,0,.25);white-space:nowrap}
+.links .dd-s h2{font:500 13px/1.4 var(--pop);color:#62766C;margin:0 0 8px}
+.dd-s ul{list-style:none;margin:0;padding:0}
+.dd-s li a{display:block;padding:8px 0;font-size:15px;font-weight:400;line-height:1.4;transition:opacity .15s}
+.dd-s li a:hover{opacity:.65}
+@media (prefers-reduced-motion:reduce){.dd-p{transition:none}}

@@ -86,70 +86,44 @@ onBeforeUnmount(() => lifetime?.abort())
             height="28"
         /></SiteLink>
         <nav class="links" aria-label="Main">
-          <template v-for="item in NAV" :key="item.label">
-            <SiteLink
-              v-if="item.label === 'Results'"
-              class="dd-l"
-              :href="item.href"
-              @click="close"
-              >{{ item.label }}</SiteLink
+          <div
+            v-for="item in NAV"
+            :key="item.label"
+            class="dd"
+            :class="{ open: openGroup === item.label }"
+            @mouseenter="openGroup = item.label"
+            @mouseleave="openGroup = null"
+            @focusout="
+              (event: FocusEvent) => {
+                if (!(event.currentTarget as HTMLElement).contains(event.relatedTarget as Node))
+                  openGroup = null
+              }
+            "
+          >
+            <button
+              type="button"
+              class="dd-t"
+              :data-menu="item.label"
+              :aria-expanded="openGroup === item.label"
+              :aria-controls="'menu-' + item.label"
+              @click="openGroup = item.label"
             >
-            <div
-              v-else
-              class="dd"
-              :class="[item.groups.length > 2 ? 'w4' : 'w3', { open: openGroup === item.label }]"
-              @mouseenter="openGroup = item.label"
-              @mouseleave="openGroup = null"
-              @focusout="
-                (event: FocusEvent) => {
-                  if (!(event.currentTarget as HTMLElement).contains(event.relatedTarget as Node))
-                    openGroup = null
-                }
-              "
-            >
-              <button
-                type="button"
-                class="dd-t"
-                :data-menu="item.label"
-                :aria-expanded="openGroup === item.label"
-                :aria-controls="'menu-' + item.label"
-                @click="openGroup = item.label"
-              >
-                <span>{{ item.label }}</span
-                ><i aria-hidden="true"></i>
-              </button>
-              <div class="dd-p" :id="'menu-' + item.label" :inert="openGroup !== item.label">
-                <div class="dd-s">
-                  <section v-for="group in item.groups" :key="group.title">
-                    <h2>{{ group.title }}</h2>
-                    <ul>
-                      <li v-for="[label, href] in group.links" :key="label">
-                        <SiteLink :href="href" @click="close"
-                          ><span class="dd-tx"
-                            ><b>{{ label }}</b></span
-                          ></SiteLink
-                        >
-                      </li>
-                    </ul>
-                  </section>
-                  <div class="dd-feat">
-                    <SiteLink class="dd-card" :href="item.href" @click="close"
-                      ><span
-                        class="dd-art"
-                        style="background-image: url(/design/images/how/how-diagnose.jpg)"
-                      ></span
-                      ><span class="dd-tx"
-                        ><b>{{ item.label }} <span aria-hidden="true">↗</span></b
-                        ><small
-                          >Find the problem. Coordinate the fix. Verify the result.</small
-                        ></span
-                      ></SiteLink
-                    >
-                  </div>
-                </div>
+              <span>{{ item.label }}</span
+              ><i aria-hidden="true"></i>
+            </button>
+            <div class="dd-p" :id="'menu-' + item.label" :inert="openGroup !== item.label">
+              <div class="dd-s">
+                <section v-for="group in item.groups" :key="group.title">
+                  <h2>{{ group.title }}</h2>
+                  <ul>
+                    <li v-for="[label, href] in group.links" :key="label">
+                      <SiteLink :href="href" @click="close">{{ label }}</SiteLink>
+                    </li>
+                  </ul>
+                </section>
               </div>
             </div>
-          </template>
+          </div>
         </nav>
         <div class="actions">
           <a class="signin" :href="DASHBOARD_URL">Sign in</a
