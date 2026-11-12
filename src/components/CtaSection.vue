@@ -9,7 +9,7 @@ import { CONTACT_EMAIL } from '@/seo/site'
     <section id="demo" class="alt demo">
       <div class="wrap">
         <div class="label">Book a demo</div>
-        <h2>See what Edviro finds in your buildings.</h2>
+        <h2>See what Edviro finds <span>in your buildings.</span></h2>
         <p class="sub">Pick a 30-minute slot and we’ll walk through your sites with you.</p>
         <DemoButton>Book a demo <span aria-hidden="true">→</span></DemoButton>
         <p class="demo-note">

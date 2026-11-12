@@ -10,8 +10,8 @@
    Older components still carry inline hex values; migrate them when touched.
 --------------------------------------------------------------------------- */
 :root {
-  --accent: #0B7A3E;
-  --ink: #0D1512;
+  --accent: #0E3A2F;
+  --ink: #0E3A2F;
   --ink-2: #445049;
   /* Muted text passes WCAG AA on every light surface: 4.8:1 on --surface,
      5.6:1 on --card. The previous #75817B measured 3.5:1 (axe: 377 nodes). */
@@ -20,8 +20,8 @@
   --line: #D8DED9;
   --line-soft: #E3E8E4;
   --line-strong: #C0CCC3;
-  --surface: #FFFFFF;
-  --surface-2: #F4F7F4;
+  --surface: #FBF8F2;
+  --surface-2: #F3F1EA;
   --card: #FFFFFF;
   --dark: #101815;
   --dark-2: #17201B;

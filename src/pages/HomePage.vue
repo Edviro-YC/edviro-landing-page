@@ -1,8 +1,21 @@
 <script setup lang="ts">
+import { nextTick, onBeforeUnmount, onMounted, ref, type Directive } from 'vue'
 import CtaSection from '@/components/CtaSection.vue'
 import DemoButton from '@/components/DemoButton.vue'
 import SiteLink from '@/components/SiteLink.vue'
 import icon from '@/assets/img/edviro-icon.svg'
+import campusesDay from '@/assets/img/buildings/campuses-day.jpg'
+import campusesNight from '@/assets/img/buildings/campuses-night.jpg'
+import dataCentersDay from '@/assets/img/buildings/data-centers-day.jpg'
+import dataCentersNight from '@/assets/img/buildings/data-centers-night.jpg'
+import hospitalsDay from '@/assets/img/buildings/hospitals-day.jpg'
+import hospitalsNight from '@/assets/img/buildings/hospitals-night.jpg'
+import jobSitesDay from '@/assets/img/buildings/job-sites-day.jpg'
+import jobSitesNight from '@/assets/img/buildings/job-sites-night.jpg'
+import officeTowersDay from '@/assets/img/buildings/office-towers-day.jpg'
+import officeTowersNight from '@/assets/img/buildings/office-towers-night.jpg'
+import publicBuildingsDay from '@/assets/img/buildings/public-buildings-day.jpg'
+import publicBuildingsNight from '@/assets/img/buildings/public-buildings-night.jpg'
 import alerton from '@/assets/img/vendors/alerton.png'
 import automatedLogic from '@/assets/img/vendors/automated-logic.png'
 import carrier from '@/assets/img/vendors/carrier.svg'
@@ -16,7 +29,7 @@ import trane from '@/assets/img/vendors/trane.svg'
 import tridium from '@/assets/img/vendors/tridium.svg'
 import { usePageSeo } from '@/seo/usePageSeo'
 import { faqLd, organizationLd, softwareApplicationLd, websiteLd } from '@/seo/jsonld'
-import { EDU_LIVE_SITES, EDU_VERIFIED_SAVINGS } from '@/seo/site'
+import { EDU_LIVE_SITES, EDU_VERIFIED_SAVINGS, SQFT_UNDER_MANAGEMENT } from '@/seo/site'
 
 /*
  * The product screen, loop and platform visuals on this page are illustrative:
@@ -71,7 +84,7 @@ const fixes: { title: string; meta: string; status: keyof typeof status }[] = [
 const stats = [
   [EDU_VERIFIED_SAVINGS, 'Savings'],
   [String(EDU_LIVE_SITES), 'Sites'],
-  ['24/7', 'Monitoring'],
+  [SQFT_UNDER_MANAGEMENT, 'Sq ft under management'],
 ]
 
 const capitalPlan = [
@@ -80,20 +93,138 @@ const capitalPlan = [
   ['Rooftop R-4', '78%', '2031'],
 ]
 
-const buildings = [
-  ['Campuses', 'K–12 and higher ed', '/solutions/schools'],
-  ['Data centers', 'Capacity, cooling and alarms', '/solutions/data-centers'],
-  ['Hospitals', 'Healthcare', '/solutions/healthcare'],
-  ['Office towers', 'Commercial real estate', '/solutions/real-estate'],
-  // No page for public buildings yet, so this one goes to the demo section.
-  ['Public buildings', 'Municipal', '#demo'],
-  ['Job sites', 'Construction', '/solutions/construction'],
+// The four platform pillars. On wide screens the section pins and scrolling
+// moves through them; everywhere else they stack.
+const pillars = [
+  {
+    key: 'waste',
+    tab: 'Find waste',
+    label: 'Building intelligence',
+    title: 'See where energy is lost, and why.',
+    text: 'Edviro learns a baseline for every building and watches utility data, BMS points and asset logs around the clock.',
+    points: [
+      'Anomalies flagged against each building’s own baseline',
+      'A likely cause attached to every finding, with the evidence',
+      'Ranked by the dollars at stake',
+    ],
+  },
+  {
+    key: 'orders',
+    tab: 'Review work orders',
+    label: 'Work orders',
+    title: 'Turn signals into orders a person approves.',
+    text: 'Alarms, texts and custodian requests become drafted work orders. A named person reviews each one before a technician is sent.',
+    points: [
+      'Drafted with the site, room and asset attached',
+      'Nothing is dispatched until a person approves it',
+      'Technicians get the history and the steps',
+    ],
+  },
+  {
+    key: 'verify',
+    tab: 'Verify every fix',
+    label: 'Measurement and verification',
+    title: 'Prove each fix in your building data.',
+    text: 'Every closed order is checked against measured data before it counts as a saving.',
+    points: [
+      'Before and after on the affected equipment',
+      'Savings tied to the order that produced them',
+      'A fix that doesn’t hold reopens on its own',
+    ],
+  },
+  {
+    key: 'capital',
+    tab: 'Plan capital',
+    label: 'Capital planning',
+    title: 'Turn asset health into a capital plan.',
+    text: 'Edviro tracks the condition and cost history of every asset, so replacement decisions rest on data.',
+    points: [
+      'Asset health across every site',
+      'Repair or replace, with the numbers behind it',
+      'A multi-year plan you can defend in budget meetings',
+    ],
+  },
 ]
 
-const signals = [
-  ['Signals', 'A text, email, alarm or meter change.'],
-  ['Requests', 'Staff needs become reviewed work orders.'],
-  ['Results', 'Fixes are verified in building data.'],
+// Building photos from the 2026-11 design mockup. Each card has two labelled
+// points on the photo: `flip` puts the label to the left of its dot.
+const buildings = [
+  {
+    name: 'Campuses',
+    text: 'School districts and universities with dozens of buildings on one plan.',
+    href: '/solutions/schools',
+    day: campusesDay,
+    night: campusesNight,
+    spots: [
+      { label: `${EDU_LIVE_SITES} sites`, style: { left: '42%', top: '34%' } },
+      { label: `${EDU_VERIFIED_SAVINGS} saved`, style: { right: '14%', top: '70%' }, flip: true },
+    ],
+  },
+  {
+    name: 'Data centers',
+    text: 'Existing facilities that need more capacity from the same cooling and power.',
+    href: '/solutions/data-centers',
+    day: dataCentersDay,
+    night: dataCentersNight,
+    spots: [
+      { label: 'Capacity headroom', style: { right: '40%', top: '46%' }, flip: true },
+      { label: 'Cooling 24/7', style: { right: '14%', top: '74%' }, flip: true },
+    ],
+  },
+  {
+    name: 'Hospitals',
+    text: 'Critical HVAC and plant rooms that can’t afford downtime.',
+    href: '/solutions/healthcare',
+    day: hospitalsDay,
+    night: hospitalsNight,
+    spots: [
+      { label: 'Critical HVAC', style: { right: '42%', top: '44%' }, flip: true },
+      { label: 'Pressure and temperature', style: { right: '16%', top: '74%' }, flip: true },
+    ],
+  },
+  {
+    name: 'Office towers',
+    text: 'Multi-tenant towers where schedules and setpoints drift.',
+    href: '/solutions/real-estate',
+    day: officeTowersDay,
+    night: officeTowersNight,
+    spots: [
+      { label: 'Schedules and setpoints', style: { right: '52%', top: '38%' }, flip: true },
+      { label: 'Occupancy-aware HVAC', style: { right: '14%', top: '68%' }, flip: true },
+    ],
+  },
+  {
+    // No page for public buildings yet, so this one goes to the demo section.
+    name: 'Public buildings',
+    text: 'Libraries, civic centers and courts on tight public budgets.',
+    href: '#demo',
+    day: publicBuildingsDay,
+    night: publicBuildingsNight,
+    spots: [
+      { label: 'Civic sites', style: { left: '40%', top: '46%' } },
+      { label: 'Utility bills tracked', style: { right: '14%', top: '72%' }, flip: true },
+    ],
+  },
+  {
+    name: 'Job sites',
+    text: 'Temporary power and plant on live construction sites.',
+    href: '/solutions/construction',
+    day: jobSitesDay,
+    night: jobSitesNight,
+    spots: [
+      { label: 'Temporary power', style: { right: '40%', top: '26%' }, flip: true },
+      { label: 'Baseline at handover', style: { right: '16%', top: '66%' }, flip: true },
+    ],
+  },
+]
+
+// The five loop steps as they appear on the drafted fix in the problem section.
+const fixSteps = [
+  { name: 'Works 24/7', done: true },
+  { name: 'Diagnose', done: true },
+  { name: 'Approve', done: false },
+  { name: 'Work order', done: false },
+  { name: 'Verify', done: false },
 ]
 
 // Arrow positions on the loop track, clockwise from the top left.
@@ -176,6 +307,130 @@ usePageSeo({
     'Facilities management software that catches problems, drafts work orders for approval, and verifies the fix. Put your facilities on autopilot with Edviro.',
   path: '/',
   jsonLd: [organizationLd(), websiteLd(), softwareApplicationLd(), faqLd(faqs)],
+})
+
+/*
+ * Scroll animation. Everything below runs in the browser only and is skipped
+ * when the visitor prefers reduced motion, so the prerendered page (and a
+ * page without JavaScript) shows every section in full.
+ */
+const canAnimate = () =>
+  'IntersectionObserver' in window &&
+  !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+let revealObserver: IntersectionObserver | undefined
+const onEnter = new WeakMap<Element, () => void>()
+
+/**
+ * `v-reveal` fades an element up when it scrolls into view; `v-reveal="120"`
+ * delays it by 120ms. `v-reveal="fn"` leaves the element alone and calls `fn`
+ * once when it enters view.
+ */
+const vReveal: Directive<HTMLElement, number | (() => void) | undefined> = {
+  mounted(el, { value }) {
+    if (!canAnimate()) return
+    revealObserver ??= new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue
+          const target = entry.target as HTMLElement
+          revealObserver?.unobserve(target)
+          target.classList.add('in')
+          onEnter.get(target)?.()
+          // Hand the element back to its own hover transitions once it has settled.
+          window.setTimeout(() => {
+            target.classList.remove('rv', 'in')
+            target.style.transitionDelay = ''
+          }, 2400)
+        }
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -6% 0px' },
+    )
+    // Anything already on screen stays as it is, so it never flashes out.
+    if (el.getBoundingClientRect().top < window.innerHeight) return
+    if (typeof value === 'function') {
+      onEnter.set(el, value)
+    } else {
+      el.classList.add('rv')
+      if (value) el.style.transitionDelay = `${value}ms`
+    }
+    revealObserver.observe(el)
+  },
+  unmounted(el) {
+    revealObserver?.unobserve(el)
+  },
+}
+
+// Stats count up from zero the first time the row is seen.
+const statValues = stats.map((stat) => stat[0] ?? '')
+const shownStats = ref(statValues)
+
+function countUpStats() {
+  const targets = statValues.map((value) => /^(\D*)(\d+)(\D*)$/.exec(value))
+  const started = performance.now()
+  const tick = (now: number) => {
+    const t = Math.min(1, (now - started) / 1100)
+    const eased = 1 - (1 - t) ** 3
+    shownStats.value = statValues.map((value, index) => {
+      const match = targets[index]
+      return match ? `${match[1]}${Math.round(Number(match[2]) * eased)}${match[3]}` : value
+    })
+    if (t < 1) requestAnimationFrame(tick)
+  }
+  requestAnimationFrame(tick)
+}
+
+// Platform section: pinned on wide, tall screens, where scrolling moves
+// through the four pillars.
+const platformTrack = ref<HTMLElement | null>(null)
+const pinned = ref(false)
+const activePillar = ref(0)
+const pillarProgress = ref(0)
+let pinQuery: MediaQueryList | undefined
+
+function measurePlatform() {
+  const track = platformTrack.value
+  if (!track || !pinned.value) return
+  const rect = track.getBoundingClientRect()
+  const span = rect.height - window.innerHeight
+  const position = Math.min(0.999, Math.max(0, -rect.top / span)) * pillars.length
+  activePillar.value = Math.floor(position)
+  pillarProgress.value = position % 1
+}
+
+function setPinned() {
+  pinned.value = Boolean(pinQuery?.matches)
+  if (!pinned.value) activePillar.value = 0
+  void nextTick(measurePlatform)
+}
+
+function goToPillar(index: number) {
+  const track = platformTrack.value
+  if (!track || !pinned.value) return
+  const span = track.offsetHeight - window.innerHeight
+  const top = track.getBoundingClientRect().top + window.scrollY
+  window.scrollTo({ top: top + ((index + 0.5) / pillars.length) * span, behavior: 'smooth' })
+}
+
+function tabFill(index: number) {
+  if (index < activePillar.value) return 1
+  return index === activePillar.value ? pillarProgress.value : 0
+}
+
+onMounted(() => {
+  pinQuery = window.matchMedia(
+    '(min-width: 1041px) and (min-height: 720px) and (prefers-reduced-motion: no-preference)',
+  )
+  pinQuery.addEventListener('change', setPinned)
+  window.addEventListener('scroll', measurePlatform, { passive: true })
+  window.addEventListener('resize', measurePlatform)
+  setPinned()
+})
+
+onBeforeUnmount(() => {
+  pinQuery?.removeEventListener('change', setPinned)
+  window.removeEventListener('scroll', measurePlatform)
+  window.removeEventListener('resize', measurePlatform)
 })
 </script>
 
@@ -269,9 +524,9 @@ usePageSeo({
 
     <div class="stats">
       <div class="wrap">
-        <div class="stat-row">
-          <div v-for="[value, label] in stats" :key="label" class="stat">
-            <b>{{ value }}</b
+        <div v-reveal="countUpStats" class="stat-row">
+          <div v-for="([, label], index) in stats" :key="label" class="stat">
+            <b>{{ shownStats[index] }}</b
             ><span>{{ label }}</span>
           </div>
           <div class="stat">
@@ -290,81 +545,166 @@ usePageSeo({
       </div>
     </div>
 
-    <section id="platform" class="alt">
-      <div class="wrap">
-        <div class="label">The platform</div>
-        <h2>Every building operation needs a co-worker.</h2>
-        <div class="card-grid">
-          <div class="nd-card">
-            <div class="viz">
-              <svg viewBox="0 0 220 100" aria-hidden="true">
-                <polygon
-                  class="chart-waste"
-                  points="60,63 80,44 100,30 120,36 140,50 150,60 120,62 90,61"
-                />
-                <polyline
-                  class="chart-base"
-                  points="0,62 30,60 60,63 90,61 120,62 150,60 180,63 220,61"
-                />
-                <polyline
-                  class="chart-line"
-                  points="0,64 30,59 60,63 80,44 100,30 120,36 140,50 150,60 180,62 220,60"
-                />
-                <circle class="chart-point" cx="100" cy="30" r="4" />
-              </svg>
+    <section id="platform" :class="['dark', 'platform', { pinned }]">
+      <div ref="platformTrack" class="plat-track">
+        <div class="plat-pin">
+          <div class="wrap">
+            <div class="label">The platform</div>
+            <h2>Every building operation <span>needs a co-worker.</span></h2>
+            <div class="plat-tabs">
+              <button
+                v-for="(pillar, index) in pillars"
+                :key="pillar.key"
+                type="button"
+                :class="{ on: index === activePillar }"
+                :aria-pressed="index === activePillar"
+                @click="goToPillar(index)"
+              >
+                {{ pillar.tab }}<i :style="{ transform: `scaleX(${tabFill(index)})` }" />
+              </button>
             </div>
-            <h3>Find waste</h3>
-            <p>Baselines, anomalies and likely causes, with evidence.</p>
-          </div>
-          <div class="nd-card">
-            <div class="viz">
-              <div class="nd-chip">
-                <div><b>AHU-2 running overnight</b><small>Drafted by Edviro</small></div>
-                <span class="chip-action">Approve</span>
-              </div>
-            </div>
-            <h3>Review work orders</h3>
-            <p>Signals and requests become orders a human approves.</p>
-          </div>
-          <div class="nd-card">
-            <div class="viz">
-              <div class="bars">
-                <div class="bar"><i style="height: 84px" />Before</div>
-                <div class="bar after"><i style="height: 54px" />After</div>
-              </div>
-            </div>
-            <h3>Verify every fix</h3>
-            <p>M&amp;V against measured building data.</p>
-          </div>
-          <div class="nd-card">
-            <div class="viz">
-              <div class="cap-plan">
-                <div v-for="[asset, used, year] in capitalPlan" :key="asset">
-                  <span>{{ asset }}</span
-                  ><i :style="{ '--w': used }" /><em>{{ year }}</em>
+            <div class="plat-stage">
+              <div
+                v-for="(pillar, index) in pillars"
+                :key="pillar.key"
+                :class="['pillar', { on: index === activePillar }]"
+              >
+                <div class="pillar-copy">
+                  <div class="pillar-label">{{ pillar.label }}</div>
+                  <h3>{{ pillar.title }}</h3>
+                  <p>{{ pillar.text }}</p>
+                  <ul>
+                    <li v-for="point in pillar.points" :key="point">{{ point }}</li>
+                  </ul>
+                </div>
+
+                <!-- Illustrative product panels -->
+                <div v-if="pillar.key === 'waste'" class="pv" aria-hidden="true">
+                  <div class="pv-card pv-main">
+                    <div class="pv-tags"><span>Gas usage</span><span>Site A</span></div>
+                    <div class="pv-big">76.4 <small>therms in one day</small></div>
+                    <p class="pv-note">The learned baseline expected 16.7 therms.</p>
+                    <svg viewBox="0 0 320 96">
+                      <polygon
+                        class="chart-waste"
+                        points="186,70 204,48 222,16 240,22 258,50 270,68 240,70 210,71"
+                      />
+                      <polyline
+                        class="chart-base"
+                        points="0,72 40,70 80,73 120,71 160,72 200,70 240,71 280,72 320,70"
+                      />
+                      <polyline
+                        class="chart-line"
+                        points="0,74 40,69 80,73 120,70 160,73 186,70 204,48 222,16 240,22 258,50 270,68 300,71 320,69"
+                      />
+                      <circle class="chart-point" cx="222" cy="16" r="4" />
+                    </svg>
+                  </div>
+                  <div class="pv-card pv-float">
+                    <small>Likely cause</small>
+                    <b>Hot-water valve stuck open</b>
+                    <span class="pv-delta">+357% against baseline</span>
+                  </div>
+                </div>
+
+                <div v-else-if="pillar.key === 'orders'" class="pv" aria-hidden="true">
+                  <div class="pv-card pv-main">
+                    <div class="pv-head"><b>Work orders</b><span>Drafted by Edviro</span></div>
+                    <div class="pv-row">
+                      <div><b>AHU-2 · Schedule fix</b><small>Site A · Air handler</small></div>
+                      <span class="pill">Draft</span>
+                    </div>
+                    <div class="pv-row">
+                      <div><b>CH-1 · Short-cycling</b><small>Site C · Chiller</small></div>
+                      <span class="pill">Draft</span>
+                    </div>
+                  </div>
+                  <div class="pv-card pv-float">
+                    <small>Needs review · Facilities lead</small>
+                    <b>Fix drafted for VAV 3-12</b>
+                    <div class="app-buttons">
+                      <span class="app-button">Approve fix</span>
+                      <span class="app-button ghost">Edit</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div v-else-if="pillar.key === 'verify'" class="pv" aria-hidden="true">
+                  <div class="pv-card pv-main">
+                    <div class="pv-tags"><span class="ok">Verified</span><span>Site A · Zone 3</span></div>
+                    <div class="pv-big">70°F <small>back at setpoint</small></div>
+                    <p class="pv-note">Watched 14 days. Fix confirmed.</p>
+                    <div class="pv-bars">
+                      <div><span>Before</span><i style="width: 88%" /></div>
+                      <div class="after"><span>After</span><i style="width: 58%" /></div>
+                    </div>
+                  </div>
+                  <div class="pv-card pv-float">
+                    <small>Tied to the work order</small>
+                    <b>VAV 3-12 · Reheat valve</b>
+                    <span>Reopens if the fix doesn’t hold</span>
+                  </div>
+                </div>
+
+                <div v-else class="pv" aria-hidden="true">
+                  <div class="pv-card pv-main">
+                    <div class="pv-head"><b>Asset health</b><span>Life used</span></div>
+                    <div class="cap-plan">
+                      <div v-for="[asset, used, year] in capitalPlan" :key="asset">
+                        <span>{{ asset }}</span
+                        ><i :style="{ '--w': used }" /><em>{{ year }}</em>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pv-card pv-float">
+                    <small>Replace</small>
+                    <b>Chiller CH-1 · Site C</b>
+                    <span>Planned for 2027</span>
+                  </div>
                 </div>
               </div>
             </div>
-            <h3>Plan capital</h3>
-            <p>Asset health turned into a defensible capital plan.</p>
+            <SiteLink class="more" href="/facilities-operations">Explore the platform →</SiteLink>
           </div>
         </div>
-        <SiteLink class="more" href="/facilities-operations">Explore the platform →</SiteLink>
       </div>
     </section>
 
     <section id="buildings">
       <div class="wrap">
         <div class="label">Built for every building</div>
-        <h2>One loop, for any building.</h2>
-        <div class="cells">
-          <SiteLink v-for="[name, detail, href] in buildings" :key="name" :href="href ?? '#demo'">
-            <div>
-              <b>{{ name }}</b
-              ><span>{{ detail }}</span>
-            </div>
-            <i>→</i>
-          </SiteLink>
+        <h2>One loop, <span>for any building.</span></h2>
+        <div class="bcards">
+          <div v-for="(building, index) in buildings" :key="building.name" v-reveal="index * 70">
+            <SiteLink class="bcard" :href="building.href">
+              <div class="bphoto">
+                <img :src="building.day" alt="" width="900" height="836" loading="lazy" />
+                <img
+                  class="night"
+                  :src="building.night"
+                  alt=""
+                  width="900"
+                  height="836"
+                  loading="lazy"
+                />
+                <span
+                  v-for="spot in building.spots"
+                  :key="spot.label"
+                  :class="['spot', { flip: spot.flip }]"
+                  :style="spot.style"
+                >
+                  <i /><em>{{ spot.label }}</em>
+                </span>
+              </div>
+              <div class="bcard-text">
+                <div>
+                  <b>{{ building.name }}</b>
+                  <p>{{ building.text }}</p>
+                </div>
+                <i>→</i>
+              </div>
+            </SiteLink>
+          </div>
         </div>
       </div>
     </section>
@@ -372,17 +712,64 @@ usePageSeo({
     <section id="problem" class="alt">
       <div class="wrap">
         <div class="label">The problem</div>
-        <p class="statement">
+        <p v-reveal class="statement">
           Facilities teams do not need more dashboards or alarms.
           <span>
             They need systems that keep improving and <b>take action</b>, turning signals and
             requests into reviewed work orders, verified fixes and capital plans.
           </span>
         </p>
-        <div class="trio">
-          <div v-for="[title, detail] in signals" :key="title">
-            <h3>{{ title }}</h3>
-            <p>{{ detail }}</p>
+        <div class="versus">
+          <div v-reveal class="vs today">
+            <div class="vs-tag"><i />Today</div>
+            <h3>Signals pile up and nobody owns them.</h3>
+            <p>
+              Alarms, emails and custodian texts land in different inboxes, and most are never
+              followed up.
+            </p>
+            <div class="vs-stage" aria-hidden="true">
+              <svg class="wires" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path d="M42 17 C50 17 46 66 54 66" />
+                <path d="M76 26 L76 50" />
+                <path d="M46 78 L54 76" />
+              </svg>
+              <div class="node" style="left: 0; top: 4%">
+                <small>BMS alarms</small><b>142 unread</b>
+              </div>
+              <div class="node" style="left: 56%; top: 0">
+                <small>Email</small><b>Re: boiler?</b>
+              </div>
+              <div class="node" style="left: 4%; top: 64%">
+                <small>Custodian text</small><b>“Too cold again”</b>
+              </div>
+              <div class="node owner" style="left: 54%; top: 50%">
+                <small>Owner</small><b>Unassigned</b>
+              </div>
+            </div>
+          </div>
+          <div v-reveal="120" class="vs with">
+            <div class="vs-tag"><i />With Edviro</div>
+            <h3>One diagnosed fix, ready to approve.</h3>
+            <p>
+              Edviro groups the signals, finds the likely cause and drafts one fix for a person to
+              approve.
+            </p>
+            <div class="vs-stage" aria-hidden="true">
+              <div class="vs-card">
+                <div class="vs-pills">
+                  <span class="pill">Needs review</span>
+                  <span class="pill verified">3 signals merged</span>
+                </div>
+                <b>Zone 3 low temperature</b>
+                <small>Site A · VAV 3-12</small>
+                <div class="vs-steps">
+                  <span v-for="step in fixSteps" :key="step.name" :class="{ done: step.done }">
+                    {{ step.name }}
+                  </span>
+                </div>
+                <p>Likely cause: reheat valve stuck closed.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -392,7 +779,7 @@ usePageSeo({
       <div class="wrap">
         <div class="center">
           <div class="label">How Edviro works</div>
-          <h2>No alarms, just fixes.</h2>
+          <h2>No alarms, <span>just fixes.</span></h2>
           <p class="sub">
             There is no alarms tab in Edviro. Your AI crew triages every alarm, text and meter
             change around the clock, even while you’re sleeping, so what reaches your team is a
@@ -407,7 +794,7 @@ usePageSeo({
             :class="['arrow', arrow.dir]"
             :style="arrow.style"
           />
-          <div class="step" style="left: 20%; top: 0">
+          <div v-reveal class="step" style="left: 20%; top: 0">
             <div class="step-no">01</div>
             <h3>Works 24/7</h3>
             <div class="step-ui">
@@ -415,7 +802,7 @@ usePageSeo({
               <span class="bubble">I checked 250 thermostats. One valve is stuck.</span>
             </div>
           </div>
-          <div class="step" style="left: 50%; top: 0">
+          <div v-reveal="140" class="step" style="left: 50%; top: 0">
             <div class="step-no">02</div>
             <h3>Diagnose issues</h3>
             <div class="step-ui">
@@ -423,7 +810,7 @@ usePageSeo({
               <span>Discharge air at 55°F for six days, valve commanded open.</span>
             </div>
           </div>
-          <div class="step human" style="left: 80%; top: 0">
+          <div v-reveal="280" class="step human" style="left: 80%; top: 0">
             <div class="step-no">03 <em>Human</em></div>
             <h3>You approve the fixes</h3>
             <div class="step-ui">
@@ -432,7 +819,7 @@ usePageSeo({
               <span class="approve">Approve fix</span>
             </div>
           </div>
-          <div class="step" style="left: 65%; bottom: 0">
+          <div v-reveal="420" class="step" style="left: 65%; bottom: 0">
             <div class="step-no">04</div>
             <h3>Push to your work orders</h3>
             <div class="step-ui">
@@ -440,7 +827,7 @@ usePageSeo({
               <span>Pushed to your work order system, with history and steps.</span>
             </div>
           </div>
-          <div class="step" style="left: 35%; bottom: 0">
+          <div v-reveal="560" class="step" style="left: 35%; bottom: 0">
             <div class="step-no">05</div>
             <h3>Verify</h3>
             <div class="step-ui">
@@ -455,14 +842,14 @@ usePageSeo({
     <section id="results">
       <div class="wrap">
         <div class="label">Results</div>
-        <h2>Featured customers and verified outcomes.</h2>
+        <h2>Featured customers <span>and verified outcomes.</span></h2>
         <div class="tabs">
           <span class="on">Education</span>
           <span>Data centers</span>
           <span>Commercial</span>
           <span>More</span>
         </div>
-        <div class="customers">
+        <div v-reveal class="customers">
           <SiteLink v-for="[short, name, type] in customers" :key="short" href="/results">
             <b>{{ short }}</b>
             <span>{{ name }}</span>
@@ -475,8 +862,8 @@ usePageSeo({
     <section id="integrations" class="alt">
       <div class="wrap">
         <div class="label">Integrations</div>
-        <h2>Works with what you already have.</h2>
-        <div class="logos">
+        <h2>Works with <span>what you already have.</span></h2>
+        <div v-reveal class="logos">
           <span v-for="vendor in vendors" :key="vendor.name">
             <img
               v-if="vendor.src"
@@ -491,7 +878,7 @@ usePageSeo({
             <template v-else>{{ vendor.name }}</template>
           </span>
         </div>
-        <div id="modules" class="modules">
+        <div id="modules" v-reveal class="modules">
           <div>
             <span class="free">Free with your AI Crew subscription</span>
             <h3>Keep what works. Consolidate what doesn’t.</h3>
@@ -520,7 +907,7 @@ usePageSeo({
       <div class="wrap faq">
         <div>
           <div class="label">FAQ</div>
-          <h2>Questions from operations teams.</h2>
+          <h2>Questions from <span>operations teams.</span></h2>
           <SiteLink class="more" href="/faq">View all FAQs →</SiteLink>
         </div>
         <div>

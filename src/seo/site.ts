@@ -92,6 +92,8 @@ export const SOLUTION_CONSTRUCTION_PATH = '/solutions/construction/'
  */
 export const EDU_VERIFIED_SAVINGS = '$500K'
 export const EDU_LIVE_SITES = 134
+// 2026-11-12: square feet under management across live sites, figure from Hursh.
+export const SQFT_UNDER_MANAGEMENT = '20M'
 
 export const FAQ_PATH = '/faq/'
 export const ABOUT_PATH = '/about/'

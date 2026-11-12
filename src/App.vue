@@ -27,7 +27,9 @@ const skipToMain = () => {
 </script>
 
 <template>
-  <div style="min-height: 100vh; overflow-x: hidden;">
+  <!-- `clip` rather than `hidden`: hidden would turn this into a scroll
+       container and stop position: sticky from working inside it. -->
+  <div style="min-height: 100vh; overflow-x: clip;">
     <a href="#main-content" class="skip-link" @click.prevent="skipToMain">Skip to content</a>
     <SiteNav />
     <div id="main-content">
