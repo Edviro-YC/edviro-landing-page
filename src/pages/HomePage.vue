@@ -189,7 +189,7 @@ const buildings = [
     day: officeTowersDay,
     night: officeTowersNight,
     spots: [
-      { label: 'Schedules and setpoints', style: { right: '52%', top: '38%' }, flip: true },
+      { label: 'Schedule drift', style: { left: '48%', top: '38%' } },
       { label: 'Occupancy-aware HVAC', style: { right: '14%', top: '68%' }, flip: true },
     ],
   },
@@ -243,7 +243,7 @@ const customers = [
 
 /*
  * Building-control vendors shown on the integrations wall. Logos are the
- * vendors' trademarks, shown in one tone. Owner: confirm each integration and
+ * vendors' trademarks, shown in their own colours on white tiles. Owner: confirm each integration and
  * swap in the vendors' official brand files before this ships. Distech has no
  * logo file yet, so it renders as text.
  */
@@ -257,7 +257,7 @@ const vendors: { name: string; src?: string; width?: number; height?: number; cl
   { name: 'Automated Logic', src: automatedLogic, width: 600, height: 197, className: 'tall' },
   { name: 'Tridium', src: tridium, width: 352, height: 63 },
   { name: 'Distech Controls' },
-  { name: 'Delta Controls', src: deltaControls, width: 600, height: 289, className: 'tall' },
+  { name: 'Delta Controls', src: deltaControls, width: 600, height: 225, className: 'tall' },
   { name: 'Alerton', src: alerton, width: 800, height: 180, className: 'crop-top' },
   { name: 'KMC Controls', src: kmcControls, width: 618, height: 255, className: 'tall' },
 ]
@@ -859,45 +859,57 @@ onBeforeUnmount(() => {
       </div>
     </section>
 
-    <section id="integrations" class="alt">
-      <div class="wrap">
-        <div class="label">Integrations</div>
-        <h2>Works with <span>what you already have.</span></h2>
-        <div v-reveal class="logos">
-          <span v-for="vendor in vendors" :key="vendor.name">
-            <img
-              v-if="vendor.src"
-              :class="vendor.className"
-              :src="vendor.src"
-              :alt="vendor.name"
-              :width="vendor.width"
-              :height="vendor.height"
-              loading="lazy"
-              decoding="async"
-            />
-            <template v-else>{{ vendor.name }}</template>
-          </span>
-        </div>
-        <div id="modules" v-reveal class="modules">
-          <div>
-            <span class="free">Free with your AI Crew subscription</span>
-            <h3>Keep what works. Consolidate what doesn’t.</h3>
-            <p>
-              The AI Crew is the core of Edviro, and it works alongside whatever you already run. If
-              you are missing a piece, add any of these modules at no extra cost.
-            </p>
-            <SiteLink class="more" href="/modules">See all modules →</SiteLink>
+    <section id="integrations" class="integrations">
+      <div class="integ-wrap">
+        <div class="integ-box">
+          <div class="label">Integrations</div>
+          <h2>Works with <span>what you already have.</span></h2>
+          <p class="sub">
+            Edviro connects to your building controls, meters, utility bills and work-order
+            systems.
+          </p>
+          <div v-reveal class="logo-tiles">
+            <span v-for="vendor in vendors" :key="vendor.name">
+              <img
+                v-if="vendor.src"
+                :class="vendor.className"
+                :src="vendor.src"
+                :alt="vendor.name"
+                :width="vendor.width"
+                :height="vendor.height"
+                loading="lazy"
+                decoding="async"
+              />
+              <template v-else>{{ vendor.name }}</template>
+            </span>
           </div>
-          <div class="module-grid">
-            <SiteLink
-              v-for="[name, detail, href] in modules"
-              :key="name"
-              :href="href ?? '/modules'"
-            >
-              <b>{{ name }}</b
-              ><span>{{ detail }}</span
-              ><i>→</i>
-            </SiteLink>
+          <SiteLink class="nd-btn lead-arrow" href="/integrations">
+            <i aria-hidden="true">→</i>See what Edviro connects to
+          </SiteLink>
+          <p class="integ-note">
+            Don’t see your system? Edviro works with all major BMS, meters and CMMS platforms.
+          </p>
+          <div id="modules" v-reveal class="modules">
+            <div>
+              <span class="free">Free with your AI Crew subscription</span>
+              <h3>Keep what works. Consolidate what doesn’t.</h3>
+              <p>
+                The AI Crew is the core of Edviro, and it works alongside whatever you already run.
+                If you are missing a piece, add any of these modules at no extra cost.
+              </p>
+              <SiteLink class="more" href="/modules">See all modules →</SiteLink>
+            </div>
+            <div class="module-grid">
+              <SiteLink
+                v-for="[name, detail, href] in modules"
+                :key="name"
+                :href="href ?? '/modules'"
+              >
+                <b>{{ name }}</b
+                ><span>{{ detail }}</span
+                ><i>→</i>
+              </SiteLink>
+            </div>
           </div>
         </div>
       </div>
