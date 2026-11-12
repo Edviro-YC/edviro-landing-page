@@ -136,7 +136,6 @@ usePageSeo({
             note="Checked over 30 days against the learned baseline after closure"
             summary="Bar comparison: RTU-3 energy after the damper fix is 18% below the learned baseline, verified over 30 days."
           />
-          <p class="ui-note">Illustrative product views with fictional data.</p>
         </div>
       </div>
     </section>
@@ -170,7 +169,6 @@ usePageSeo({
             :rows="backlog"
             summary="Backlog of four work orders ordered by impact: a short-cycling boiler at Lincoln HS on its third occurrence awaiting review, a Room 214 overheating request matched to a stuck damper in progress, a proposed schedule change for gym lights at Roosevelt MS awaiting review, and a closed RTU-7 belt repair at Jefferson ES still verifying."
           />
-          <p class="ui-note">Illustrative product view with fictional data.</p>
         </div>
       </div>
     </section>

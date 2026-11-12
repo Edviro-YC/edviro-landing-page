@@ -98,7 +98,7 @@ const pages: ContentPage[] = [
             items: [
               [
                 'What results has Edviro verified?',
-                'We’ve saved customers $500K and run at 134 sites. One live high-school site cut energy use 21.4% against its weather-adjusted baseline. Most of our work so far is in schools.',
+                'We’ve saved customers $500K and run at 134 sites. At one high school, we detected $400,000 in gas overbilling against its weather-adjusted baseline. Most of our work so far is in schools.',
               ],
               [
                 'How does occupancy-based control work?',

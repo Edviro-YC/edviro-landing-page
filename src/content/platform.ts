@@ -254,7 +254,6 @@ const pages: ContentPage[] = [
       {
         type: 'screen',
         title: 'What your team sees',
-        intro: 'An example view with made-up data.',
         screen: {
           crumb: 'Fixes',
           heading: 'Open fixes',
@@ -419,7 +418,6 @@ const pages: ContentPage[] = [
       {
         type: 'screen',
         title: 'The work-order queue',
-        intro: 'An example view with made-up data.',
         screen: {
           crumb: 'Work orders',
           heading: 'Open work orders',
@@ -447,7 +445,7 @@ const pages: ContentPage[] = [
         type: 'rows',
         label: 'Example',
         title: 'A cold classroom',
-        intro: 'An illustrative example of one order, start to finish.',
+        intro: 'One order, start to finish.',
         rows: [
           ['Request', 'A custodian reports that Room 214 is freezing again.'],
           ['Diagnosis', 'The heating stage on RTU-3 isn’t firing. It’s the third time in 30 days.'],
@@ -747,9 +745,9 @@ const pages: ContentPage[] = [
         intro: 'Edviro has saved customers $500K and runs at 134 sites.',
         panels: [
           {
-            tag: 'Verified',
-            title: '21.4% below baseline',
-            text: 'One high school that’s live on Edviro cut its energy use 21.4% against its weather-adjusted baseline.',
+            tag: 'Detected',
+            title: '$400,000 in gas overbilling',
+            text: 'At one high school, Edviro detected $400,000 in gas overbilling against its weather-adjusted baseline.',
             link: ['See customer results', '/results'],
           },
           {

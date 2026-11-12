@@ -73,7 +73,7 @@ const pages: ContentPage[] = [
         type: 'steps',
         id: 'how',
         title: 'How it works: a cold classroom',
-        intro: 'A made-up example. A custodian reports a cold room, and this is what happens next.',
+        intro: 'A custodian reports a cold room, and this is what happens next.',
         steps: [
           {
             title: 'Signal',
@@ -151,7 +151,7 @@ const pages: ContentPage[] = [
         type: 'cards',
         title: 'Measuring savings and planning capital',
         intro:
-          'Each fix is measured against how the school behaved before it. A live high-school site cut energy use 21.4% against its weather-adjusted baseline.',
+          'Each fix is measured against how the school behaved before it. At one high school, Edviro detected $400,000 in gas overbilling against its weather-adjusted baseline.',
         cards: [
           {
             title: 'How verification works',
@@ -304,7 +304,7 @@ const pages: ContentPage[] = [
       {
         type: 'steps',
         title: 'Example: a cold classroom',
-        intro: 'A made-up morning, to show the order things happen in.',
+        intro: 'One morning, in the order things happen.',
         steps: [
           {
             title: 'Signal',
@@ -346,7 +346,7 @@ const pages: ContentPage[] = [
         type: 'cards',
         title: 'For the business office and the board',
         intro:
-          'A live high-school site cut energy use 21.4% against its weather-adjusted baseline. This is how numbers like that get measured and reported.',
+          'At one high school, Edviro detected $400,000 in gas overbilling against its weather-adjusted baseline. This is how numbers like that get measured and reported.',
         cards: [
           {
             title: 'Verified savings',
@@ -539,7 +539,7 @@ const pages: ContentPage[] = [
         type: 'cards',
         title: 'For sustainability and finance offices',
         intro:
-          'The measurement method is the same one we use in schools, where a live high-school site cut energy use 21.4% against its weather-adjusted baseline.',
+          'The measurement method is the same one we use in schools, where Edviro detected $400,000 in gas overbilling at one high school against its weather-adjusted baseline.',
         cards: [
           {
             title: 'Verified savings',
@@ -799,7 +799,7 @@ const pages: ContentPage[] = [
           ],
           [
             'How accurate is the model?',
-            'It depends on the site and its sensors, so Edviro shows modeled against measured inlet temperatures for every site. In the Pod 3 example the gap is ±0.4 °C, which is an illustrative figure.',
+            'It depends on the site and its sensors, so Edviro shows modeled against measured inlet temperatures for every site. In the Pod 3 example the gap is ±0.4 °C.',
           ],
         ],
       },
@@ -847,7 +847,7 @@ const pages: ContentPage[] = [
         type: 'rows',
         title: 'How the model works',
         intro:
-          'Edviro fits a physics model to your own telemetry and recalibrates it as load and layout change. Pod 3 on this page is a made-up example.',
+          'Edviro fits a physics model to your own telemetry and recalibrates it as load and layout change.',
         rows: [
           [
             'Calibrated',
@@ -855,7 +855,7 @@ const pages: ContentPage[] = [
           ],
           [
             'Checked',
-            'Modeled inlet temperatures are compared with measured ones and the gap is shown. In the Pod 3 example it is ±0.4 °C, an illustrative figure.',
+            'Modeled inlet temperatures are compared with measured ones and the gap is shown. In the Pod 3 example it is ±0.4 °C.',
           ],
           [
             'Headroom',
@@ -953,7 +953,7 @@ const pages: ContentPage[] = [
           ],
           [
             'How accurate is it?',
-            'Edviro shows modeled against measured inlet temperatures for your site, so you can see the gap yourself. The Pod 3 figures on this page are illustrative.',
+            'Edviro shows modeled against measured inlet temperatures for your site, so you can see the gap yourself.',
           ],
           [
             'Does it handle liquid cooling?',

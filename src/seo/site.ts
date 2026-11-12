@@ -79,10 +79,10 @@ export const SOLUTION_CONSTRUCTION_PATH = '/solutions/construction/'
  * - EDU_LIVE_SITES — live school sites in the schools registry. Source:
  *   registry count on 2026-08-25 (commit 797ea60, same commit as the district
  *   logos). Re-count before each deploy.
- * - MV_HEADLINE_RESULT — one verified result at a live high-school site,
- *   shown on the M&V page. Source: that site's M&V report (site anonymized).
- *   First published 2026-06-30 (commit 369247c). Record report id + period
- *   here when re-confirmed.
+ *
+ * MV_HEADLINE_RESULT (the 21.4% high-school result) was removed on 2026-11-11
+ * at Hursh's request; the pages now cite the $400K gas overbilling detected
+ * at one high school, written as text in src/content.
  */
 /*
  * 2026-11-10: raised from $400K / 34 to the figures Hursh gave for the
@@ -92,7 +92,6 @@ export const SOLUTION_CONSTRUCTION_PATH = '/solutions/construction/'
  */
 export const EDU_VERIFIED_SAVINGS = '$500K'
 export const EDU_LIVE_SITES = 134
-export const MV_HEADLINE_RESULT = '\u221221.4%'
 
 export const FAQ_PATH = '/faq/'
 export const ABOUT_PATH = '/about/'

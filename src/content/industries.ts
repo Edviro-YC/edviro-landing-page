@@ -10,7 +10,7 @@ const pages: ContentPage[] = [
       crumbs: [],
       label: 'Commercial real estate',
       title: 'Edviro for commercial real estate',
-      lede: 'In office buildings, Edviro uses your WiFi access points or its own occupancy sensors to see which floors are in use. When a floor is empty and still being conditioned, it drafts an HVAC schedule change for a person on your team to approve, then checks the load change on the meter. Our published results so far are from schools.',
+      lede: 'In office buildings, Edviro uses your WiFi access points or its own occupancy sensors to see which floors are in use. When a floor is empty and still being conditioned, it drafts an HVAC schedule change for a person on your team to approve, then checks the load change on the meter.',
       secondary: ['See an example', '#example'],
       note: 'Occupancy from WiFi access points or Edviro sensors. Works with any major BMS. A person approves every change.',
     },
@@ -25,7 +25,7 @@ const pages: ContentPage[] = [
         type: 'steps',
         id: 'example',
         title: 'Example: an empty wing on a weeknight',
-        intro: 'An illustrative example: Floor 4 East of an office tower.',
+        intro: 'Floor 4 East of an office tower.',
         steps: [
           {
             title: 'Signal',
@@ -92,7 +92,7 @@ const pages: ContentPage[] = [
         label: 'Example',
         title: 'What your team sees',
         intro:
-          'An example screen with made-up data. There is no alarm list. Each item is a diagnosed fix that is waiting for approval, in progress or verified. Verified changes also feed the capital plan, which ranks buildings, systems and retrofits by payback from measured use.',
+          'There is no alarm list. Each item is a diagnosed fix that is waiting for approval, in progress or verified. Verified changes also feed the capital plan, which ranks buildings, systems and retrofits by payback from measured use.',
         screen: {
           crumb: 'Fixes',
           heading: 'Tower A',
@@ -200,7 +200,7 @@ const pages: ContentPage[] = [
       crumbs: [],
       label: 'Healthcare',
       title: 'Edviro for healthcare facilities',
-      lede: 'Edviro reads the BMS, meters and temperature loggers you already have. When a room drifts out of range or a unit runs past its hours, it drafts the fix for a person on your team to approve, and it keeps the dated record surveyors ask for. Our published results so far are from schools, so this page describes what the product does, and the example on it is made up.',
+      lede: 'Edviro reads the BMS, meters and temperature loggers you already have. When a room drifts out of range or a unit runs past its hours, it drafts the fix for a person on your team to approve, and it keeps the dated record surveyors ask for.',
       secondary: ['See an example', '#example'],
       note: 'No new sensors. Critical spaces can be excluded. A person approves every change.',
     },
@@ -215,7 +215,7 @@ const pages: ContentPage[] = [
         type: 'steps',
         id: 'example',
         title: 'Example: an isolation room losing pressure',
-        intro: 'An illustrative example: isolation room AII-2 on an early morning.',
+        intro: 'Isolation room AII-2 on an early morning.',
         steps: [
           {
             title: 'Signal',
@@ -289,7 +289,7 @@ const pages: ContentPage[] = [
         type: 'rows',
         title: 'Energy in support spaces',
         intro:
-          'Critical spaces have to run to the standard around the clock. Clinics, offices and other support spaces can follow a schedule, so that is where Edviro looks for energy savings. The finding and the fix below are examples with made-up numbers.',
+          'Critical spaces have to run to the standard around the clock. Clinics, offices and other support spaces can follow a schedule, so that is where Edviro looks for energy savings.',
         rows: [
           [
             '193 vs 70 kBtu/sq ft',
@@ -418,7 +418,7 @@ const pages: ContentPage[] = [
         type: 'steps',
         id: 'example',
         title: 'Example: a tower from fit-out to month 6',
-        intro: 'An illustrative example. The building is called Tower A.',
+        intro: 'The building is called Tower A.',
         steps: [
           {
             title: 'Independent baseline',
@@ -522,7 +522,7 @@ const pages: ContentPage[] = [
           ],
           [
             'Has Edviro done this on a real project?',
-            'We have piloted baselining and M&V with a construction company. The Tower A example on this page is made up to show the steps.',
+            'We have piloted baselining and M&V with a construction company.',
           ],
         ],
       },

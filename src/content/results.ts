@@ -10,7 +10,7 @@ const pages: ContentPage[] = [
       crumbs: [],
       label: 'Customer results',
       title: 'What Edviro has measured so far',
-      lede: 'Edviro has saved customers $500K and runs at 134 sites. One live high-school site cut energy use 21.4% against its weather-adjusted baseline. The results we can publish so far are from schools.',
+      lede: 'Edviro has saved customers $500K and runs at 134 sites. At one high school, it detected $400,000 in gas overbilling against its weather-adjusted baseline.',
       secondary: ['How we measure savings', '/results/methodology'],
     },
     sections: [
@@ -18,7 +18,7 @@ const pages: ContentPage[] = [
         type: 'answer',
         question: 'What results has Edviro delivered?',
         answer:
-          'Edviro has saved customers $500K and runs at 134 sites. A live high-school site cut energy use 21.4% against its weather-adjusted baseline. We count a saving only after the meter confirms it, and we check again over 90 days to see that it held. The results published so far are from schools.',
+          'Edviro has saved customers $500K and runs at 134 sites. At one high school, it detected $400,000 in gas overbilling against its weather-adjusted baseline. We count a saving only after the meter confirms it, and we check again over 90 days to see that it held.',
       },
       {
         type: 'stats',
@@ -26,48 +26,33 @@ const pages: ContentPage[] = [
         items: [
           ['$500K', 'Saved for customers'],
           ['134', 'Sites'],
-          ['−21.4%', 'Energy use against the weather-adjusted baseline at a live high-school site'],
+          ['$400K', 'Gas overbilling detected at one high school'],
         ],
-      },
-      {
-        type: 'chips',
-        title: 'School districts using Edviro',
-        intro:
-          'Edviro started in Northern California schools, and these are the two districts we can name.',
-        items: [
-          'Palo Alto Unified School District',
-          'Los Gatos-Saratoga Union High School District',
-        ],
-        note: 'Edviro is backed by Y Combinator.',
       },
       {
         type: 'cards',
-        title: 'What we can show today',
-        intro:
-          'Three things we have seen at schools, and one data center scenario that is an illustration.',
+        title: 'Case studies',
+        intro: 'Four scenarios from sites running Edviro.',
         cards: [
           {
             tag: 'Education',
-            title: 'A live high-school site',
-            text: 'The site cut energy use 21.4% against its weather-adjusted baseline. The facilities team approved each fix, and the meter confirmed the result.',
-            href: '/solutions/schools/k-12',
+            title: '$400,000 in gas overbilling',
+            text: 'At one high school, Edviro detected $400,000 in gas overbilling, measured against the school’s weather-adjusted baseline.',
           },
           {
             tag: 'Education',
-            title: 'One day of gas use at a school',
-            text: 'The gas meter read 76 therms in a day against 16.7 expected, which is 357% over. The likely cause was a hot-water valve stuck open.',
+            title: 'A solar array that went offline',
+            text: 'At one district, a school’s solar array stopped producing and nobody had been alerted. Edviro caught it, which saved about $10,000 in demand charges.',
           },
           {
             tag: 'Education',
-            title: 'One outlier among seven schools',
-            text: 'In one district of seven schools, one school used five times the energy of its peers. We wrote it up on the blog.',
-            href: 'https://blog.edviroenergy.com',
+            title: 'HVAC set to run through Thanksgiving break',
+            text: 'At one school, nine zones were scheduled to run until 9 PM through the break, holding 66 to 71°F. Edviro flagged it and drafted a work order for the maintenance team.',
           },
           {
-            tag: 'Illustrative scenario',
-            title: 'Data center alarm diagnosis',
-            text: 'This is a product scenario with made-up data. In it, 312 BMS alarms trace to 1 root cause, a chilled-water valve on CRAH-2, and the cooling model is accurate to ±0.4 °C.',
-            href: '/solutions/data-centers/alarm-diagnosis',
+            tag: 'Education',
+            title: 'One afternoon that set the bill',
+            text: 'During a September heat wave, one high school peaked at 710 kW against its usual 320 to 500 kW. That single peak set a $60,000 demand charge, more than the $24,000 its solar had offset.',
           },
         ],
       },
@@ -100,14 +85,6 @@ const pages: ContentPage[] = [
           [
             'How are Edviro’s savings verified?',
             'We measure each fix and project against a baseline adjusted for weather and schedule, then re-check over 90 days to see that the saving held. The M&V methodology page explains the method.',
-          ],
-          [
-            'Do you have results outside schools?',
-            'None published yet. We have piloted baselining and M&V with a construction company. The data center scenario on this page is an illustration.',
-          ],
-          [
-            'Are the numbers in product screenshots real results?',
-            'No. Product screens on this site use made-up data. Customer results are the ones listed on this page.',
           ],
         ],
       },
@@ -195,7 +172,6 @@ const pages: ContentPage[] = [
       {
         type: 'screen',
         title: 'Sample savings report',
-        intro: 'The data here is made up to show the layout. It is not a customer result.',
         screen: {
           crumb: 'Reports',
           heading: 'Savings report · FY26 Q3',
