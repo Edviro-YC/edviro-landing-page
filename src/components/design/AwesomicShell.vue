@@ -23,15 +23,19 @@ const update = () => {
   const el = root.value,
     nav = header.value
   if (!el || !nav) return
-  const y = window.scrollY,
+  // Safari reports positions beyond the document during rubber-band scrolling.
+  // Do not treat the rebound at the footer as an intentional upward scroll.
+  const bottom = Math.max(0, document.documentElement.scrollHeight - window.innerHeight)
+  const y = Math.min(bottom, Math.max(0, window.scrollY)),
     delta = y - last
   nav.classList.toggle('stuck', y > 4)
-  if (Math.abs(delta) > 6 || y <= 120) {
+  if ((y < bottom - 1 && Math.abs(delta) > 6) || y <= 120) {
     const away = delta > 0 && y > 120 && !nav.contains(document.activeElement) && !mobileOpen.value
     nav.classList.toggle('hide', away)
     el.querySelector('.aw-page')?.classList.toggle('nav-away', away)
     last = y
   }
+  if (y >= bottom - 1) last = y
   const middle = nav.offsetHeight / 2
   const dark = [...el.querySelectorAll('section.dark')].some((section) => {
     const rect = section.getBoundingClientRect()

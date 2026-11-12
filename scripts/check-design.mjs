@@ -187,6 +187,16 @@ try {
       'Rejected hero stack remains removed',
     )
     assert.match(await page.locator('h1').innerText(), /Infrastructure that runs itself/)
+    assert.equal(await page.locator('img[src*="edviro-dashboard.jpg"]').count(), 0)
+    assert.equal(await page.getByRole('img', { name: 'Edviro fixes screen (example)' }).count(), 1)
+    assert.equal(await page.locator('.product-screen .fix').count(), 6)
+    assert.match(
+      await page.locator('.product-screen .detail').innerText(),
+      /Reheat valve on VAV 3-12 is stuck closed/,
+    )
+    await page.locator('.shot').scrollIntoViewIfNeeded()
+    await shot('verified-current-product-screen')
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }))
     assert.equal(await page.locator('.nav .btn').innerText(), 'Book a demo')
     assert.equal(
       await page.locator('.nav .btn').evaluate((el) => getComputedStyle(el).color),
@@ -279,6 +289,17 @@ try {
     assert.equal(await page.locator('.hl').getAttribute('data-s'), '3')
     await shot('verified-how-trust')
     await goto('/integrations/')
+    const vendors = await page
+      .locator('.lg-track img')
+      .evaluateAll((elements) => elements.map((el) => el.alt))
+    const half = vendors.length / 2
+    assert.deepEqual(
+      vendors.slice(0, half),
+      vendors.slice(half),
+      'Marquee repeats the complete vendor list',
+    )
+    assert.ok(vendors.slice(0, half).includes('Pelican Wireless'))
+    assert.match(await page.locator('#controls .chips').innerText(), /Pelican Wireless/)
     assert.match(
       await page.locator('.lg-track').evaluate((el) => getComputedStyle(el).animationName),
       /lgScroll/,
@@ -308,6 +329,13 @@ try {
       ]) {
         await goto(path)
         assert.equal(await page.locator('h1').count(), 1, `${path}: one heading`)
+        if (['/', '/facilities-operations/', '/building-intelligence/'].includes(path)) {
+          assert.equal(
+            await page.locator('.logo-wall img[alt="Pelican Wireless"]').count(),
+            1,
+            `${path}: Pelican Wireless is supported`,
+          )
+        }
         assert.equal(
           await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
           true,

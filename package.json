@@ -12,7 +12,8 @@
     "format": "prettier --write --experimental-cli src/",
     "check:design": "node scripts/check-design.mjs",
     "check:seo": "node scripts/check-seo.mjs",
-    "generate:brand": "node scripts/generate-og.mjs"
+    "generate:brand": "node scripts/generate-og.mjs",
+    "check:scroll": "node scripts/check-scroll.mjs"
   },
   "dependencies": {
     "posthog-js": "^1.407.3",

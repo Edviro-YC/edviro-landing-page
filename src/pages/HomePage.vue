@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import CurrentProductScreen from '@/components/design/CurrentProductScreen.vue'
 import SiteLink from '@/components/SiteLink.vue'
 import DemoButton from '@/components/DemoButton.vue'
 import { useAwesomicMotion } from '@/composables/useAwesomicMotion'
@@ -173,10 +174,7 @@ const capabilityPoints = capabilities.map(
       <div class="wrap">
         <div class="stage">
           <div class="frame">
-            <img
-              src="/design/images/screens/edviro-dashboard.jpg"
-              alt="Edviro dashboard showing energy usage, goal progress, alerts and savings reports"
-            />
+            <CurrentProductScreen />
           </div>
         </div>
       </div>
@@ -1268,7 +1266,15 @@ const capabilityPoints = capabilities.map(
                 loading="lazy"
               />
             </li>
-            <li class="more" style="--i: 11"><span>+ Other major BMS and BAS</span></li>
+            <li style="--i: 11">
+              <img
+                src="/design/images/integrations/pelican-wireless.png"
+                alt="Pelican Wireless"
+                loading="lazy"
+                width="515"
+                height="120"
+              />
+            </li>
           </ul>
           <SiteLink class="btn btn-primary btn-lg btn-arrow" href="/integrations/"
             ><i>→</i>See what Edviro connects to</SiteLink

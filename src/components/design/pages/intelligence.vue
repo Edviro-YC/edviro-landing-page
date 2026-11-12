@@ -635,7 +635,15 @@ const capabilities: {
                 loading="lazy"
               />
             </li>
-            <li class="more" style="--i: 11"><span>+ Other major BMS and BAS</span></li>
+            <li style="--i: 11">
+              <img
+                src="/design/images/integrations/pelican-wireless.png"
+                alt="Pelican Wireless"
+                loading="lazy"
+                width="515"
+                height="120"
+              />
+            </li>
           </ul>
           <SiteLink class="btn btn-primary btn-lg btn-arrow" href="/integrations/"
             ><i>→</i>See what Edviro connects to</SiteLink

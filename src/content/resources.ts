@@ -56,7 +56,7 @@ const pages: ContentPage[] = [
               ],
               [
                 'Do I need to replace my existing equipment or controls?',
-                'No. Edviro reads from what you already have: meters, submeters, sensors, your BMS, work-order systems and utility bills. That includes Niagara, Pelican, Carrier i-Vu and other major BMS/BAS vendors, as well as legacy controls, utility portals and monthly bills. Your controls stay in place.',
+                'No. Edviro reads from what you already have: meters, submeters, sensors, your BMS, work-order systems and utility bills. That includes Niagara, Pelican Wireless, Carrier i-Vu and other major BMS/BAS vendors, as well as legacy controls, utility portals and monthly bills. Your controls stay in place.',
               ],
               [
                 'How does Edviro detect energy waste and building problems?',

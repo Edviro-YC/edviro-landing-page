@@ -971,7 +971,7 @@ const pages: ContentPage[] = [
         id: 'systems',
         title: 'Building controls',
         intro: 'Edviro reads modern BMS and legacy controls.',
-        items: ['Niagara (Tridium)', 'Pelican', 'Carrier i-Vu', 'Other major BMS and BAS'],
+        items: ['Niagara (Tridium)', 'Pelican Wireless', 'Carrier i-Vu', 'Other major BMS and BAS'],
       },
       {
         type: 'chips',
@@ -1037,7 +1037,7 @@ const pages: ContentPage[] = [
           ],
           [
             'Which BMS vendors do you support?',
-            'Niagara, Pelican, Carrier i-Vu and other major BMS and BAS vendors, modern and legacy.',
+            'Niagara, Pelican Wireless, Carrier i-Vu and other major BMS and BAS vendors, modern and legacy.',
           ],
           [
             'Can we keep our CMMS?',

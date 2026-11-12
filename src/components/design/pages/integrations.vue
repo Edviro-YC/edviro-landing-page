@@ -128,6 +128,11 @@ const capabilities: {
             /><img src="/design/images/integrations/delta-controls.png" alt="Delta Controls" /><img
               src="/design/images/integrations/automated-logic.png"
               alt="Automated Logic"
+            /><img
+              src="/design/images/integrations/pelican-wireless.png"
+              alt="Pelican Wireless"
+              width="515"
+              height="120"
             /><img src="/design/images/integrations/honeywell.svg" alt="Honeywell" /><img
               src="/design/images/integrations/tridium.svg"
               alt="Tridium"
@@ -146,6 +151,11 @@ const capabilities: {
             /><img src="/design/images/integrations/delta-controls.png" alt="Delta Controls" /><img
               src="/design/images/integrations/automated-logic.png"
               alt="Automated Logic"
+            /><img
+              src="/design/images/integrations/pelican-wireless.png"
+              alt="Pelican Wireless"
+              width="515"
+              height="120"
             />
           </div>
         </div>
@@ -233,11 +243,11 @@ const capabilities: {
             >
             <h2 id="controls-t">Modern BMS and<br /><span>legacy controls.</span></h2>
           </div>
-          <p>Niagara, Pelican, Carrier i-Vu and all other major BMS/BAS vendors.</p>
+          <p>Niagara, Pelican Wireless, Carrier i-Vu and all other major BMS/BAS vendors.</p>
         </div>
         <ul class="chips">
           <li>Niagara (Tridium)</li>
-          <li>Pelican</li>
+          <li>Pelican Wireless</li>
           <li>Carrier i-Vu</li>
           <li>+ all major BMS/BAS</li>
         </ul>
