@@ -91,12 +91,12 @@ Modern BMS integrations, legacy controls, utility portals (including PG&E Green 
 
 ## Blog (deep guidance)
 
-- [Edviro blog](https://blog.edviroenergy.com/): Practical guidance on AI-powered operations and maintenance for school facilities.
-- [Give school facilities teams their weekends back](https://blog.edviroenergy.com/blog/give-school-facilities-teams-their-weekends-back/): Why the problem is triage, not visibility.
-- [What AI-powered operations and maintenance means for a school district](https://blog.edviroenergy.com/blog/what-ai-powered-operations-and-maintenance-means-for-a-school-district/)
-- [From BAS alert to completed work order](https://blog.edviroenergy.com/blog/from-bas-alert-to-completed-work-order/): Closing the facilities operations loop.
-- [CMMS vs. AI-native O&M platform](https://blog.edviroenergy.com/blog/cmms-vs-ai-native-om-platform-for-school-districts/): What school districts actually need.
-- [Best energy management software for schools](https://blog.edviroenergy.com/blog/best-energy-management-software-for-schools/): What districts should evaluate.
+- [Edviro blog](https://edviro.com/blog/): Practical field notes on school facilities operations.
+- [Give school facilities teams their weekends back](https://edviro.com/blog/give-school-facilities-teams-their-weekends-back/): Reducing alert triage overload.
+- [How AI-powered facilities operations works](https://edviro.com/blog/how-ai-powered-facilities-operations-works-in-school-districts/): Requests, evidence, action, and verification.
+- [School work orders](https://edviro.com/blog/work-orders-bridge-school-staff-facilities-teams/): Connecting staff requests, technicians, and asset history.
+- [Replace or integrate a school CMMS](https://edviro.com/blog/replace-or-integrate-school-district-cmms/): A modernization decision framework.
+- [Measurement and verification](https://edviro.com/blog/prove-it-saved-money-mv-for-school-energy-projects/): How to assess school energy savings.
 
 ## Getting started, and pricing
 
