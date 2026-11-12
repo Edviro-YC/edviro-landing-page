@@ -1890,7 +1890,7 @@
 
 /* ---------------------------------------------------------------------------
    Homepage blend (2026-11): dark sections, platform pillars, building photo
-   cards, the today / with Edviro panels and scroll animation.
+   cards and scroll animation.
 --------------------------------------------------------------------------- */
 
 /* Dark sections swap the text tokens, so shared pieces (labels, .more, h2)
@@ -2429,188 +2429,6 @@
   color: var(--bg);
 }
 
-/* Problem: today / with Edviro */
-.nd .versus {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-top: 56px;
-}
-
-.nd .vs {
-  border-radius: var(--r);
-  padding: 28px 28px 32px;
-}
-
-.nd .vs.today {
-  --ink: #F3F1EA;
-  --text: rgba(243, 241, 234, .72);
-  --line: rgba(255, 255, 255, .16);
-  background: var(--deep);
-  color: var(--text);
-}
-
-.nd .vs.with {
-  background:
-    url('./img/brand/grain.png') 0 0 / 160px 160px,
-    url('./img/brand/bg-light.jpg') center / cover no-repeat;
-  background-blend-mode: soft-light, normal;
-}
-
-.nd .vs-tag {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--ink);
-}
-
-.nd .vs-tag i {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #E0803F;
-}
-
-.nd .vs.with .vs-tag i {
-  background: var(--green);
-}
-
-.nd .vs h3 {
-  margin-top: 16px;
-  font: 500 26px/1.14 var(--font);
-  letter-spacing: -.032em;
-}
-
-.nd .vs > p {
-  margin-top: 10px;
-  max-width: 28em;
-}
-
-.nd .vs-stage {
-  position: relative;
-  height: 232px;
-  margin-top: 30px;
-}
-
-.nd .wires {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.nd .wires path {
-  fill: none;
-  stroke: rgba(255, 255, 255, .34);
-  stroke-width: 1.5;
-  stroke-dasharray: 4 5;
-  vector-effect: non-scaling-stroke;
-  animation: nd-wire 1.6s linear infinite;
-}
-
-@keyframes nd-wire {
-  to {
-    stroke-dashoffset: -18;
-  }
-}
-
-.nd .node {
-  position: absolute;
-  width: 42%;
-  background: #153C31;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 11px 14px 12px;
-  font-size: 14px;
-}
-
-.nd .node small {
-  display: block;
-  font-size: 12px;
-  color: rgba(255, 255, 255, .56);
-}
-
-.nd .node b {
-  display: block;
-  margin-top: 2px;
-  font-weight: 500;
-  color: #fff;
-}
-
-.nd .node.owner {
-  width: 46%;
-  padding: 16px 16px 18px;
-  border-style: dashed;
-}
-
-.nd .node.owner b {
-  color: #F0A66B;
-}
-
-.nd .vs-stage:has(.vs-card) {
-  display: grid;
-  align-items: center;
-}
-
-.nd .vs-card {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  box-shadow: 0 22px 44px -24px rgba(13, 40, 25, .35);
-  padding: 20px 22px;
-  font-size: 14px;
-}
-
-.nd .vs-pills {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 14px;
-}
-
-.nd .vs-card > b {
-  display: block;
-  font: 500 19px/1.2 var(--font);
-  letter-spacing: -.02em;
-  color: var(--ink);
-}
-
-.nd .vs-card > small {
-  display: block;
-  margin-top: 2px;
-  font-size: 13px;
-  color: var(--mute);
-}
-
-.nd .vs-steps {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: 16px 0 14px;
-}
-
-.nd .vs-steps span {
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 500;
-  background: var(--band);
-  color: var(--mute);
-}
-
-.nd .vs-steps span.done {
-  background: #E6F4E7;
-  color: #2C6A37;
-}
-
-.nd .vs-steps span.done + span:not(.done) {
-  background: #fff;
-  color: var(--ink);
-  box-shadow: inset 0 0 0 1px var(--green);
-}
-
 /* Demo band */
 .nd section.demo {
   position: relative;
@@ -2668,7 +2486,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .nd .spot i, .nd .wires path {
+  .nd .spot i {
     animation: none;
   }
 }
@@ -2701,7 +2519,7 @@
     margin-top: 40px;
   }
 
-  .nd .pillar, .nd .versus, .nd .bcards {
+  .nd .pillar, .nd .bcards {
     grid-template-columns: 1fr;
   }
 
@@ -2722,10 +2540,6 @@
     position: static;
     width: auto;
     margin-top: 12px;
-  }
-
-  .nd .versus {
-    margin-top: 40px;
   }
 }
 

@@ -218,13 +218,11 @@ const buildings = [
   },
 ]
 
-// The five loop steps as they appear on the drafted fix in the problem section.
-const fixSteps = [
-  { name: 'Works 24/7', done: true },
-  { name: 'Diagnose', done: true },
-  { name: 'Approve', done: false },
-  { name: 'Work order', done: false },
-  { name: 'Verify', done: false },
+// The three things the problem statement says signals and requests turn into.
+const outcomes = [
+  ['Reviewed work orders', 'Every alarm, text and request becomes an order a person approves.'],
+  ['Verified fixes', 'Building data confirms each fix held.'],
+  ['Capital plans', 'Repair history shows what to replace, and when.'],
 ]
 
 // Arrow positions on the loop track, clockwise from the top left.
@@ -733,57 +731,10 @@ onBeforeUnmount(() => {
             requests into reviewed work orders, verified fixes and capital plans.
           </span>
         </p>
-        <div class="versus">
-          <div v-reveal class="vs today">
-            <div class="vs-tag"><i />Today</div>
-            <h3>Signals pile up and nobody owns them.</h3>
-            <p>
-              Alarms, emails and custodian texts land in different inboxes, and most are never
-              followed up.
-            </p>
-            <div class="vs-stage" aria-hidden="true">
-              <svg class="wires" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <path d="M42 17 C50 17 46 66 54 66" />
-                <path d="M76 26 L76 50" />
-                <path d="M46 78 L54 76" />
-              </svg>
-              <div class="node" style="left: 0; top: 4%">
-                <small>BMS alarms</small><b>142 unread</b>
-              </div>
-              <div class="node" style="left: 56%; top: 0">
-                <small>Email</small><b>Re: boiler?</b>
-              </div>
-              <div class="node" style="left: 4%; top: 64%">
-                <small>Custodian text</small><b>“Too cold again”</b>
-              </div>
-              <div class="node owner" style="left: 54%; top: 50%">
-                <small>Owner</small><b>Unassigned</b>
-              </div>
-            </div>
-          </div>
-          <div v-reveal="120" class="vs with">
-            <div class="vs-tag"><i />With Edviro</div>
-            <h3>One diagnosed fix, ready to approve.</h3>
-            <p>
-              Edviro groups the signals, finds the likely cause and drafts one fix for a person to
-              approve.
-            </p>
-            <div class="vs-stage" aria-hidden="true">
-              <div class="vs-card">
-                <div class="vs-pills">
-                  <span class="pill">Needs review</span>
-                  <span class="pill verified">3 signals merged</span>
-                </div>
-                <b>Zone 3 low temperature</b>
-                <small>Site A · VAV 3-12</small>
-                <div class="vs-steps">
-                  <span v-for="step in fixSteps" :key="step.name" :class="{ done: step.done }">
-                    {{ step.name }}
-                  </span>
-                </div>
-                <p>Likely cause: reheat valve stuck closed.</p>
-              </div>
-            </div>
+        <div v-reveal class="trio">
+          <div v-for="[title, detail] in outcomes" :key="title">
+            <h3>{{ title }}</h3>
+            <p>{{ detail }}</p>
           </div>
         </div>
       </div>
