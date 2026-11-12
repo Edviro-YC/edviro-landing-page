@@ -1,7 +1,7 @@
 import { useHead } from '@unhead/vue'
 import {
   SITE_NAME,
-  SITE_TAGLINE,
+  DEFAULT_OG_IMAGE_ALT,
   DEFAULT_DESCRIPTION,
   DEFAULT_OG_IMAGE,
   X_HANDLE,
@@ -64,7 +64,7 @@ export function usePageSeo(opts: PageSeoOptions): void {
       { property: 'og:image', content: image },
       { property: 'og:image:width', content: '1200' },
       { property: 'og:image:height', content: '630' },
-      { property: 'og:image:alt', content: `${SITE_NAME} — ${SITE_TAGLINE}` },
+      { property: 'og:image:alt', content: DEFAULT_OG_IMAGE_ALT },
       { property: 'og:locale', content: 'en_US' },
 
       { name: 'twitter:card', content: 'summary_large_image' },
@@ -72,7 +72,7 @@ export function usePageSeo(opts: PageSeoOptions): void {
       { name: 'twitter:title', content: socialTitle },
       { name: 'twitter:description', content: description },
       { name: 'twitter:image', content: image },
-      { name: 'twitter:image:alt', content: `${SITE_NAME} — ${SITE_TAGLINE}` },
+      { name: 'twitter:image:alt', content: DEFAULT_OG_IMAGE_ALT },
     ],
     script: (opts.jsonLd ?? []).map((obj) => ({
       type: 'application/ld+json',
