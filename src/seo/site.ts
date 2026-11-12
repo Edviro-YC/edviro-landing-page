@@ -20,7 +20,8 @@ export const BRAND_PROMISE = 'Find the problem. Coordinate the fix. Verify the r
 export const DEFAULT_DESCRIPTION =
   'Edviro connects building signals, work orders, assets, schedules, field teams, projects, and budgets so facilities teams can detect problems, coordinate the response, and verify that the work succeeded.'
 
-export const DEFAULT_OG_IMAGE = '/og-image.png'
+export const DEFAULT_OG_IMAGE = '/edviro-autopilot-2026.png'
+export const DEFAULT_OG_IMAGE_ALT = 'Edviro — Put your facilities on autopilot. Find the problem. Coordinate the fix. Verify the result.'
 export const LOGO_PATH = '/logo-icon.png'
 
 export const CONTACT_EMAIL = 'founders@edviroenergy.com'

@@ -74,10 +74,16 @@ npm run build
 
 ## Search and domain migration
 
+### Brand images
+
+`npm run generate:brand` renders the social card, favicons, Apple touch icon, Android icons, and schema logo from `src/assets/img/edviro-logo.svg`, `edviro-icon.svg`, and the site's Geist font. First install the renderer browser with `npx playwright install chromium`, or set `BRAND_BROWSER_PATH` to an installed Chrome/Chromium executable. Rendering is a development task; generated images are committed and production builds need no browser.
+
+The shared social image is `/edviro-autopilot-2026.png` (1200×630). `/og-image.png` remains an identical compatibility copy for existing external embeds. When changing the social card again, use a new filename in `DEFAULT_OG_IMAGE`; bump icon URL versions in `index.html` and `public/site.webmanifest` when regenerating icons. The maskable icon has separate safe-area padding. Do not restore the retired raster wordmark or Hanken Grotesk generator.
+
 `src/seo/site.ts` defines the canonical `https://edviro.com` origin. The production build prerenders all pages, then generates `dist/sitemap.xml` from their canonical URLs, excluding `noindex` pages. No fabricated modification dates are emitted. `public/robots.txt` advertises that sitemap.
 
 `vite.config.ts` emits forced, permanent host redirects for the old apex/www domains, legacy `home.edviroenergy.com` alias, production `edviro-landing-page.netlify.app` hostname, and new www/HTTP variants. Deploy-preview hostnames remain accessible. Keep the old host aliases and TLS certificates attached to this Netlify site for at least a year, preferably indefinitely. Blog, Answers, dashboard, and email hostnames are separate services and are not migrated by these rules.
 
-As observed in Netlify on November 11, 2026, `edviroenergy.com` is still primary; `edviro.com` and `www.edviro.com` are aliases. HTTPS already covers both domains. This PR prepares the canonical switch; adding an alias alone does not migrate search signals.
+The November 11, 2026 cutover is deployed: `edviro.com` is Netlify's primary domain; old apex/www/home aliases and HTTPS coverage remain for permanent redirects. Search Console ownership, sitemap submission, and Change of Address still require completion. Adding an alias alone does not migrate search signals.
 
 Run `npm run build` before merging (it includes the SEO checks). Before release, obtain Search Console ownership of the old and new sites in the same account and inspect the new domain's security/manual-action reports. Coordinate deploying this PR with making `edviro.com` the Netlify primary domain; retain every existing alias and TLS coverage. Verify old-to-new redirects with real HTTP requests, including a deep path with a query string, no redirect back to the old domain, and the new site's self-canonicals. Submit `https://edviro.com/sitemap.xml`, inspect priority URLs, then complete Change of Address for the migrated old apex and relevant www/home variants. The tool does not automatically move subdomains; do not submit moves for Blog or Answers while they remain on their current hosts. Monitor indexing and traffic on both properties. A PR preview cannot verify production hostname routing.
