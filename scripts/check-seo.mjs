@@ -90,5 +90,7 @@ assert.ok(!redirects.includes('https://*'), 'Host redirects must not capture dep
 console.log(`SEO checks passed: ${rows.length} HTML pages, ${indexed.length} sitemap URLs, metadata, JSON-LD, links, crawl depth, and migration rules.`)
 
 assert.ok(redirects.includes('/blog/*  https://edviro-blog.netlify.app/blog/:splat  200'))
+assert.ok(redirects.includes('/blog  https://edviro-blog.netlify.app/blog/  200'))
+assert.ok(!redirects.includes('/blog  /blog/  301'), 'Netlify normalizes slash matching; this would loop at the proxied index')
 assert.ok((await readFile('dist/robots.txt', 'utf8')).includes('Sitemap: https://edviro.com/blog/sitemap-index.xml'))
 assert.ok(home.html.includes('name="share-your-story"'), 'Netlify must detect the proxied blog form on the receiving site')

@@ -74,7 +74,9 @@ function netlifyRedirects(): Plugin {
             'https://www.edviro.com',
             'http://edviro.com',
           ].map((origin) => `${origin}/*  ${SITE_URL}/:splat  301!\n`).join('') +
-          `/blog  /blog/  301\n` +
+          // Netlify normalizes trailing slashes when matching rules. Proxy
+          // the index directly: /blog -> /blog/ would match /blog/ and loop.
+          `/blog  https://edviro-blog.netlify.app/blog/  200\n` +
           `/blog/*  https://edviro-blog.netlify.app/blog/:splat  200\n` +
           `${DEMO_REDIRECT_PATH}  ${BOOKING_URL}  302!\n` +
           `${IUSD_DEMO_PATH}  ${IUSD_DEMO_URL}  302\n` +
