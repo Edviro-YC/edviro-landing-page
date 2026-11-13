@@ -118,7 +118,8 @@ usePageSeo({
         </div>
       </div>
 
-      <div v-else class="wrap">
+      <!-- An example screen sits beside its heading; other sections stack. -->
+      <div v-else :class="['wrap', { 'screen-split': section.type === 'screen' }]">
         <SectionHead :label="section.label" :title="section.title" :intro="section.intro" />
 
         <div
@@ -191,7 +192,9 @@ usePageSeo({
           </div>
         </div>
 
-        <FixWindow v-else-if="section.type === 'screen'" :screen="section.screen" />
+        <div v-else-if="section.type === 'screen'" class="screen-stage">
+          <FixWindow :screen="section.screen" />
+        </div>
 
         <div
           v-else-if="section.type === 'prose'"

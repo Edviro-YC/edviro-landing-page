@@ -43,7 +43,7 @@ const pages: ContentPage[] = [
       label: 'How Edviro works',
       title: 'How a building problem gets found, fixed and checked',
       lede: 'Edviro reads your utility data, building controls and maintenance records. When something goes wrong, it works out the likely cause and drafts a fix. A person on your team approves it, a technician does the work, and we check the building data afterwards to see that it held. You can start with the sites and systems you have now.',
-      secondary: ['See the steps', '#loop'],
+      secondary: ['See an example', '#example'],
       note: 'No new hardware. Works with any vendor. A person approves every change.',
     },
     sections: [
@@ -54,34 +54,8 @@ const pages: ContentPage[] = [
           'It’s software that reads building data, work orders and asset records, spots problems, and helps the facilities team get them fixed and confirm the fix worked. Edviro works as an AI facilities crew: it does the watching and the follow-up around the clock, and a named person approves every change before it happens. We work with schools, campuses and data centers.',
       },
       {
-        type: 'steps',
-        id: 'loop',
-        title: 'How it works',
-        intro:
-          'Edviro watches utility data, BMS and BAS points, and asset and maintenance logs around the clock, on any vendor’s equipment. Every problem goes through the same five steps.',
-        steps: [
-          {
-            title: 'Signal',
-            text: 'A request in the app or by email, an alarm, or a change on a meter.',
-          },
-          {
-            title: 'Diagnose',
-            text: 'Edviro works out the likely cause and attaches the evidence.',
-          },
-          {
-            title: 'Review',
-            text: 'A person on your team approves the drafted fix, edits it or rejects it.',
-            tag: 'Human',
-          },
-          {
-            title: 'Dispatch',
-            text: 'The technician gets the location, the equipment history and the steps.',
-          },
-          { title: 'Verify', text: 'We check the building data to confirm the problem stopped.' },
-        ],
-      },
-      {
         type: 'rows',
+        id: 'example',
         label: 'Example',
         title: 'A rooftop unit left running overnight',
         rows: [
@@ -199,7 +173,7 @@ const pages: ContentPage[] = [
       label: 'Building intelligence',
       title: 'Fault detection that names the likely cause',
       lede: 'Edviro learns a baseline for each site from its meters, BMS points, bills and weather. When something drifts from that baseline, Edviro flags it and names the likely cause, with the evidence. A person reviews the fix before anything is dispatched.',
-      secondary: ['How it works', '#how'],
+      secondary: ['See an example', '#example'],
     },
     sections: [
       {
@@ -207,27 +181,6 @@ const pages: ContentPage[] = [
         question: 'What is automated fault detection and diagnostics?',
         answer:
           'Automated fault detection and diagnostics (AFDD) is software that watches building data all the time and flags equipment or schedules that are behaving abnormally. Edviro learns a baseline for each site, adjusted for weather and schedule, and looks for departures from it in meter, BMS and alarm data. When it finds one, it names the likely cause and shows the evidence.',
-      },
-      {
-        type: 'steps',
-        id: 'how',
-        title: 'How it works',
-        steps: [
-          {
-            title: 'Learn',
-            text: 'Edviro builds a baseline for each site from meter data, weather, schedules and tariffs.',
-          },
-          {
-            title: 'Detect',
-            text: 'It flags anomalies as they start, at any hour, on any vendor’s system.',
-          },
-          {
-            title: 'Diagnose',
-            text: 'It names the likely cause and shows the evidence: runtime, setpoints, the calendar.',
-          },
-          { title: 'Review', text: 'A named person approves the drafted fix.', tag: 'Human' },
-          { title: 'Verify', text: 'The building data shows whether the condition stopped.' },
-        ],
       },
       {
         type: 'cards',
@@ -253,6 +206,7 @@ const pages: ContentPage[] = [
       },
       {
         type: 'screen',
+        id: 'example',
         title: 'What your team sees',
         screen: {
           crumb: 'Fixes',
@@ -355,7 +309,7 @@ const pages: ContentPage[] = [
       label: 'Work orders',
       title: 'Work orders that close when the data shows the fix worked',
       lede: 'Requests, alarms and problems Edviro detects go into one queue. Edviro drafts the work order and a person approves it. After the technician finishes, Edviro checks the building data to see whether the problem stopped. You can use Edviro as your work-order system or connect it to the one you have.',
-      secondary: ['How it works', '#how'],
+      secondary: ['See the queue', '#queue'],
       note: 'Work orders is a paid module on top of the AI Crew subscription.',
     },
     sections: [
@@ -364,34 +318,6 @@ const pages: ContentPage[] = [
         question: 'What is a closed-loop work order?',
         answer:
           'A closed-loop work order stays open until building data shows the problem has stopped. In Edviro, a request, alarm or detected anomaly opens the order, a named person approves it and a technician does the work. Edviro then checks the meter or BMS against the baseline, and if the condition comes back, the order reopens with the evidence.',
-      },
-      {
-        type: 'steps',
-        id: 'how',
-        title: 'How it works',
-        steps: [
-          {
-            title: 'Intake',
-            text: 'A request, alarm, anomaly or inspection finding opens the order.',
-          },
-          {
-            title: 'Triage',
-            text: 'Edviro drafts the site, the likely asset, its history and a proposed priority.',
-          },
-          {
-            title: 'Review',
-            text: 'A named person approves, edits or rejects the order. Nothing is dispatched before that.',
-            tag: 'Human',
-          },
-          {
-            title: 'Dispatch and field',
-            text: 'The technician gets the location, history and steps on a phone, and sends back photos and readings.',
-          },
-          {
-            title: 'Close and verify',
-            text: 'The cost is recorded on the asset. Building data confirms the fix, or the order reopens.',
-          },
-        ],
       },
       {
         type: 'cards',
@@ -417,6 +343,7 @@ const pages: ContentPage[] = [
       },
       {
         type: 'screen',
+        id: 'queue',
         title: 'The work-order queue',
         screen: {
           crumb: 'Work orders',
@@ -536,7 +463,7 @@ const pages: ContentPage[] = [
       label: 'Asset management',
       title: 'A record and service history for every piece of equipment',
       lede: 'Each asset has its nameplate, documents, service history, inspections and costs in one place, so when it fails again next year, the history is already there. Import the list you have and fill the gaps during the first inspections.',
-      secondary: ['How it works', '#how'],
+      secondary: ['See an example', '#example'],
       note: 'Asset logging is a free module with your AI Crew subscription.',
     },
     sections: [
@@ -545,30 +472,6 @@ const pages: ContentPage[] = [
         question: 'What is facility asset management software?',
         answer:
           'It’s software that keeps a record for each piece of equipment a facilities team looks after. In Edviro, each record holds the nameplate, location, documents, service history with labor, parts and cost, and scheduled inspections. That history produces a repair-or-replace outlook, which goes into the capital plan.',
-      },
-      {
-        type: 'steps',
-        id: 'how',
-        title: 'How it works',
-        steps: [
-          { title: 'Import', text: 'Bring in spreadsheets, CMMS exports and nameplate photos.' },
-          {
-            title: 'Map',
-            text: 'Each asset is placed in a hierarchy: organization, site, building, system, asset.',
-          },
-          {
-            title: 'Inspect',
-            text: 'Technicians complete checklists and add photos and readings in the field.',
-          },
-          {
-            title: 'Record',
-            text: 'Every order, reading and cost is logged against the right asset.',
-          },
-          {
-            title: 'Plan',
-            text: 'Repeat failures and repair costs feed the repair-or-replace review.',
-          },
-        ],
       },
       {
         type: 'cards',
@@ -594,6 +497,7 @@ const pages: ContentPage[] = [
       },
       {
         type: 'rows',
+        id: 'example',
         label: 'Example',
         title: 'A boiler that keeps failing',
         rows: [
@@ -677,29 +581,6 @@ const pages: ContentPage[] = [
         question: 'What is measurement and verification (M&V)?',
         answer:
           'Measurement and verification is how you show an energy saving with meter data. You establish a baseline for how much energy the building would have used, measure what it actually used after a change, and report the difference. Edviro does this continuously, for every fix and project, against a baseline adjusted for weather and schedule.',
-      },
-      {
-        type: 'steps',
-        title: 'How it works',
-        steps: [
-          {
-            title: 'Baseline',
-            text: 'A model is fitted to the building’s meter data, weather, schedules and tariffs.',
-          },
-          {
-            title: 'Measure',
-            text: 'From the day a fix lands, actual consumption is tracked against the baseline.',
-          },
-          {
-            title: 'Report',
-            text: 'The report gives the difference, the method and whether the saving held.',
-          },
-          {
-            title: 'Persist',
-            text: 'Savings are re-checked over 90 days. If they don’t hold, the work reopens.',
-          },
-          { title: 'Plan', text: 'Verified results go into the capital plan as evidence.' },
-        ],
       },
       {
         type: 'cards',
@@ -813,7 +694,7 @@ const pages: ContentPage[] = [
       label: 'Capital planning',
       title: 'Model a replacement or retrofit before you fund it',
       lede: 'Edviro builds a model of each building from its bills, meter readings, BMS points, asset records and work orders. You can simulate a replacement, a retrofit or a schedule change against that model, and rank capital projects by payback on your own usage.',
-      secondary: ['How it works', '#how'],
+      secondary: ['See an example', '#example'],
     },
     sections: [
       {
@@ -821,24 +702,6 @@ const pages: ContentPage[] = [
         question: 'What is capital planning software for buildings?',
         answer:
           'It’s software that helps a facilities team decide which building investments to fund, and in what order. Edviro builds a model of each building from bills, meters, BMS points, weather, tariffs, asset records and work orders, then simulates replacements, retrofits and schedule changes against it. Projects are ranked by payback on your actual usage, and the result is measured after the work is done.',
-      },
-      {
-        type: 'steps',
-        id: 'how',
-        title: 'How it works',
-        steps: [
-          {
-            title: 'Model',
-            text: 'The model is recalibrated every night against metered data, with no extra setup.',
-          },
-          {
-            title: 'Simulate',
-            text: 'Try repair against replacement, retrofits, schedule changes and rate changes.',
-          },
-          { title: 'Decide', text: 'You get a ranked plan with the evidence behind each line.' },
-          { title: 'Fund', text: 'Each project gets an owner, a funding source and a budget.' },
-          { title: 'Verify', text: 'After install, the result is measured against the baseline.' },
-        ],
       },
       {
         type: 'cards',
@@ -861,6 +724,7 @@ const pages: ContentPage[] = [
       },
       {
         type: 'rows',
+        id: 'example',
         label: 'Example',
         title: 'Two lines from a ranked plan',
         rows: [
@@ -946,25 +810,6 @@ const pages: ContentPage[] = [
         question: 'What systems does Edviro connect to?',
         answer:
           'Building management systems, modern and legacy, plus interval meters, utility bills, Green Button data and work-order systems. Edviro reads from these to detect and diagnose problems. Approved work goes into Edviro’s own work orders or into the CMMS you already use, and the outcome is read back to verify the fix.',
-      },
-      {
-        type: 'steps',
-        title: 'How data moves',
-        steps: [
-          {
-            title: 'In',
-            text: 'Modern BMS and legacy controls, interval meters, bills and Green Button data, and requests from staff through the app and by email.',
-          },
-          {
-            title: 'Edviro',
-            text: 'Edviro compares the data with a learned baseline and diagnoses the problem. A person approves the fix.',
-            tag: 'Human',
-          },
-          {
-            title: 'Out',
-            text: 'Edviro work orders or your CMMS, updates on the technician’s phone, and M&V reports, budgets and the capital plan.',
-          },
-        ],
       },
       {
         type: 'chips',
@@ -1206,23 +1051,6 @@ const pages: ContentPage[] = [
         question: 'What is facilities scheduling software?',
         answer:
           'Facilities scheduling software handles requests to use a building’s spaces, such as gyms, fields, auditoriums and classrooms. In Edviro, each request goes to a person for approval, and approved bookings sit on one calendar per site, so everyone can see what is in use and when.',
-      },
-      {
-        type: 'steps',
-        title: 'How it works',
-        steps: [
-          {
-            title: 'Request',
-            text: 'Staff or a community group asks for a space, a date and a time.',
-          },
-          { title: 'Check', text: 'Edviro checks the calendar for anything already booked there.' },
-          {
-            title: 'Approve',
-            text: 'A person on your team approves or declines the request.',
-            tag: 'Human',
-          },
-          { title: 'Calendar', text: 'The booking appears on the site’s calendar.' },
-        ],
       },
       {
         type: 'cards',

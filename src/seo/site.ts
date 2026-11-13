@@ -21,7 +21,8 @@ export const DEFAULT_DESCRIPTION =
   'Edviro connects building signals, work orders, assets, schedules, field teams, projects, and budgets so facilities teams can detect problems, coordinate the response, and verify that the work succeeded.'
 
 export const DEFAULT_OG_IMAGE = '/edviro-autopilot-2026.png'
-export const DEFAULT_OG_IMAGE_ALT = 'Edviro — Put your facilities on autopilot. Find the problem. Coordinate the fix. Verify the result.'
+export const DEFAULT_OG_IMAGE_ALT =
+  'Edviro: Infrastructure that runs itself. Put your facility on autopilot. Software that catches building problems, drafts work orders for your team to approve, and verifies the fix.'
 export const LOGO_PATH = '/logo-icon.png'
 
 export const CONTACT_EMAIL = 'founders@edviroenergy.com'
@@ -92,6 +93,8 @@ export const SOLUTION_CONSTRUCTION_PATH = '/solutions/construction/'
  */
 export const EDU_VERIFIED_SAVINGS = '$500K'
 export const EDU_LIVE_SITES = 134
+// 2026-11-12: square feet under management across live sites, figure from Hursh.
+export const SQFT_UNDER_MANAGEMENT = '20M'
 
 export const FAQ_PATH = '/faq/'
 export const ABOUT_PATH = '/about/'
