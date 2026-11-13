@@ -195,7 +195,72 @@
   padding: 0 16px;
 }
 
-/* Header */
+/* Header. The bar sticks to the top of the window: it slides away on the way
+   down the page and comes back on the way up (SiteNav.vue sets the classes).
+   Once the page has moved it takes a background, light or dark to match the
+   section underneath. */
+.nd.site-bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: transform .35s cubic-bezier(.22, .8, .3, 1);
+}
+
+.nd.site-bar.away {
+  transform: translateY(-100%);
+}
+
+.nd.site-bar header {
+  transition: background-color .25s, box-shadow .25s;
+}
+
+.nd.site-bar.stuck header {
+  background: rgba(251, 248, 242, .86);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 var(--line);
+}
+
+.nd.site-bar.on-dark {
+  --ink: #F3F1EA;
+  --mute: rgba(243, 241, 234, .62);
+  --line: rgba(255, 255, 255, .14);
+  --green: var(--leaf);
+}
+
+.nd.site-bar.on-dark header {
+  background: rgba(11, 46, 37, .86);
+}
+
+.nd.site-bar.on-dark .header-actions .nd-btn {
+  background: #F3F1EA;
+  border-color: #F3F1EA;
+  color: #0E3A2F;
+}
+
+.nd.site-bar.on-dark .header-actions .nd-btn:hover {
+  background: #fff;
+  border-color: #fff;
+}
+
+/* The dropdown is a white card whatever the bar is sitting on */
+.nd.site-bar .menu-panel {
+  --ink: var(--forest);
+  --mute: #586E65;
+  --line: rgba(14, 58, 47, .13);
+}
+
+.nd.site-bar .mobile-menu {
+  max-height: calc(100vh - 76px);
+  overflow-y: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nd.site-bar {
+    transition: none;
+  }
+}
+
 .nd header .wrap {
   display: flex;
   align-items: center;
@@ -1567,7 +1632,8 @@
 
 .nd .prose-layout figure {
   position: sticky;
-  top: 32px;
+  top: calc(var(--nav-offset, 0px) + 32px);
+  transition: top .35s cubic-bezier(.22, .8, .3, 1);
 }
 
 .nd .prose-layout img {
@@ -1613,8 +1679,9 @@
 @media (min-width: 781px) {
   .nd .faq > div:first-child {
     position: sticky;
-    top: 32px;
+    top: calc(var(--nav-offset, 0px) + 32px);
     align-self: start;
+    transition: top .35s cubic-bezier(.22, .8, .3, 1);
   }
 }
 
@@ -1956,8 +2023,9 @@
 @media (min-width: 1041px) and (min-height: 680px) and (prefers-reduced-motion: no-preference) {
   .nd .plat-tabs {
     position: sticky;
-    top: 0;
+    top: var(--nav-offset, 0px);
     z-index: 5;
+    transition: top .35s cubic-bezier(.22, .8, .3, 1);
     display: flex;
     gap: 36px;
     margin-bottom: 20px;
@@ -1968,7 +2036,8 @@
 
   .nd .pcard {
     position: sticky;
-    top: calc(76px + var(--n) * 14px);
+    top: calc(var(--nav-offset, 0px) + 76px + var(--n) * 14px);
+    transition: top .35s cubic-bezier(.22, .8, .3, 1);
     transform: scale(calc(1 - var(--p, 0) * .045));
     transform-origin: 50% 0;
     box-shadow:
@@ -1989,7 +2058,7 @@
 
   /* Keep each card inside the viewport under the tabs */
   .nd .pmedia {
-    width: min(100%, calc(100vh - 290px));
+    width: min(100%, calc(100vh - 340px));
   }
 }
 
@@ -3242,7 +3311,7 @@
 /* ---------------------------------------------------------------------------
    Homepage opening animation: the headline comes in, then the product screen
    fills in row by row and diagnoses the first fix. It is CSS only, so it runs
-   from the first paint of the prerendered page, and it plays once per tab. Keyframes only set a `from`
+   from the first paint of the prerendered page. Keyframes only set a `from`
    and fill backwards, so once an animation ends nothing of it is left on the
    element.
 --------------------------------------------------------------------------- */
@@ -3343,7 +3412,7 @@
   animation: nd-pop .4s 3.05s backwards;
 }
 
-/* Already played in this tab (set in index.html and HomePage.vue) */
+/* Already played since the page loaded (set when HomePage.vue unmounts) */
 .intro-seen .nd .intro,
 .intro-seen .nd .intro * {
   animation: none !important;

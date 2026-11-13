@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import logo from '@/assets/img/edviro-logo.svg'
+import logoLight from '@/assets/img/edviro-logo-light.svg'
 import DemoButton from './DemoButton.vue'
 import SiteLink from './SiteLink.vue'
 import { NAV } from '@/content/nav'
@@ -12,20 +13,67 @@ const menuOpen = ref(false)
 // Hides the hovered dropdown after one of its links is clicked.
 const dismissed = ref(false)
 
+/*
+ * The bar sticks to the top of the window. It slides away while the page
+ * scrolls down and comes back as soon as it scrolls up. `stuck` gives it a
+ * background once the page has moved, and `dark` matches it to a dark section
+ * underneath. --nav-offset tells other sticky pieces how much room it takes.
+ */
+const BAR_HEIGHT = 76
+const away = ref(false)
+const stuck = ref(false)
+const dark = ref(false)
+let lastY = 0
+
+function onScroll() {
+  const y = window.scrollY
+  stuck.value = y > 8
+  if (menuOpen.value || y < 160) away.value = false
+  else if (y > lastY + 6) away.value = true
+  else if (y < lastY - 6) away.value = false
+  if (Math.abs(y - lastY) > 6) lastY = y
+
+  const line = BAR_HEIGHT / 2
+  dark.value =
+    stuck.value &&
+    Array.from(
+      document.querySelectorAll('.nd section.dark, .nd section.demo, .section.is-dark'),
+    ).some((section) => {
+      const rect = section.getBoundingClientRect()
+      return rect.top <= line && rect.bottom > line
+    })
+
+  document.documentElement.style.setProperty(
+    '--nav-offset',
+    away.value ? '0px' : `${BAR_HEIGHT}px`,
+  )
+}
+
+onMounted(() => {
+  lastY = window.scrollY
+  window.addEventListener('scroll', onScroll, { passive: true })
+  onScroll()
+})
+
+onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
+
 watch(
   () => route.path,
   () => {
     menuOpen.value = false
+    void nextTick(onScroll)
   },
 )
+
+watch(menuOpen, onScroll)
 </script>
 
 <template>
-  <div class="nd">
+  <div :class="['nd', 'site-bar', { away, stuck, 'on-dark': dark }]">
     <header>
       <div class="wrap">
         <RouterLink class="logo" to="/"
-          ><img :src="logo" alt="Edviro" width="103" height="25"
+          ><img :src="dark ? logoLight : logo" alt="Edviro" width="103" height="25"
         /></RouterLink>
         <nav :class="['nav', { dismissed }]" aria-label="Main">
           <div

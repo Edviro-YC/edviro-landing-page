@@ -442,24 +442,25 @@ function goToPillar(index: number) {
   }
   const before = cards.slice(0, index).reduce((sum, item) => sum + item.offsetHeight + gap, 0)
   const top = stack.getBoundingClientRect().top + window.scrollY + before
-  window.scrollTo({ top: top - stick, behavior: 'smooth' })
+  // The top bar is out of the way going down the page and back going up, and
+  // the cards stick below it (--nav-offset, set by SiteNav), so aim for where
+  // the card will stick once the scroll has finished.
+  const root = document.documentElement
+  const barNow = parseFloat(getComputedStyle(root).getPropertyValue('--nav-offset')) || 0
+  const bar = document.querySelector<HTMLElement>('.site-bar')?.offsetHeight ?? 0
+  const barThen = top - stick < window.scrollY ? bar : 0
+  window.scrollTo({ top: top - (stick - barNow + barThen), behavior: 'smooth' })
 }
 
 onMounted(() => {
-  // The opening animation plays once per tab: see the script in index.html.
-  try {
-    window.sessionStorage.setItem('edviro-intro', '1')
-  } catch {
-    // Storage can be blocked; the animation then plays on each load.
-  }
-
   window.addEventListener('scroll', measurePlatform, { passive: true })
   window.addEventListener('resize', measurePlatform)
   void nextTick(measurePlatform)
 })
 
 onBeforeUnmount(() => {
-  // Coming back to the homepage from another page does not replay it.
+  // The opening animation plays when the page loads. Coming back to the
+  // homepage from another page of the site does not replay it.
   document.documentElement.classList.add('intro-seen')
   window.removeEventListener('scroll', measurePlatform)
   window.removeEventListener('resize', measurePlatform)
