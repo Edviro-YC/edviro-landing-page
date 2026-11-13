@@ -8,6 +8,9 @@ const uri = async (path, mime) => `data:${mime};base64,${(await readFile(path)).
 const logo = await uri('src/assets/img/edviro-logo.svg', 'image/svg+xml')
 const mark = (await readFile('src/assets/img/edviro-icon.svg', 'utf8')).replace(/<\?xml[^>]*\?>/, '')
 const font = await uri('src/assets/fonts/geist-latin.woff2', 'font/woff2')
+// The landing page hero's background, so the card matches the site. It is
+// drawn blurred and without the grain overlay: noise makes the PNG over 1 MB.
+const field = await uri('src/assets/img/brand/bg-light.jpg', 'image/jpeg')
 const browser = await chromium.launch({ executablePath: process.env.BRAND_BROWSER_PATH || undefined })
 try {
   const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 })
@@ -15,22 +18,26 @@ try {
     @font-face { font-family: Geist; src: url('${font}') format('woff2'); font-weight: 100 900; }
     * { box-sizing: border-box; }
     html, body { margin: 0; width: 1200px; height: 630px; }
-    body { font-family: Geist, sans-serif; color: #0D1512; background: #fff; padding: 58px 72px 0; }
+    body { position: relative; overflow: hidden; font-family: Geist, sans-serif; color: #0E3A2F; padding: 58px 72px 0; background: #FBF8F2; }
+    body::before { content: ''; position: absolute; inset: -40px; background: url('${field}') center / cover no-repeat; filter: blur(12px); }
+    body::after { content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, rgba(251,248,242,.7) 0%, rgba(251,248,242,.25) 55%, rgba(251,248,242,0) 100%); }
+    header, h1, p, footer { position: relative; z-index: 1; }
     header { display: flex; align-items: center; justify-content: space-between; }
     header img { width: 205px; height: 50px; }
-    header span { color: #5F6B65; font-size: 19px; }
-    h1 { margin: 66px 0 23px; font-size: 88px; line-height: 1.04; letter-spacing: -4px; font-weight: 500; }
-    h1 span { display: block; color: #0B7A3E; }
-    p { margin: 0; font-size: 26px; line-height: 1.5; color: #445049; letter-spacing: -.45px; }
-    footer { position: absolute; left: 0; right: 0; bottom: 0; height: 92px; padding: 0 72px;
-      display: flex; align-items: center; justify-content: space-between; background: #F4F7F4; border-top: 1px solid #e5eae6; }
-    footer strong { font-size: 24px; font-weight: 500; color: #0B7A3E; }
-    footer div { display: flex; align-items: center; gap: 11px; font-size: 18px; }
-    footer b { display: flex; width: 24px; height: 24px; align-items: center; justify-content: center; background: #F26522; color: white; font-size: 18px; font-weight: 400; }
+    header span { font-size: 18px; font-weight: 500; background: #fff; border-radius: 999px; padding: 11px 20px;
+      box-shadow: 0 6px 20px rgba(14,58,47,.08); }
+    h1 { margin: 74px 0 26px -4px; font-size: 71px; line-height: 1.06; letter-spacing: -3.2px; font-weight: 500; white-space: nowrap; }
+    h1 span { display: block; color: #3E6D41; }
+    p { margin: 0; max-width: 820px; font-size: 25px; line-height: 1.5; color: #4A635B; letter-spacing: -.4px; }
+    footer { position: absolute; left: 72px; right: 72px; bottom: 44px; display: flex; align-items: center; justify-content: space-between; }
+    footer strong { font-size: 22px; font-weight: 500; color: #fff; background: #0E3A2F; border-radius: 999px; padding: 12px 24px; }
+    footer div { display: flex; align-items: center; gap: 11px; font-size: 18px; font-weight: 500; }
+    footer b { display: flex; width: 26px; height: 26px; align-items: center; justify-content: center; border-radius: 3px; background: #F26522; color: white; font-size: 18px; font-weight: 400; }
   </style></head><body>
-    <header><img src="${logo}" alt="Edviro"><span>Your AI facilities crew.</span></header>
-    <h1>Put your facilities<span>on autopilot.</span></h1>
-    <p>Find the problem. Coordinate the fix. Verify the result.</p>
+    <header><img src="${logo}" alt="Edviro"><span>Your AI facilities crew</span></header>
+    <h1>Infrastructure that runs itself.<span>Put your facility on autopilot.</span></h1>
+    <p>Facilities management software that catches building problems, drafts work orders for your team to approve, and verifies the fix.</p>
     <footer><strong>edviro.com</strong><div><b>Y</b>Backed by Y Combinator</div></footer>
   </body></html>`)
   await page.evaluate(async () => { await document.fonts.ready; await Promise.all([...document.images].map(i => i.decode())) })
