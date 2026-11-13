@@ -81,7 +81,7 @@ const pages: ContentPage[] = [
           },
           {
             title: 'Security',
-            text: 'SOC 2 is in progress. Zero data retention, air-gapped, on-premises and regional hosting are available.',
+            text: 'Zero data retention, air-gapped, on-premises and regional hosting are available.',
           },
         ],
       },
@@ -202,7 +202,7 @@ const pages: ContentPage[] = [
           },
           {
             title: 'Security review',
-            text: 'SOC 2 is in progress. We can send a completed security questionnaire on request.',
+            text: 'We can send a completed security questionnaire on request.',
           },
           {
             title: 'Billing',

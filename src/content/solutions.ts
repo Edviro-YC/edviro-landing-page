@@ -552,7 +552,7 @@ const pages: ContentPage[] = [
           ],
           [
             'What are the security and hosting options?',
-            'SOC 2 is in progress. Zero data retention, air-gapped, on-premises and regional hosting are options.',
+            'Zero data retention, air-gapped, on-premises and regional hosting are options.',
           ],
           [
             'How do universities buy it?',

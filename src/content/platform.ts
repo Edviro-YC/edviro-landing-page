@@ -867,7 +867,7 @@ const pages: ContentPage[] = [
           },
           {
             title: 'Data handling',
-            text: 'SOC 2 certification is in progress. We also offer zero data retention, air-gapped and on-premises deployments, and dedicated hosting regions, including the Middle East.',
+            text: 'We offer zero data retention, air-gapped and on-premises deployments, and dedicated hosting regions, including the Middle East.',
           },
         ],
       },

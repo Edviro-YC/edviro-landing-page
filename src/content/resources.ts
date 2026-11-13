@@ -72,7 +72,7 @@ const pages: ContentPage[] = [
               ],
               [
                 'Is our data secure?',
-                'We’re completing SOC 2 certification. We also offer zero data retention (ZDR), air-gapped and on-premises deployments, and dedicated hosting regions such as the Middle East.',
+                'We offer zero data retention (ZDR), air-gapped and on-premises deployments, and dedicated hosting regions such as the Middle East.',
               ],
             ],
           },
