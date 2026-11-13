@@ -7,6 +7,8 @@ interface Window {
    * variables" method).
    */
   edviroBookingEmail?: string
+  /** Defined by the opening-animation snippet in index.html: the app calls it once mounted. */
+  edviroIntroReady?: () => void
   /** Defined by the Google tag snippet in index.html. */
   gtag?: (command: string, event: string, params?: Record<string, unknown>) => void
   /** Defined by the LinkedIn Insight Tag snippet in index.html. */

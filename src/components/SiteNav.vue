@@ -10,8 +10,10 @@ import { DASHBOARD_URL } from '@/seo/site'
 
 const route = useRoute()
 const menuOpen = ref(false)
-// Hides the hovered dropdown after one of its links is clicked.
+// Hides the hovered dropdown after one of its links is clicked, or when the
+// page starts scrolling down. Hovering a nav item again brings it back.
 const dismissed = ref(false)
+const navEl = ref<HTMLElement | null>(null)
 
 /*
  * The bar sticks to the top of the window. It slides away while the page
@@ -28,9 +30,17 @@ let lastY = 0
 function onScroll() {
   const y = window.scrollY
   stuck.value = y > 8
+  const goingDown = y > lastY + 6
   if (menuOpen.value || y < 160) away.value = false
-  else if (y > lastY + 6) away.value = true
+  else if (goingDown) away.value = true
   else if (y < lastY - 6) away.value = false
+  if (goingDown) {
+    // Close an open dropdown as the page moves on, including one held open
+    // by keyboard focus.
+    dismissed.value = true
+    const focused = document.activeElement
+    if (focused instanceof HTMLElement && navEl.value?.contains(focused)) focused.blur()
+  }
   if (Math.abs(y - lastY) > 6) lastY = y
 
   const line = BAR_HEIGHT / 2
@@ -75,11 +85,12 @@ watch(menuOpen, onScroll)
         <RouterLink class="logo" to="/"
           ><img :src="dark ? logoLight : logo" alt="Edviro" width="103" height="25"
         /></RouterLink>
-        <nav :class="['nav', { dismissed }]" aria-label="Main">
+        <nav ref="navEl" :class="['nav', { dismissed }]" aria-label="Main">
           <div
             v-for="item in NAV"
             :key="item.label"
             class="nav-item"
+            @mouseenter="dismissed = false"
             @mouseleave="dismissed = false"
           >
             <SiteLink class="caret" :href="item.href" @click="dismissed = true">{{

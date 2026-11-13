@@ -318,17 +318,24 @@
   opacity: .5;
 }
 
+/* The dropdown fades in and out. Hidden, it is invisible to the pointer. */
 .nd .menu {
-  display: none;
   position: absolute;
   top: 100%;
   left: -12px;
   padding-top: 8px;
   z-index: 20;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity .16s, transform .16s, visibility 0s .16s;
 }
 
 .nd .nav-item:hover .menu, .nd .nav-item:focus-within .menu {
-  display: block;
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  transition: opacity .16s, transform .16s;
 }
 
 .nd .menu-panel {
@@ -1308,8 +1315,13 @@
   background: var(--ink);
 }
 
-.nd .nav.dismissed .menu {
-  display: none;
+/* Closed after a link is clicked, when the page scrolls down, and whenever
+   the bar itself is out of view */
+.nd .nav.dismissed .menu, .nd.site-bar.away .menu {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity .16s, transform .16s, visibility 0s .16s;
 }
 
 .nd .mobile-menu {
@@ -3410,6 +3422,12 @@
 
 .nd .intro .detail .app-button:first-child {
   animation: nd-pop .4s 3.05s backwards;
+}
+
+/* Held at its first frame until the font and the app are ready (index.html) */
+.intro-hold .nd .intro,
+.intro-hold .nd .intro * {
+  animation-play-state: paused !important;
 }
 
 /* Already played since the page loaded (set when HomePage.vue unmounts) */

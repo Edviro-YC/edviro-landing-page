@@ -26,6 +26,32 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20261112">
     <link rel="manifest" href="/site.webmanifest?v=20261112">
 
+    <!-- Homepage opening animation: hold it until the headline font has
+         loaded and the app has started, so it does not begin while the page
+         is still busy (see .intro-hold in src/assets/site.css). It starts
+         after 0.9s whatever happens. -->
+    <script>
+      (function () {
+        var root = document.documentElement, parts = 0, done = false
+        function go() { if (!done) { done = true; root.classList.remove('intro-hold') } }
+        function part() { if (++parts >= 2) (window.requestAnimationFrame || setTimeout)(go) }
+        root.classList.add('intro-hold')
+        setTimeout(go, 900)
+        // Called by the app once it has mounted.
+        window.edviroIntroReady = part
+        function font() {
+          if (done) return
+          if (!document.fonts || !document.fonts.load) return part()
+          // No matching face yet means the stylesheet has not been read: try again.
+          document.fonts.load('500 1em Geist').then(function (faces) {
+            if (faces.length) part()
+            else setTimeout(font, 40)
+          }, part)
+        }
+        font()
+      })()
+    </script>
+
     <!-- Theme -->
     <meta name="theme-color" content="#0B7A3E">
     <meta name="color-scheme" content="light">

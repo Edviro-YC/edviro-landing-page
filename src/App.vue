@@ -1,19 +1,29 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
 import { useHead } from '@unhead/vue'
 import SiteNav from './components/SiteNav.vue'
 import SiteFooter from './components/SiteFooter.vue'
 import geistLatin from '@/assets/fonts/geist-latin.woff2'
+import heroField from '@/assets/img/brand/bg-light.jpg'
+import grain from '@/assets/img/brand/grain.png'
 
 // Preload the primary latin font subset (hashed URL resolved by Vite) so the
 // above-the-fold type renders without a flash. Applied on every route.
+// The hero background and grain are preloaded too: the stylesheet only asks
+// for them once it has loaded, which is after the first paint.
 // Tokens for the older pages live in assets/main.css; the redesign's in assets/site.css.
 useHead({
   htmlAttrs: { lang: 'en' },
   link: [
     { rel: 'preload', as: 'font', type: 'font/woff2', href: geistLatin, crossorigin: 'anonymous' },
+    { rel: 'preload', as: 'image', type: 'image/jpeg', href: heroField, fetchpriority: 'high' },
+    { rel: 'preload', as: 'image', type: 'image/png', href: grain },
   ],
 })
+
+// The homepage opening animation waits for this (see index.html).
+onMounted(() => window.edviroIntroReady?.())
 
 // Skip link: move focus into the page's <main> without a router hash round-trip.
 const skipToMain = () => {
