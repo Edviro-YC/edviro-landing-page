@@ -1488,6 +1488,59 @@
   max-width: 820px;
 }
 
+/* Example screen: heading on the left, product window on the right */
+.nd .screen-split {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.nd .screen-split .head + * {
+  margin-top: 0;
+}
+
+.nd .screen-split h2 {
+  font-size: clamp(28px, 3vw, 38px);
+  line-height: 1.08;
+}
+
+.nd .screen-split .sub {
+  font-size: 17px;
+}
+
+.nd .screen-split .app.compact {
+  max-width: none;
+}
+
+/* The window sits on the same green field as the homepage panels */
+.nd .screen-stage {
+  border-radius: 24px;
+  padding: 44px 40px;
+  background:
+    url('./img/brand/grain.png') 0 0 / 160px 160px,
+    url('./img/brand/bg-light.jpg') center / cover no-repeat;
+  background-blend-mode: soft-light, normal;
+}
+
+.nd .screen-stage .app {
+  box-shadow: 0 24px 48px -24px rgba(14, 58, 47, .35);
+}
+
+@media (max-width: 780px) {
+  .nd .screen-stage {
+    border-radius: 18px;
+    padding: 20px 14px;
+  }
+}
+
+@media (max-width: 1040px) {
+  .nd .screen-split {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
 .nd .pill.progress {
   background: var(--tint);
   color: var(--green);
@@ -2885,12 +2938,44 @@
   z-index: 5;
 }
 
-.nd .hero {
+.nd .hero, .nd .page-hero {
   position: relative;
   isolation: isolate;
   margin-top: -76px;
-  padding-top: 156px;
   background: url('./img/brand/bg-light.jpg') center top / cover no-repeat;
+}
+
+.nd .hero {
+  padding-top: 156px;
+}
+
+/* Content pages get the same field, fading out sooner */
+.nd .page-hero {
+  padding-top: 132px;
+}
+
+.nd .page-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url('./img/brand/grain.png') 0 0 / 160px 160px;
+  mix-blend-mode: soft-light;
+  opacity: .9;
+}
+
+.nd .page-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    rgba(251, 248, 242, .6) 0%,
+    rgba(251, 248, 242, .15) 30%,
+    rgba(251, 248, 242, .5) 62%,
+    var(--bg) 100%
+  );
 }
 
 .nd .hero::before {
@@ -2938,6 +3023,10 @@
 @media (max-width: 780px) {
   .nd .hero {
     padding-top: 124px;
+  }
+
+  .nd .page-hero {
+    padding-top: 112px;
   }
 
   .nd section.demo {
