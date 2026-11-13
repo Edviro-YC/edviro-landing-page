@@ -22,28 +22,6 @@ const pages: ContentPage[] = [
           'It means comparing how many people are in each zone with how that zone is being heated, cooled and lit. Edviro gets occupancy from WiFi access points or from its own occupancy sensors, and reads HVAC mode and load from the BMS and meters. When a zone is empty and still in occupied mode, it drafts a setback and a restore rule. Nothing changes until a named person approves it, and each approved change is checked against a baseline of the same weekdays.',
       },
       {
-        type: 'steps',
-        id: 'example',
-        title: 'Example: an empty wing on a weeknight',
-        intro: 'Floor 4 East of an office tower.',
-        steps: [
-          {
-            title: 'Signal',
-            text: 'WiFi device counts on Floor 4 East drop to near zero at 6 pm.',
-          },
-          {
-            title: 'Diagnose',
-            text: 'The zone stays in occupied mode until 10 pm. Edviro drafts a change: unoccupied from 6:30 pm, restore on the first badge-in.',
-          },
-          { title: 'Review', text: 'Facilities approves the drafted change.', tag: 'Human' },
-          { title: 'Dispatch', text: 'The BMS applies the approved schedule.' },
-          {
-            title: 'Verify',
-            text: 'After-hours HVAC load is 41% lower over five weeknights, compared with the same weekdays before the change.',
-          },
-        ],
-      },
-      {
         type: 'cards',
         title: 'How it works in an office',
         cards: [
@@ -89,6 +67,7 @@ const pages: ContentPage[] = [
       },
       {
         type: 'screen',
+        id: 'example',
         label: 'Example',
         title: 'What your team sees',
         intro:
@@ -201,7 +180,7 @@ const pages: ContentPage[] = [
       label: 'Healthcare',
       title: 'Edviro for healthcare facilities',
       lede: 'Edviro reads the BMS, meters and temperature loggers you already have. When a room drifts out of range or a unit runs past its hours, it drafts the fix for a person on your team to approve, and it keeps the dated record surveyors ask for.',
-      secondary: ['See an example', '#example'],
+      secondary: ['See what it catches', '#catches'],
       note: 'No new sensors. Critical spaces can be excluded. A person approves every change.',
     },
     sections: [
@@ -212,29 +191,8 @@ const pages: ContentPage[] = [
           'It is software that watches critical spaces such as operating rooms, isolation rooms and pharmacy coolers, and gets drift in front of someone who can fix it. Edviro reads existing BMS points, meters and temperature loggers. When pressure, temperature or humidity goes out of range, it names the likely cause, drafts the fix, and keeps the readings, fixes and tests together with their dates. It does not control critical spaces on its own and does not certify compliance.',
       },
       {
-        type: 'steps',
-        id: 'example',
-        title: 'Example: an isolation room losing pressure',
-        intro: 'Isolation room AII-2 on an early morning.',
-        steps: [
-          {
-            title: 'Signal',
-            text: 'AII-2 loses negative pressure over six hours and crosses −0.01 in. w.c. at 06:40.',
-          },
-          {
-            title: 'Diagnose',
-            text: 'Edviro names the likely cause: the belt on EF-4 is slipping.',
-          },
-          { title: 'Review', text: 'Facilities reviews the drafted fix at 06:52.', tag: 'Human' },
-          { title: 'Dispatch', text: 'An HVAC technician is dispatched at 06:55.' },
-          {
-            title: 'Verify',
-            text: 'The belt is replaced and pressure is back to −0.02 in. w.c. by 08:10. The event, the fix and who handled it are recorded on the asset.',
-          },
-        ],
-      },
-      {
         type: 'cards',
+        id: 'catches',
         title: 'What it catches',
         cards: [
           {
@@ -404,7 +362,7 @@ const pages: ContentPage[] = [
       label: 'Construction',
       title: 'Baselining and M&V for construction',
       lede: 'Edviro fits an independent energy baseline during fit-out and measures the building against it. The contractor sees a variance while still on site, and the owner gets an M&V report at handover. We have piloted baselining and M&V with a construction company.',
-      secondary: ['See an example', '#example'],
+      secondary: ['How it works', '#how'],
       note: 'Independent baseline. Weekly comparison with the design model. M&V report at handover.',
     },
     sections: [
@@ -415,27 +373,8 @@ const pages: ContentPage[] = [
           'Independent baselining means fitting an energy model to a new building’s own metered data and weather during fit-out, before anyone moves in. Each week Edviro compares measured performance with the design model. Variances go to the general contractor with the evidence, while they are still cheap to fix. At handover the owner gets an M&V report and a calibrated baseline, and Edviro goes on checking the building against that baseline afterwards.',
       },
       {
-        type: 'steps',
-        id: 'example',
-        title: 'Example: a tower from fit-out to month 6',
-        intro: 'The building is called Tower A.',
-        steps: [
-          {
-            title: 'Independent baseline',
-            text: 'The baseline is fit to 62 days of metered data during fit-out and locked before occupancy.',
-          },
-          {
-            title: 'Variance found',
-            text: 'Measured load runs 8% over the design model in weeks 3–4. The GC gets the evidence that week.',
-          },
-          {
-            title: 'Fixed and reported',
-            text: 'A commissioning fix to the AHU-2 economizer lands in week 5. The M&V report goes to the owner at month 6.',
-          },
-        ],
-      },
-      {
         type: 'rows',
+        id: 'how',
         title: 'How it works',
         rows: [
           ['Design model', 'The engineer’s model is the reference.'],

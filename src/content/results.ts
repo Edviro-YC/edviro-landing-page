@@ -57,24 +57,6 @@ const pages: ContentPage[] = [
         ],
       },
       {
-        type: 'steps',
-        title: 'How a saving gets counted',
-        steps: [
-          {
-            title: 'Baseline',
-            text: 'We fit a model to the building’s meter data, weather, schedules and tariffs. It predicts what the building would have used.',
-          },
-          {
-            title: 'Measure',
-            text: 'From the moment a fix lands, we track actual use against that prediction.',
-          },
-          {
-            title: 'Re-check',
-            text: 'We check the saving again over 90 days. If it slips, the fix is reopened.',
-          },
-        ],
-      },
-      {
         type: 'faq',
         title: 'Common questions',
         items: [
@@ -126,26 +108,8 @@ const pages: ContentPage[] = [
           'M&V is how you find out whether a change actually saved energy. You build a baseline, which is a prediction of what the building would have used with no change. You measure what it did use. The saving is the difference. Edviro runs this check continuously on every fix and project, against a baseline adjusted for weather and schedule.',
       },
       {
-        type: 'steps',
-        id: 'method',
-        title: 'How it works',
-        steps: [
-          {
-            title: 'Baseline',
-            text: 'A model learns how each building normally uses energy and predicts what it would have used.',
-          },
-          {
-            title: 'Measure',
-            text: 'From the moment a fix lands, we track real consumption at that site against the prediction. We do this for work orders as well as projects.',
-          },
-          {
-            title: 'Report',
-            text: 'The report gives the difference, how it was calculated and whether it held.',
-          },
-        ],
-      },
-      {
         type: 'chips',
+        id: 'method',
         title: 'What goes into the baseline',
         intro:
           'The baseline is a model of one building. We fit it to that building’s historical and live meter data, along with weather, schedules, occupancy and tariffs. It answers one question: what would this building have used if nothing had changed?',

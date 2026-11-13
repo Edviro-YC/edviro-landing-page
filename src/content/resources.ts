@@ -132,7 +132,7 @@ const pages: ContentPage[] = [
         cards: [
           {
             title: 'How Edviro works',
-            text: 'The five steps, from a signal coming in to checking that the fix worked.',
+            text: 'What the platform does, with an example from one building.',
             href: '/facilities-operations',
           },
           {
@@ -332,7 +332,7 @@ const pages: ContentPage[] = [
           },
           {
             title: 'How Edviro works',
-            text: 'The five steps, from a signal coming in to checking that the fix worked.',
+            text: 'What the platform does, with an example from one building.',
             href: '/facilities-operations',
           },
         ],

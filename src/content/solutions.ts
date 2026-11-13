@@ -70,32 +70,6 @@ const pages: ContentPage[] = [
         ],
       },
       {
-        type: 'steps',
-        id: 'how',
-        title: 'How it works: a cold classroom',
-        intro: 'A custodian reports a cold room, and this is what happens next.',
-        steps: [
-          {
-            title: 'Signal',
-            text: 'A custodian writes: “Room 214 is freezing again. Kids are in coats.”',
-          },
-          {
-            title: 'Diagnose',
-            text: 'Edviro finds the RTU-3 heating stage isn’t firing, for the third time in 30 days. Supply air is 58°F where it should be 92°F.',
-          },
-          {
-            title: 'Review',
-            text: 'The facilities lead reads the drafted fix and approves it at 9:47 AM.',
-            tag: 'Human',
-          },
-          { title: 'Dispatch', text: 'The technician goes to site and replaces the igniter.' },
-          {
-            title: 'Verify',
-            text: 'By 11:20 supply air is back to 91°F and the room is holding 70°F.',
-          },
-        ],
-      },
-      {
         type: 'cards',
         title: 'Work orders, assets and maintenance',
         intro:
@@ -302,24 +276,6 @@ const pages: ContentPage[] = [
         ],
       },
       {
-        type: 'steps',
-        title: 'Example: a cold classroom',
-        intro: 'One morning, in the order things happen.',
-        steps: [
-          {
-            title: 'Signal',
-            text: 'A custodian writes: “Room 214 is freezing again. Kids are in coats.”',
-          },
-          {
-            title: 'Diagnose',
-            text: 'The RTU-3 heating stage isn’t firing. It’s the third time in 30 days.',
-          },
-          { title: 'Review', text: 'The facilities lead approves the drafted fix.', tag: 'Human' },
-          { title: 'Dispatch', text: 'The technician replaces the igniter.' },
-          { title: 'Verify', text: 'Supply air reads 91°F and the room is holding 70°F.' },
-        ],
-      },
-      {
         type: 'cards',
         title: 'Keep your CMMS or use ours',
         intro:
@@ -522,20 +478,6 @@ const pages: ContentPage[] = [
         ],
       },
       {
-        type: 'steps',
-        title: 'How it works',
-        steps: [
-          {
-            title: 'Signal',
-            text: 'BMS points and meters are checked against the learned baseline.',
-          },
-          { title: 'Diagnose', text: 'Edviro names the likely cause and attaches the evidence.' },
-          { title: 'Review', text: 'A named person approves the fix.', tag: 'Human' },
-          { title: 'Dispatch', text: 'The work order goes out in Edviro or in your CMMS.' },
-          { title: 'Verify', text: 'Edviro checks the meter to see whether the fix held.' },
-        ],
-      },
-      {
         type: 'cards',
         title: 'For sustainability and finance offices',
         intro:
@@ -635,7 +577,7 @@ const pages: ContentPage[] = [
           { title: 'Customer results', text: 'What Edviro has measured so far.', href: '/results' },
           {
             title: 'How Edviro works',
-            text: 'The five steps, from a signal to a checked fix.',
+            text: 'What the platform does, with an example from one building.',
             href: '/facilities-operations',
           },
         ],
@@ -743,33 +685,6 @@ const pages: ContentPage[] = [
           {
             title: 'What would an upgrade unlock?',
             text: 'Model an added cooling unit or more power before you buy it, and see how much load it would let you add.',
-          },
-        ],
-      },
-      {
-        type: 'steps',
-        title: 'How it works',
-        steps: [
-          {
-            title: 'Connect',
-            text: 'Edviro reads your BMS, EPMS, PDU and sensor feeds. Access is read-only.',
-          },
-          {
-            title: 'Model',
-            text: 'It fits a physics model to the site and shows modeled against measured temperatures, so you can check it.',
-          },
-          {
-            title: 'Plan',
-            text: 'You get a 7-day and a 30-day plan of the changes that free up capacity or lower PUE.',
-          },
-          {
-            title: 'Review',
-            text: 'Your team decides which changes to make, and makes them.',
-            tag: 'Human',
-          },
-          {
-            title: 'Verify',
-            text: 'Edviro checks the telemetry to confirm the change did what the model said, and updates the model.',
           },
         ],
       },
@@ -1091,31 +1006,6 @@ const pages: ContentPage[] = [
         ],
       },
       {
-        type: 'steps',
-        label: 'How it works',
-        title: 'No alarms, just fixes.',
-        intro:
-          'There is no alarms tab in Edviro. It triages every alarm, groups the related ones, and hands your team a diagnosed fix that is ready to approve.',
-        steps: [
-          {
-            title: 'Collect',
-            text: 'BMS points and alarms, EPMS and PDU power, and sensor feeds. All read-only.',
-          },
-          {
-            title: 'Group',
-            text: 'Alarms are tied together by time, location and equipment: unit, row and pod.',
-          },
-          {
-            title: 'Compare',
-            text: 'Behavior is checked against the learned baseline and the cooling model.',
-          },
-          {
-            title: 'Name the cause',
-            text: 'Edviro names the likely cause and lists the evidence and the alarms it explains.',
-          },
-        ],
-      },
-      {
         type: 'rows',
         id: 'diagnosis',
         title: 'Example: a diagnosis for CRAH-2',
@@ -1152,20 +1042,6 @@ const pages: ContentPage[] = [
           {
             title: 'Units fighting',
             text: 'Neighboring units humidifying and dehumidifying at the same time.',
-          },
-        ],
-      },
-      {
-        type: 'steps',
-        title: 'What happens after the diagnosis',
-        steps: [
-          { title: 'Signal', text: 'Alarms from the BMS, EPMS, PDUs and sensors.' },
-          { title: 'Diagnose', text: 'The likely cause, with evidence.' },
-          { title: 'Review', text: 'The site lead approves the fix.', tag: 'Human' },
-          { title: 'Dispatch', text: 'The technician gets the unit history and the steps.' },
-          {
-            title: 'Verify',
-            text: 'Edviro checks that supply temperature holds inside the model band. The pattern is kept, so the same fault is recognized sooner next time.',
           },
         ],
       },
