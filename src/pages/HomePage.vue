@@ -30,6 +30,7 @@ import deltaControls from '@/assets/img/vendors/delta-controls.png'
 import honeywell from '@/assets/img/vendors/honeywell.svg'
 import johnsonControls from '@/assets/img/vendors/johnson-controls.svg'
 import kmcControls from '@/assets/img/vendors/kmc-controls.svg'
+import pelican from '@/assets/img/vendors/pelican-wireless.png'
 import schneiderElectric from '@/assets/img/vendors/schneider-electric.svg'
 import siemens from '@/assets/img/vendors/siemens.svg'
 import trane from '@/assets/img/vendors/trane.svg'
@@ -263,8 +264,8 @@ const customers = [
 /*
  * Building-control vendors shown on the integrations wall. Logos are the
  * vendors' trademarks, shown in their own colours on white tiles. Owner: confirm each integration and
- * swap in the vendors' official brand files before this ships. Distech has no
- * logo file yet, so it renders as text.
+ * swap in the vendors' official brand files before this ships. A vendor
+ * without a logo file renders as text.
  */
 const vendors: { name: string; src?: string; width?: number; height?: number; className?: string }[] = [
   { name: 'Siemens', src: siemens, width: 210, height: 50 },
@@ -275,7 +276,7 @@ const vendors: { name: string; src?: string; width?: number; height?: number; cl
   { name: 'Carrier', src: carrier, width: 300, height: 121, className: 'tall gray' },
   { name: 'Automated Logic', src: automatedLogic, width: 600, height: 197, className: 'tall' },
   { name: 'Tridium', src: tridium, width: 352, height: 63 },
-  { name: 'Distech Controls' },
+  { name: 'Pelican', src: pelican, width: 515, height: 120, className: 'tall' },
   { name: 'Delta Controls', src: deltaControls, width: 600, height: 225, className: 'tall' },
   { name: 'Alerton', src: alerton, width: 800, height: 180, className: 'crop-top' },
   { name: 'KMC Controls', src: kmcControls, width: 618, height: 255, className: 'tall' },
