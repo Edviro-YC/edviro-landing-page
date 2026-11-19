@@ -156,7 +156,7 @@ const pillars = [
 // points on the photo: `flip` puts the label to the left of its dot.
 const buildings = [
   {
-    name: 'Campuses',
+    name: 'Schools & campuses',
     text: 'School districts and universities with dozens of buildings on one plan.',
     href: '/solutions/schools',
     day: campusesDay,
