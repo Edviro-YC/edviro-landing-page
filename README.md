@@ -95,3 +95,20 @@ Run `npm run build` before merging (it includes the SEO checks). Before release,
 The hidden `share-your-story` form in index.html lets Netlify detect the form served through the blog proxy. Enable Forms detection on this landing project; new submissions on edviro.com belong to this project. Existing blog-project submissions stay there. The newsletter endpoint is unchanged.
 
 Release order: publish the blog origin with legacy redirects disabled, publish this routing change, verify public blog pages/assets/forms detection, then set `BLOG_MIGRATION_REDIRECTS=true` in the blog project's production build environment and trigger a Git build. Keep blog.edviroenergy.com DNS and TLS attached to the blog project to serve 301 redirects indefinitely. See the blog repository's migration notes for mappings and rollback.
+
+### AI agent routing (AEO)
+
+`netlify/edge-functions/aeo-router.ts` can serve AI assistants and AI crawlers (ChatGPT, Claude, Perplexity, Mistral, Meta, Amazon, Common Crawl and others; see `netlify/aeo/agents.ts`) a simplified copy of the page they asked for: same URL, same visible content, no scripts, menus or interactive chrome. The simplified pages are built by the private `Edviro-YC/edviro-aeo` repo, whose build fails if a page says anything the human page does not visibly say. Googlebot, Bingbot and every other search crawler, link previews, browser-driving agents and people always get the normal page; people never invoke the function at all (it only runs for AI user agents).
+
+It is **off by default**. Netlify environment variables (Functions scope), set per deploy context:
+
+| Variable | Values | Effect |
+|---|---|---|
+| `AEO_ROUTING` | `off` (default), `pilot`, `all` | `pilot` routes only `DEFAULT_PILOT_PATHS` in `netlify/aeo/route.ts`; `all` routes every page path |
+| `AEO_ORIGIN` | `https://<edviro-aeo site>.netlify.app` | Where agent pages come from; routing stays off without it |
+| `AEO_PILOT_PATHS` | comma-separated paths | Overrides the pilot list |
+| `AEO_TIMEOUT_MS` | 100–10000 (default 1500) | Agent-page fetch timeout |
+| `AEO_REQUIRE_SOURCE_MATCH` | `on` (default), `off` | Serve an agent page only if it was built from the human page's current ETag; set `off` only on deploy previews |
+| `AEO_POSTHOG` | `off` (default), `on` | Send `ai_agent_request` {agent, path, variant, reason} to PostHog for every AI-agent page request, routed or not |
+
+Every failure (timeout, error, non-200 on either side, or an agent page built from an older human page) serves the human page. Responses the function touches carry `Vary: User-Agent` and `x-edviro-aeo` (`aeo; agent=gptbot; mode=pilot` or `human; agent=gptbot; reason=...`). Check it with `curl -sI -A 'GPTBot/1.4' https://edviro.com/work-orders/ | grep -i x-edviro-aeo`; a browser or `-A Googlebot/2.1` must show no such header. Run `npm run test:edge` after changing anything under `netlify/`.
