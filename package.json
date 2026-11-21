@@ -11,6 +11,7 @@
     "type-check": "vue-tsc --build",
     "format": "prettier --write --experimental-cli src/",
     "check:seo": "node scripts/check-seo.mjs",
+    "test:edge": "node --test \"netlify/aeo/*.test.ts\"",
     "generate:brand": "node scripts/generate-og.mjs"
   },
   "dependencies": {
