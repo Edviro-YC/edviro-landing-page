@@ -3,6 +3,7 @@ import { nextTick, onBeforeUnmount, onMounted, ref, type Directive } from 'vue'
 import CtaSection from '@/components/CtaSection.vue'
 import DemoButton from '@/components/DemoButton.vue'
 import SiteLink from '@/components/SiteLink.vue'
+import WhatsNewStrip from '@/components/WhatsNewStrip.vue'
 import icon from '@/assets/img/edviro-icon.svg'
 import bgForest from '@/assets/img/brand/bg-forest.jpg'
 import bgLight from '@/assets/img/brand/bg-light.jpg'
@@ -1008,5 +1009,8 @@ onBeforeUnmount(() => {
     </section>
 
     <CtaSection />
+
+    <!-- Latest product updates from the blog; appears only once the feed loads. -->
+    <WhatsNewStrip />
   </main>
 </template>

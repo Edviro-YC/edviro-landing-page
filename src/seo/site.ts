@@ -27,6 +27,14 @@ export const LOGO_PATH = '/logo-icon.png'
 
 export const CONTACT_EMAIL = 'founders@edviroenergy.com'
 export const BLOG_URL = 'https://edviro.com/blog/'
+/** Product updates, published by the blog (edviro-blog, /blog/whats-new/). */
+export const WHATS_NEW_URL = 'https://edviro.com/blog/whats-new/'
+/**
+ * The blog's JSON feed of the latest updates, read by the homepage strip in
+ * the browser. Same origin in production and deploy previews through the
+ * /blog/* proxy (vite.config.ts), so no CORS is involved.
+ */
+export const WHATS_NEW_FEED_PATH = '/blog/whats-new.json'
 
 /**
  * Canonical solution destinations. Nav, footer, llms.txt, the sitemap and the

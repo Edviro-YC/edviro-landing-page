@@ -92,6 +92,7 @@ Modern BMS integrations, legacy controls, utility portals (including PG&E Green 
 ## Blog (deep guidance)
 
 - [Edviro blog](https://edviro.com/blog/): Practical field notes on school facilities operations.
+- [What's new in Edviro](https://edviro.com/blog/whats-new/): Product updates in plain language, newest first (JSON feed: https://edviro.com/blog/whats-new.json).
 - [Give school facilities teams their weekends back](https://edviro.com/blog/give-school-facilities-teams-their-weekends-back/): Reducing alert triage overload.
 - [How AI-powered facilities operations works](https://edviro.com/blog/how-ai-powered-facilities-operations-works-in-school-districts/): Requests, evidence, action, and verification.
 - [School work orders](https://edviro.com/blog/work-orders-bridge-school-staff-facilities-teams/): Connecting staff requests, technicians, and asset history.

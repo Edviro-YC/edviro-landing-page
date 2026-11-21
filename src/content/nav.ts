@@ -1,4 +1,4 @@
-import { BLOG_URL, DASHBOARD_URL, LINKEDIN_URL, X_URL } from '@/seo/site'
+import { BLOG_URL, DASHBOARD_URL, LINKEDIN_URL, WHATS_NEW_URL, X_URL } from '@/seo/site'
 import type { LinkPair } from './types'
 
 export interface NavItem {
@@ -155,6 +155,7 @@ export const FOOTER: { title: string; links: LinkPair[] }[] = [
       ['Customer results', '/results'],
       ['M&V methodology', '/results/methodology'],
       ['Blog', BLOG_URL],
+      ['What’s new', WHATS_NEW_URL],
       ['FAQ', '/faq'],
       ['Glossary', '/glossary'],
     ],
